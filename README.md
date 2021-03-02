@@ -1,6 +1,7 @@
 # admin-antdv-vue3
 ## 目录规划
 ```js
+|- docs // 文档
 |- dist // 构建成果
 |- mock // 数据mock
 |- public
@@ -10,22 +11,24 @@
   |- assets  // 静态资源
   |- components // 组件
   |- config // 全局配置
-  |- filters // 全局过滤器
+  |- directives // 全局指令
+  |- hooks // 全局hooks
   |- layouts // 布局组件
   |- mixins  // mixin
   |- plugins // 第三方插件
   |- router  // 路由
   |- store   // 状态
+  |- types   // 类型声明
   |- utils   // 工具
   |- views   // 页面
   |- App.vue  // 根组件
-  |- main.js
+  |- main.ts
 ```
 ## 技术体系
-- 基础：Html5 + Css3 + ES6
-- 框架：VueJs + VueRouter + Vuex
-- UI：ant-design-vue
-- 构建系统：Webpack + Babel + Eslint + PostCss
+- 基础：HTML5 + CSS3 + TypeScript
+- 框架：VueJs3.0 + VueRouter4.0 + Vuex4.0
+- UI：AntDesignVue2.0
+- 构建系统：Webpack + Babel + ESLint + PostCss
 - Http请求：Axios
 - 依赖管理：NPM
 
