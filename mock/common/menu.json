@@ -1,0 +1,89 @@
+[
+  {
+    "id": 1,
+    "permission": "system",
+    "name": "系统管理",
+    "type": 0,
+    "priority":0,
+    "icon": "el-icon-setting",
+    "parentId": 0
+  },
+  {
+    "id": 2,
+    "permission": "system/config",
+    "name": "系统配置",
+    "type": 0,
+
+    "priority":0,
+    "icon": "el-icon-set-up",
+    "parentId": 1
+  },
+  {
+    "id": 3,
+    "permission": "system/menu",
+    "name": "菜单管理",
+    "type": 0,
+
+    "priority":0,
+    "icon": "el-icon-menu",
+    "parentId": 1
+  },
+  {
+    "id": 4,
+    "permission": "system/department",
+    "name": "部门管理",
+    "type": 0,
+
+    "priority":0,
+    "icon": "el-icon-bangzhu",
+    "parentId": 1
+  },
+  {
+    "id": 5,
+    "permission": "system/role",
+    "name": "角色管理",
+    "type": 0,
+
+    "priority":0,
+    "icon": "el-icon-s-custom",
+    "parentId": 1
+  },
+  {
+    "id": 51,
+    "permission": "system/role/view",
+    "name": "角色查看",
+    "type": 1,
+    "icon": null,
+    "parentId": 4
+  },
+  {
+    "id": 6,
+    "permission": "system/user",
+    "name": "用户管理",
+    "type": 0,
+
+    "priority":0,
+    "icon": "el-icon-user",
+    "parentId": 1
+  },
+  {
+    "id": 7,
+    "permission": "system/message",
+    "name": "站内消息",
+    "type": 0,
+
+    "priority":0,
+    "icon": "el-icon-message",
+    "parentId": 1
+  },
+  {
+    "id": 8,
+    "permission": "system/log",
+    "name": "用户日志",
+    "type": 0,
+
+    "priority":0,
+    "icon": "el-icon-s-opportunity",
+    "parentId": 1
+  }
+]

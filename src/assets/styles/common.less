@@ -1,0 +1,72 @@
+@import './_flex.less';
+/* slide */
+.slide-leave-active,
+.slide-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-enter-from {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+// 原子样式
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.text-nowrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fr {
+  float: right;
+}
+.fl {
+  float: left;
+}
+.fn {
+  float: none;
+}
+.block {
+  display: block;
+}
+.flex {
+  display: flex;
+}
+.vertical-mid {
+  vertical-align: middle;
+}
+.vertical-top {
+  vertical-align: top;
+}
+.vertical-bottom {
+  vertical-align: bottom;
+}
+.vertical-baseline {
+  vertical-align: baseline;
+}
+.width-full {
+  width: 100%;
+}
+.text-primary {
+  color: @primary-color;
+}
+.divider-primary {
+  background: @primary-color;
+}
+.cursor-p {
+  cursor: pointer;
+}
+.cursor-d {
+  cursor: default;
+}

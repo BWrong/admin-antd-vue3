@@ -1,8 +1,18 @@
-import { createStore } from "vuex";
+import { createStore } from 'vuex';
+
+import user from './modules/user';
+import config from '@/config';
 
 export default createStore({
-  state: {},
+  strict: process.env.NODE_ENV !== 'production',
+  state() {
+    return {
+      theme: config.theme
+    };
+  },
   mutations: {},
   actions: {},
-  modules: {}
+  modules: {
+    user
+  }
 });

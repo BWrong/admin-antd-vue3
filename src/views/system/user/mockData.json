@@ -1,0 +1,36 @@
+{
+  "records": [
+    {
+      "id": "09987bca70a2457496c165844d7a007f",
+      "username": "admin",
+      "name": "admin",
+      "telphone": "",
+      "email": "",
+      "nickName": "",
+      "birthday": null,
+      "sex": null,
+      "idNumber": "",
+      "originPlace": null,
+      "resideAddress": null,
+      "headPic": null,
+      "remark": "",
+      "delFlag": 0,
+      "status": 0,
+      "createUser": null,
+      "perLoginDate": null,
+      "userId": "111111",
+      "deptId": "22222",
+      "updateTime": "2019-01-18 15:33:23",
+      "createAt": "admin",
+      "createTime": "2019-01-18 15:27:47",
+      "updateAt": null,
+      "sysRole": "1",
+      "deptCode": "001001028"
+    }
+  ],
+  "total": 85,
+  "size": 10,
+  "current": 1,
+  "searchCount": true,
+  "pages": 9
+}
