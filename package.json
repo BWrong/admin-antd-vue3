@@ -73,6 +73,10 @@
       "vue-cli-service lint",
       "prettier --write",
       "git add"
+    ],
+    "*.{css,less}": [
+      "prettier --write",
+      "git add"
     ]
   },
   "config": {
