@@ -4,7 +4,7 @@ const menus = ({ query }) => {
     msg: '登录成功',
     data: {
       menus: require('./menu.json'),
-      btnPermissions: [],
+      btnPermissions: ['testAuth'],
       detail: {
         email: '8888888@qq.com',
         id: '12341234',

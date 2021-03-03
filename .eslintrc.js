@@ -33,6 +33,7 @@ module.exports = {
         trailingComma: 'none',
         bracketSpacing: true,
         jsxBracketSameLine: true,
+        sortAttributes: true,
         'key-spacing': false
       }
     ]

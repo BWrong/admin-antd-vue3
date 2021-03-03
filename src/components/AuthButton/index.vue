@@ -5,27 +5,23 @@
 </template>
 
 <script>
+import { computed, defineComponent } from 'vue';
 import { getStorage } from '@/utils/storage';
-export default {
-  // inheritAttrs:false,
-  data() {
-    return {
-      permissions: Object.freeze(getStorage('permissions'))
-    };
-  },
+export default defineComponent({
   props: {
     auth: {
       type: String,
       default: ''
     }
   },
-  computed: {
-    hasAuth() {
-      const permissions = this.permissions || [];
-      return !this.auth || permissions.includes(this.auth);
-    }
+  setup(props) {
+    let permissions = Object.freeze(getStorage('permissions')) || [];
+    let hasAuth = computed(() => {
+      return !props.auth || permissions.includes(props.auth);
+    });
+    return {
+      hasAuth
+    };
   }
-};
+});
 </script>
-
-<style lang="less" scoped></style>

@@ -1,12 +1,8 @@
 <template>
   <div class="page-wrap">
     <a-card class="page-control">
-      <a-space class="fr">
-        <a-input v-model:value="searchWord" placeholder="请输入系统配置项名称" allowClear class="vertical-top" style="width: 400px"></a-input>
-        <a-button class="space" type="primary">搜索</a-button>
-        <a-button class="space" type="primary" ghost>重置</a-button>
-      </a-space>
-      <a-button class="" type="primary" ghost @click="handleAdd"> <PlusOutlined /> 新建 </a-button>
+      <search-button class="fr" v-model:value="searchKey" @search="handleSearch" @reset="handleReset" placeholder="请输入系统配置项名称" />
+      <a-button type="primary" ghost @click="handleAdd"> <PlusOutlined /> 新建 </a-button>
     </a-card>
     <a-card>
       <basis-table
@@ -108,7 +104,7 @@ export default {
       { title: '操作', slots: { customRender: 'action' }, align: 'center', width: 200 }
     ];
     return {
-      searchWord: '',
+      searchKey: '',
       tableData: [],
       tableLoading: false,
       select: [],
@@ -116,7 +112,7 @@ export default {
       columns: Object.freeze(columns),
       pagination: {
         ...this.$pagination,
-        pageSize: 20
+        pageSize: 10
       },
       showEditModal: false,
       isAdd: true,
@@ -140,6 +136,7 @@ export default {
       this.tableLoading = true;
       configApi
         .list({
+          searchKey: this.searchKey,
           pageSize: this.pagination.pageSize,
           pageNow
         })
@@ -155,6 +152,12 @@ export default {
       this.isAdd = true;
       this.showEditModal = true;
       this.form = { ...initForm };
+    },
+    handleSearch(val) {
+      console.log(val);
+    },
+    handleReset() {
+      console.log(1);
     },
     handleEdit(row) {
       console.log(row);

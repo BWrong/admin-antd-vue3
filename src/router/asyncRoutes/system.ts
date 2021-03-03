@@ -4,8 +4,8 @@ export default [
     path: '/system',
     name: 'system',
     redirect: '/system/department',
-    // component: () => import('@/layouts/DefaultLayout.vue'),
-    component: () => import('@/layouts/VerticalLayout.vue'),
+    // component: () => import(/* webpackChunkName: "default-layout" */ '@/layouts/DefaultLayout.vue'),
+    component: () => import(/* webpackChunkName: "vertical-layout" */ '@/layouts/VerticalLayout.vue'),
     meta: {
       permission: 'system'
     },
