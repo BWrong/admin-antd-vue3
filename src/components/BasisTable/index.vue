@@ -10,11 +10,14 @@
     </a-table>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { computed, defineComponent } from 'vue';
 function ganerTableIndex(pageNow = 1, pageSize = 10, index = 0) {
   return (pageNow - 1) * pageSize + index + 1;
 }
-export default {
+export default defineComponent({
+  name: 'BasisTable',
+  inheritAttrs: false,
   props: {
     rowKey: {
       type: String,
@@ -29,16 +32,15 @@ export default {
       required: true
     }
   },
-  computed: {
-    computedColumns() {
-      // 判断是否需要显示序号
-      if (!this.showIndex) {
-        return this.columns;
-      } else {
-        let { current = 1, pageSize = 10 } = this.$attrs.pagination;
-        return [{ title: '序号', width: 80, customRender: ({ index }) => ganerTableIndex(current, pageSize, index) }, ...this.columns];
-      }
-    }
+  setup(props, { attrs }) {
+    return {
+      computedColumns: computed(() => {
+        // 判断是否需要显示序号
+        if (!props.showIndex) return props.columns;
+        let { current = 1, pageSize = 10 } = attrs.pagination as any;
+        return [{ title: '序号', width: 80, customRender: ({ index }: { index: number }) => ganerTableIndex(current, pageSize, index), align: 'center' }, ...props.columns];
+      })
+    };
   }
-};
+});
 </script>

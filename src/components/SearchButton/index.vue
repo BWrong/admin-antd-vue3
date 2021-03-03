@@ -1,42 +1,49 @@
 <template>
   <a-space>
-    <a-input v-model:value="searchKey" @change="onChange" :placeholder="placeholder" allowClear style="width: 300px" />
+    <slot></slot>
+    <a-input v-model:value="searchWord" @change="onChange" :placeholder="placeholder" allowClear :style="{ width: inputWidth }" />
+    <slot name="suffix"></slot>
     <a-button type="primary" @click="handleSearch" :loading="loading">搜索</a-button>
     <a-button type="primary" ghost @click="handleReset">重置</a-button>
   </a-space>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
-  name: 'search-button',
+  name: 'SearchButton',
   props: {
     placeholder: {
       type: String,
       default: '请输入搜索关键词'
     },
-    value: {
+    modelValue: {
       type: String,
       default: ''
     },
     loading: {
       type: Boolean,
       default: false
+    },
+    inputWidth: {
+      type: String,
+      default: '200px'
     }
   },
+  emits: ['update:modelValue', 'search', 'reset'],
   setup(props, { emit }) {
-    let searchKey = ref(props.value);
+    let searchWord = ref(props.modelValue);
     return {
-      searchKey,
-      onChange({ target }) {
-        emit('update:value', target.value);
+      searchWord,
+      onChange({ target }: any) {
+        emit('update:modelValue', target.value);
       },
       handleSearch() {
-        emit('search', searchKey.value);
+        emit('search', searchWord.value);
       },
       handleReset() {
-        searchKey.value = '';
-        emit('update:value', '');
+        searchWord.value = '';
+        emit('update:modelValue', '');
         emit('reset');
       }
     };

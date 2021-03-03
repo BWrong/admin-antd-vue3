@@ -1,21 +1,17 @@
 import { RouteRecordRaw } from 'vue-router';
 // 静态路由
-const routes: Array<RouteRecordRaw> = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     name: 'login',
     component: () => import('@/views/login/Index.vue'),
-    meta: {
-      noCache: true
-    }
+    meta: {}
   },
   {
     path: '/err',
     name: 'err',
     component: () => import('@/views/err/Index.vue'),
-    meta: {
-      noCache: true
-    }
+    meta: {}
   }
 ];
 export default routes;

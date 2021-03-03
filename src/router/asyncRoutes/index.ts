@@ -1,6 +1,7 @@
+import { RouteRecordRaw } from 'vue-router';
 import system from './system';
 // 注意：为了方便和后台返回菜单合并，提取url，path需要填写完整
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'root',
@@ -12,8 +13,7 @@ const routes = [
         name: 'home',
         component: () => import('@/views/home/Index.vue'),
         meta: {
-          title: '首页',
-          noCache: true //添加此标识，不会缓存路由
+          title: '首页'
           // permission: 'home'
         }
       }

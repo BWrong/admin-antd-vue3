@@ -1,12 +1,11 @@
 <template>
-  <span>
-    <a-input :value="value" v-if="isEdit" @input="handleInput" v-bind="$attrs" />
-    <span v-else>{{ value }}</span>
-  </span>
+  <a-input :value="value" v-if="isEdit" @input="handleInput" v-bind="$attrs" />
+  <span v-else>{{ value }}</span>
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue';
+export default defineComponent({
   props: {
     value: {
       type: String,
@@ -17,10 +16,11 @@ export default {
       default: true
     }
   },
+  emits: ['update:value'],
   methods: {
     handleInput(value) {
-      this.$emit('input', value);
+      this.$emit('update:value', value);
     }
   }
-};
+});
 </script>

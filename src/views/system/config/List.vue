@@ -1,19 +1,11 @@
 <template>
   <div class="page-wrap">
     <a-card class="page-control">
-      <search-button class="fr" v-model:value="searchKey" @search="handleSearch" @reset="handleReset" placeholder="请输入系统配置项名称" />
       <a-button type="primary" ghost @click="handleAdd"> <PlusOutlined /> 新建 </a-button>
+      <search-button class="fr" v-model="searchWord" @search="handleSearch" @reset="getData(1)" placeholder="请输入系统配置项名称" />
     </a-card>
     <a-card>
-      <basis-table
-        :columns="columns"
-        show-index
-        :data-source="tableData"
-        :pagination="pagination"
-        @change="handleTableChange"
-        :loading="tableLoading"
-        :row-selection="{ selectedRowKeys: select, onChange: onSelectChange }"
-      >
+      <basis-table :columns="columns" show-index :data-source="tableData" :pagination="pagination" @change="handleTableChange" :loading="tableLoading">
         <template #action="{ record }">
           <a-space>
             <a-button @click="handleEdit(record)" type="primary" size="small">编辑</a-button>
@@ -23,7 +15,7 @@
       </basis-table>
     </a-card>
     <!-- 新增编辑 -->
-    <a-modal v-model:visible="showEditModal" :title="isAdd ? '新建' : '编辑'" :keyboard="false" :maskClosable="false" @ok="handleOk" :afterClose="() => $refs.form.resetFields()">
+    <a-modal v-model:visible="isShowEdit" :title="isAdd ? '新建' : '编辑'" :keyboard="false" :mask-closable="false" @ok="handleOk" :after-close="handleClose">
       <a-form ref="form" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
         <a-form-item label="配置项代码" name="code">
           <a-input v-model:value="form.code" :disabled="!isAdd" />
@@ -48,14 +40,13 @@
 </template>
 
 <script>
-import { PlusOutlined } from '@ant-design/icons-vue';
-import configComponent from './components';
+import configComponent from './components/index.ts';
 import configApi from '@/api/system/config';
 const initForm = {
   code: '',
   title: '',
   value: '',
-  type: '',
+  type: configComponent[0].value,
   describe: ''
 };
 export default {
@@ -104,17 +95,15 @@ export default {
       { title: '操作', slots: { customRender: 'action' }, align: 'center', width: 200 }
     ];
     return {
-      searchKey: '',
+      searchWord: '',
       tableData: [],
       tableLoading: false,
-      select: [],
       types: configComponent,
       columns: Object.freeze(columns),
       pagination: {
-        ...this.$pagination,
-        pageSize: 10
+        ...this.$pagination
       },
-      showEditModal: false,
+      isShowEdit: false,
       isAdd: true,
       form: {},
       rules: {
@@ -125,9 +114,6 @@ export default {
       }
     };
   },
-  components: {
-    PlusOutlined
-  },
   created() {
     this.getData(1);
   },
@@ -136,13 +122,12 @@ export default {
       this.tableLoading = true;
       configApi
         .list({
-          searchKey: this.searchKey,
+          searchWord: this.searchWord,
           pageSize: this.pagination.pageSize,
           pageNow
         })
         .then((res) => {
           this.pagination.current = res.current;
-          this.pagination.pageSize = res.size;
           this.pagination.total = res.total;
           this.tableData = res.list;
           this.tableLoading = false;
@@ -150,37 +135,35 @@ export default {
     },
     handleAdd() {
       this.isAdd = true;
-      this.showEditModal = true;
+      this.isShowEdit = true;
       this.form = { ...initForm };
-    },
-    handleSearch(val) {
-      console.log(val);
-    },
-    handleReset() {
-      console.log(1);
     },
     handleEdit(row) {
       console.log(row);
       this.isAdd = false;
-      this.showEditModal = true;
+      this.isShowEdit = true;
       this.form = { ...row };
     },
     handleDel(row) {
       this.$message.success('操作成功');
     },
+    handleSearch(val) {
+      console.log(val);
+      this.getData(1);
+    },
     handleTableChange(pagination, filters, sorter) {
       this.pagination = pagination;
-      console.log(pagination, filters, sorter);
+      this.getData(pagination.current);
+    },
+    handleClose() {
+      this.$refs.form.resetFields();
+      this.isShowEdit = false;
     },
     handleOk() {
       this.$refs.form.validate().then(() => {
         this.$message.success('操作成功');
-        this.showEditModal = false;
+        this.isShowEdit = false;
       });
-    },
-    onSelectChange(selectedRowKeys) {
-      this.select = selectedRowKeys;
-      console.log(selectedRowKeys);
     }
   }
 };

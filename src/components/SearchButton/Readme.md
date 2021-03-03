@@ -21,8 +21,10 @@ component: {
 属性|必须|说明|类型|默认值
 :---:|:---:|:---:|:---:|:---:
 placeholder|false|placeholder|String|'请输入搜索关键词'
-value(v-model)|false|输入框值，可使用`v-model:value`|String|''
+modelValue(v-model)|false|输入框值，可使用`v-model`|String|''
 loading|false|搜索按钮loading|Boolean|false
+inputWidth|false|输入框长度|String|200px
+
 
 
 ### Events

@@ -1,63 +1,59 @@
 <template>
   <div class="page-wrap">
     <a-card class="page-control">
-      <span class="fl">
-        <a-button type="primary" ghost icon="check-circle" style="margin-right: 10px" @click="allRead">全部已读</a-button>
-        <a-button type="primary" ghost icon="check-circle" @click="batchRead">批量已读</a-button>
-      </span>
-      <span class="flex" style="justify-content: flex-end">
-        <a-select placeholder="消息类型(可选)" style="width: 15%" v-model:value="form.type">
-          <a-select-option v-for="item in types" :key="item.key" :value="item.value">{{ item.value }}</a-select-option>
+      <a-space class="fl">
+        <a-button type="primary" ghost @click="handleAllRead"><CheckOutlined />全部已读</a-button>
+        <a-button type="primary" ghost @click="handleBatchRead"><CheckSquareOutlined />批量已读</a-button>
+      </a-space>
+      <a-space class="fr text-right">
+        <a-select placeholder="消息类型(可选)" style="width: 200px" v-model:value="searchType">
+          <a-select-option v-for="(item, key) in messageType" :key="key" :value="item">{{ item }}</a-select-option>
         </a-select>
-        <a-select placeholder="消息状态(可选)" style="width: 15%; margin: 0 10px" v-model:value="form.state">
-          <a-select-option value="0">未读</a-select-option>
-          <a-select-option value="1">已读</a-select-option>
+        <a-select placeholder="消息状态(可选)" style="width: 200px" v-model:value="searchStatus">
+          <a-select-option v-for="(item, key) in messageStatus" :key="key" :value="item">{{ item }}</a-select-option>
         </a-select>
-        <a-range-picker show-time format="YYYY-MM-DD HH:mm:ss" style="width: 28%; margin-right: 10px" @change="selectTimes" v-model:value="times"></a-range-picker>
-        <div class="r-nw-fe-c" style="float: right">
-          <a-button type="primary" icon="search" style="margin-right: 10px" @click="search">搜索</a-button>
-          <a-button type="primary" icon="reload" style="margin-right: 10px" ghost @click="reset">重置</a-button>
-        </div>
-      </span>
+        <a-range-picker show-time format="YYYY-MM-DD HH:mm:ss" @change="selectTimes" v-model:value="searchTimes"></a-range-picker>
+        <a-button type="primary" @click="handleSearch">搜索</a-button>
+        <a-button type="primary" ghost @click="handleReset">重置</a-button>
+      </a-space>
     </a-card>
     <a-card>
       <basis-table
-        :rowSelection="{
+        :row-selection="{
           selectedRowKeys: selectedRowKeys,
           onChange: onSelectChange
         }"
         :columns="columns"
-        :dataSource="dataList"
+        :data-source="tableData"
         :pagination="pagination"
-        :action="action"
-      ></basis-table>
+        @change="handleTableChange"
+        :loading="tableLoading"
+      >
+        <template #action="{ record }">
+          <a-space>
+            <a-button @click="handleView(record)" type="primary" size="small">详情</a-button>
+          </a-space>
+        </template>
+      </basis-table>
     </a-card>
-    <a-modal title="消息详情" :visible="visible" @ok="handleOk" @cancel="handleCancel" :keyboard="false" :maskClosable="false">
+    <a-modal title="消息详情" :visible="isShowDetail" @ok="handleOk" @cancel="handleCancel" :keyboard="false" :maskClosable="false">
       <p>{{ row.content }}</p>
       <template #footer>
-        <span>
-          <div class="footer" @click="handleOk">已读</div>
-        </span>
+        <a-button class="block-center" type="primary" @click="handleOk">已读</a-button>
       </template>
     </a-modal>
   </div>
 </template>
 
 <script>
-import messageApi from '@/api/system/message';
-import BasisTable from '@/components/BasisTable';
+import { CheckOutlined, CheckSquareOutlined } from '@ant-design/icons-vue';
 import { Modal } from 'ant-design-vue';
-import { pagination } from '@/config';
+import messageApi from '@/api/system/message';
 import { messageStatus } from '@/utils';
+import { MESSAGE_TYPE, MESSAGE_STATUS } from '@/config/dictionary';
 export default {
   data() {
     const columns = [
-      {
-        title: 'ID',
-        width: '100px',
-        dataIndex: 'id',
-        ellipsis: true
-      },
       {
         title: '发送者',
         width: '100px',
@@ -80,7 +76,7 @@ export default {
         dataIndex: 'state',
         ellipsis: true,
         align: 'center',
-        customRender: (text, record) => {
+        customRender: ({ text, record }) => {
           const status = messageStatus(record.state);
           return <a-badge status={status == '未读' ? 'warning' : status == '已读' ? 'processing' : 'warning'} text={status} />;
         }
@@ -96,44 +92,23 @@ export default {
         width: '100px',
         ellipsis: true,
         align: 'center',
-        scopedSlots: { customRender: 'action' }
+        slots: { customRender: 'action' }
       }
     ];
     return {
-      types: [],
+      messageType: MESSAGE_TYPE,
+      messageStatus: MESSAGE_STATUS,
       columns,
-      form: {
-        page: 1,
-        size: 10,
-        asc: false,
-        orderBy: 'createTime',
-        type: undefined,
-        state: undefined,
-        startTime: '',
-        endTime: ''
-      },
+      tableData: [],
+      tableLoading: false,
       pagination: {
-        ...pagination,
-        showTotal: (total) => `共 ${total} 条`,
-        onShowSizeChange: (current, pageSize) => {
-          this.form.size = pageSize;
-          this.getData();
-        },
-        onChange: (val) => {
-          this.form.page = val;
-          this.getData();
-        }
+        ...this.$pagination
       },
-      dataList: [],
+      searchType: '',
+      searchStatus: '',
+      searchTimes: [],
       selectedRowKeys: [],
-      times: ['', ''],
-      action: [
-        {
-          text: '详情',
-          click: this.goToDetail
-        }
-      ],
-      visible: false,
+      isShowDetail: false,
       row: {}
     };
   },
@@ -141,94 +116,90 @@ export default {
     this.getData();
   },
   components: {
-    BasisTable
+    CheckOutlined,
+    CheckSquareOutlined
   },
   methods: {
     // 获取表格数据
-    getData() {
-      messageApi.list(this.form).then((res) => {
-        this.pagination.total = res.total;
-        this.dataList = res.records;
-      });
+    getData(pageNow = 1) {
+      this.tableLoading = true;
+      messageApi
+        .list({
+          pageSize: this.pagination.pageSize,
+          pageNow
+        })
+        .then((res) => {
+          this.pagination.currentPage = res.current;
+          this.pagination.total = res.total;
+          this.tableData = res.list;
+          this.tableLoading = false;
+        });
     },
     // 查询
-    search() {
-      this.form.page = 1;
-      this.form.size = 10;
-      this.getData();
+    handleSearch() {
+      this.getData(1);
+    },
+    // 重置
+    handleReset() {
+      this.searchType = '';
+      this.searchStatus = '';
+      this.searchTimes = [];
+      this.getData(1);
     },
     // 选择时间
     selectTimes(data, values) {
-      this.times = data;
+      this.searchTimes = data;
       this.form.startTime = values[0];
       this.form.endTime = values[1];
     },
-    // 详情
-    goToDetail(row) {
-      this.row = { ...row };
-      this.visible = true;
+
+    handleTableChange(pagination, filters, sorter) {
+      this.pagination = pagination;
+      this.getData(pagination.current);
     },
-    // 重置
-    reset() {
-      this.form.page = 1;
-      this.form.size = 10;
-      this.form.type = '';
-      this.form.state = '';
-      this.times = [];
+    // 详情
+    handleView(row) {
+      this.row = { ...row };
+      this.isShowDetail = true;
     },
     // 选择表格数据
     onSelectChange(selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys;
     },
     // 全部已读
-    allRead() {
-      if (this.selectedRowKeys.length === 0) {
-        Modal.confirm({
-          title: ' 批量标记为已读消息',
-          content: '未选中任何未读消息!'
-        });
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        let that = this;
-        Modal.confirm({
-          title: '全部标记为已读消息',
-          content: '确定把所有未读消息标记为已读吗?',
-          okText: '确认',
-          cancelText: '取消',
-          onOk() {
-            // let params = {
-            //   messageIds: this.rowKeys,
-            //   receiver: getStorage('userinfo').username
-            // };
-            // console.log('params', params);
-            that.$message.success('全部已读成功');
-            that.selectedRowKeys = [];
-          }
-        });
-      }
+    handleAllRead() {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      let that = this;
+      Modal.confirm({
+        title: '提示',
+        content: '确定把所有未读消息标记为已读吗?',
+        okText: '确认',
+        cancelText: '取消',
+        onOk() {
+          // let params = {
+          //   messageIds: this.rowKeys,
+          //   receiver: getStorage('userinfo').username
+          // };
+          // console.log('params', params);
+          that.$message.success('操作成功');
+          that.selectedRowKeys = [];
+        }
+      });
     },
     // 批量已读
-    batchRead() {
+    handleBatchRead() {
       if (this.selectedRowKeys.length === 0) {
-        Modal.confirm({
-          title: ' 批量标记为已读消息',
-          content: '未选中任何未读消息!'
-        });
+        this.$message.error('未选择消息');
       } else {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         let that = this;
         Modal.confirm({
-          title: '全部标记为已读消息',
-          content: '确定把所有未读消息标记为已读吗?',
+          title: '提示',
+          content: '确定把选择项标记为已读吗?',
           okText: '确认',
           cancelText: '取消',
           onOk() {
-            // let params = {
-            //   messageIds: this.rowKeys,
-            //   receiver: getStorage('userinfo').username
-            // };
-            // console.log('params', params);
-            that.$message.success('全部已读成功');
+            that.$message.success('操作成功');
             that.selectedRowKeys = [];
           }
         });
@@ -241,12 +212,9 @@ export default {
     },
     // 取消
     handleCancel() {
-      this.visible = false;
+      this.isShowDetail = false;
       this.row = {};
     }
-  },
-  created() {
-    // this.rowSelection.selectedRowKeys = this.selectedRowKeys;
   }
 };
 </script>

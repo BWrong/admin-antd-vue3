@@ -30,8 +30,9 @@
   <!-- <div class="sider-trigger" @click="handleCollapse"><a-icon :type="collapse ? 'right' : 'left'" /></div> -->
 </template>
 <script>
+import { defineComponent } from 'vue';
 import { SettingOutlined } from '@ant-design/icons-vue';
-export default {
+export default defineComponent({
   components: {
     SettingOutlined
   },
@@ -73,12 +74,13 @@ export default {
       }
     );
   },
+  emits: ['update:collapse'],
   methods: {
     handleCollapse() {
       this.$emit('update:collapse', !this.collapse);
     }
   }
-};
+});
 </script>
 
 <style lang="less" scoped>
@@ -91,7 +93,7 @@ export default {
 .menu-box {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: calc(100vh - 64px);
+  max-height: calc(100vh - 64px);
   width: calc(100% + 17px);
   // transition: width 0.5s ease;
 }

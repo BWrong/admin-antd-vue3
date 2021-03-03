@@ -9,9 +9,10 @@
     </a-breadcrumb>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
-export default {
+import { defineComponent } from 'vue';
+export default defineComponent({
   components: {
     MenuFoldOutlined,
     MenuUnfoldOutlined
@@ -26,12 +27,13 @@ export default {
       default: false
     }
   },
+  emits: ['update:collapse'],
   methods: {
     handleCollapse() {
       this.$emit('update:collapse', !this.collapse);
     }
   }
-};
+});
 </script>
 <style lang="less" scoped>
 .breadcrumb-bar {

@@ -23,7 +23,7 @@
           </a-avatar>
           <span style="margin-left: 10px; vertical-align: middle; color: #fff">
             {{ userInfo.username }}
-            <a-icon type="down" style="margin-left: 5px; font-size: 10px" />
+            <DownOutlined style="margin-left: 5px; font-size: 10px" />
           </span>
         </div>
         <template #overlay>
@@ -34,26 +34,27 @@
         </template>
       </a-dropdown>
     </div>
-    <l-update-psd :visible="visiblePsd" @changeVisiblePsd="changeVisiblePsd"></l-update-psd>
+    <l-personal-edit :visible="visiblePsd" @changeVisiblePsd="changeVisiblePsd"></l-personal-edit>
   </a-layout-header>
 </template>
 
-<script>
-import { createVNode } from 'vue';
+<script lang="ts">
+import { createVNode, defineComponent } from 'vue';
+import { Modal } from 'ant-design-vue';
 import { mapState } from 'vuex';
-import { HomeOutlined, FileOutlined, BellOutlined, UserOutlined, LogoutOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { HomeOutlined, FileOutlined, BellOutlined, UserOutlined, LogoutOutlined, ExclamationCircleOutlined, DownOutlined } from '@ant-design/icons-vue';
 import { logout } from '@/router';
 import { getStorage } from '@/utils/storage';
-import { Modal } from 'ant-design-vue';
-import LUpdatePsd from './LUpdatePsd';
-export default {
+import LPersonalEdit from './LPersonalEdit.vue';
+export default defineComponent({
   components: {
-    LUpdatePsd,
+    LPersonalEdit,
     HomeOutlined,
     FileOutlined,
     BellOutlined,
     UserOutlined,
-    LogoutOutlined
+    LogoutOutlined,
+    DownOutlined
   },
   props: {
     collapse: {
@@ -75,13 +76,14 @@ export default {
     };
   },
   computed: mapState({
-    userInfo: (state) => state.user.userinfo
+    userInfo: (state: any) => state.user.userinfo
   }),
+  emits: ['update:collapse'],
   methods: {
-    handleCollapse() {
-      this.$emit('update:collapse', !this.collapse);
-    },
-    handleClick({ key }) {
+    // handleCollapse() {
+    //   this.$emit('update:collapse', !this.collapse);
+    // },
+    handleClick({ key }: { key: string }) {
       switch (key) {
         case 'person':
           this.visiblePsd = true;
@@ -104,7 +106,7 @@ export default {
       alert('开发中!');
     },
     // 关闭修改密码弹框
-    changeVisiblePsd(val) {
+    changeVisiblePsd(val: boolean) {
       this.visiblePsd = val;
     },
     // 导航菜单是否显示
@@ -112,7 +114,7 @@ export default {
       this.drawerVisible = !this.drawerVisible;
     }
   }
-};
+});
 </script>
 
 <style lang="less" scoped>

@@ -1,11 +1,10 @@
 <template>
-  <span>
-    <a-switch checked-children="开" un-checked-children="关" :default-checked="value === '1'" @change="onChange" v-bind="$attrs" />
-  </span>
+  <a-switch checked-children="开" un-checked-children="关" :default-checked="value === '1'" @change="onChange" v-bind="$attrs" />
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
+export default defineComponent({
   props: {
     value: {
       type: String,
@@ -16,10 +15,11 @@ export default {
       default: true
     }
   },
+  emits: ['update:value'],
   methods: {
-    onChange(value) {
-      this.$emit('input', value);
+    onChange(value: string) {
+      this.$emit('update:value', value);
     }
   }
-};
+});
 </script>

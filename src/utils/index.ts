@@ -3,7 +3,7 @@
  * @Github: https://github.com/BWrong
  * @Date: 2020-04-07 10:30:49
  * @LastEditors: Bwrong
- * @LastEditTime: 2021-03-01 17:22:42
+ * @LastEditTime: 2021-03-03 18:00:05
  */
 import dayjs from '@/plugins/dayjs';
 import Utf8 from 'crypto-js/enc-utf8';
@@ -69,7 +69,7 @@ export function getQuery(url: string) {
  * @param {*} password 要加密的密码
  * @param {*} cryptoKey 盐
  */
-export function cryptoPassword(password: string, cryptoKey: string) {
+export function cryptoPassword(password: string, cryptoKey?: string) {
   return Base64.stringify(Utf8.parse(`${cryptoKey}${password}`));
   // return md5(`${cryptoKey}${password}`).toString();
 }

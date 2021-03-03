@@ -1,3 +1,4 @@
+import { RouteRecordRaw } from 'vue-router';
 // 系统管理
 export default [
   {
@@ -75,4 +76,4 @@ export default [
       }
     ]
   }
-];
+] as RouteRecordRaw[];

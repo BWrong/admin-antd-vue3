@@ -4,17 +4,18 @@
   </a-button>
 </template>
 
-<script>
+<script lang="tsx">
 import { createVNode, defineComponent } from 'vue';
 import { Modal } from 'ant-design-vue';
 export default defineComponent({
-  name: 'delete-button',
+  name: 'DeleteButton',
   props: {
     title: {
       type: String,
       default: ''
     }
   },
+  emits: ['confirm'],
   setup(props, { emit }) {
     return {
       handleClick() {

@@ -1,5 +1,5 @@
-import ConfigInput from './ConfigInput';
-import ConfigSwitch from './ConfigSwitch';
+import ConfigInput from './ConfigInput.vue';
+import ConfigSwitch from './ConfigSwitch.vue';
 export default [
   {
     value: 0,

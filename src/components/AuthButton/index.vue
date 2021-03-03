@@ -4,10 +4,11 @@
   </a-button>
 </template>
 
-<script>
+<script lang="ts">
 import { computed, defineComponent } from 'vue';
 import { getStorage } from '@/utils/storage';
 export default defineComponent({
+  name: 'AuthButton',
   props: {
     auth: {
       type: String,

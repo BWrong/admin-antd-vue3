@@ -2,48 +2,31 @@
   <div class="page-wrap">
     <a-card class="page-control">
       <a-space>
-        <a-button type="primary" icon="plus" ghost @click="handleAdd">新建 </a-button>
-        <a-button class="space" type="primary" icon="medicine-box" ghost>数据修复 </a-button>
+        <a-button type="primary" ghost @click="handleAdd"> <PlusOutlined /> 新建 </a-button>
       </a-space>
-      <a-input-search class="space fr" placeholder="请输入部门名称" style="width: 300px" enter-button="搜索" allow-clear @search="handleSearch"></a-input-search>
+      <search-button class="fr" v-model="searchWord" @search="handleSearch" @reset="getData(1)" placeholder="请输入部门名称" />
     </a-card>
     <a-card>
-      <a-table :columns="columns" :data-source="tableData" size="small" rowKey="id" :expandIconColumnIndex="1" :pagination="pagination" @change="handlePageChange">
-        <template #index="text, row, index">
-          <span>{{ index + 1 }}</span>
+      <basis-table :columns="columns" :data-source="tableData" :pagination="pagination" @change="handleTableChange" :loading="tableLoading">
+        <template #action="{ record }">
+          <a-space>
+            <a-button @click="handleEdit(record)" type="primary" size="small">编辑</a-button>
+            <delete-button @confirm="handleDel(record)" :title="record.title" />
+          </a-space>
         </template>
-        <template #action="row">
-          <div>
-            <a-button @click="handleEdit(row)" type="link" size="small">编辑</a-button>
-            <a-divider type="vertical" class="divider-primary" />
-            <a-button @click="handleDel(row)" type="link" size="small">删除</a-button>
-          </div>
-        </template>
-      </a-table>
+      </basis-table>
     </a-card>
     <!-- 新增和编辑 -->
-    <a-modal
-      v-model:visible="showEditModal"
-      :title="isAdd ? '新建' : '编辑'"
-      :keyboard="false"
-      :maskClosable="false"
-      @ok="handleOk"
-      :afterClose="() => $refs.ruleForm.resetFields()"
-    >
-      <a-form ref="ruleForm" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
-        <a-form-item has-feedback label="部门名称" name="name">
-          <a-input v-model:value="form.name" />
+    <a-modal v-model:visible="isShowEdit" :title="isAdd ? '新建' : '编辑'" :keyboard="false" :maskClosable="false" @ok="handleOk" :afterClose="() => $refs.form.resetFields()">
+      <a-form ref="form" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
+        <a-form-item has-feedback label="部门名称" name="title">
+          <a-input v-model:value="form.title" />
         </a-form-item>
         <a-form-item has-feedback label="部门编码" name="code">
           <a-input v-model:value="form.code" />
         </a-form-item>
-        <a-form-item has-feedback label="部门主管" name="createUser">
-          <a-select v-model:value="form.createUser">
-            <a-select-option :value="item.id" v-for="item in userList" :key="item.id">{{ item.username }} </a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item has-feedback label="描述" name="deptDesc">
-          <a-input type="textarea" v-model:value="form.deptDesc"></a-input>
+        <a-form-item has-feedback label="描述" name="describe">
+          <a-textarea :rows="3" v-model:value="form.describe"></a-textarea>
         </a-form-item>
       </a-form>
     </a-modal>
@@ -51,102 +34,85 @@
 </template>
 
 <script>
-import { pagination } from '@/config';
-import { ganerTableIndex } from '@/utils';
-
+import departmentApi from '@/api/system/department';
 const initForm = {
-  name: '',
+  title: '',
   code: '',
-  createUser: '',
-  deptDesc: ''
+  describe: ''
 };
 export default {
+  inject: ['$pagination'],
   data() {
     const columns = [
-      { title: '序号', customRender: (value, row, index) => `${ganerTableIndex(this.pagination.current, this.pagination.pageSize, index)}`, width: 50 },
-      { title: '部门名称', dataIndex: 'name', ellipsis: true },
+      { title: '部门名称', dataIndex: 'title', ellipsis: true },
       { title: '部门编码', dataIndex: 'code' },
-      { title: '部门主管', dataIndex: 'createUser' },
-      { title: '部门描述', dataIndex: 'deptDesc', ellipsis: true },
-      { title: '操作', scopedSlots: { customRender: 'action' }, align: 'center', width: 300 }
+      { title: '部门描述', dataIndex: 'describe', ellipsis: true },
+      { title: '操作', slots: { customRender: 'action' }, align: 'center', width: 300 }
     ];
     return {
       tableData: [],
       tableLoading: false,
       columns: Object.freeze(columns),
       pagination: {
-        ...pagination,
-        pageSize: 20
+        ...this.$pagination
       },
-      searchValue: '',
-      deptList: [],
-      selectDept: [],
-      showEditModal: false,
+      searchWord: '',
+      isShowEdit: false,
       isAdd: true,
       form: {},
       rules: {
-        name: [{ required: true, trigger: 'blur', message: '请输入部门名称' }],
+        title: [{ required: true, trigger: 'blur', message: '请输入部门名称' }],
         code: [{ required: true, trigger: 'blur', message: '请输入部门编码' }]
-      },
-      showAuthModal: false,
-      selectAuth: [],
-      userList: []
+      }
     };
   },
   created() {
     this.getData(1);
-    this.getUserList();
   },
   methods: {
-    getData(pageNow) {
+    getData(pageNow = 1) {
       this.tableLoading = true;
-      import('./mockData.json').then((res) => {
-        // this.pagination.current = res.current;
-        // this.pagination.pageSize = res.size;
-        // this.pagination.total = res.total;
-        this.tableData = res.default;
-        this.tableLoading = false;
-      });
-    },
-    getUserList() {
-      import('../user/mockData.json').then((res) => {
-        this.userList = res.default.records;
-      });
+      departmentApi
+        .list({
+          pageSize: this.pagination.pageSize,
+          pageNow
+        })
+        .then((res) => {
+          this.pagination.current = res.current;
+          this.pagination.total = res.total;
+          this.tableData = res.list;
+          this.tableLoading = false;
+        });
     },
     handleAdd() {
       this.isAdd = true;
-      this.showEditModal = true;
+      this.isShowEdit = true;
       this.form = { ...initForm };
     },
     handleEdit(row) {
       console.log(row);
       this.isAdd = false;
-      this.showEditModal = true;
+      this.isShowEdit = true;
       this.form = { ...row };
     },
-    handleAuth(row) {
-      console.log(row);
-      this.showAuthModal = true;
-    },
     handleDel(row) {
-      this.$modal.confirm({
-        title: '提示',
-        content: () => <span>您确定要删除【{<span class="text-primary">{row.name}</span>}】吗？</span>,
-        okText: '确认',
-        cancelText: '取消',
-        onOk: () => {
-          this.$message.success('操作成功');
-        }
-      });
+      console.log(row);
+      this.$message.success('操作成功');
     },
-    handleSearch(key) {
-      console.log(key);
+    handleSearch(val) {
+      console.log(val);
+      this.getData(1);
     },
-    handlePageChange(pagination, filters, sorter) {
+    handleTableChange(pagination, filters, sorter) {
       this.pagination = pagination;
-      console.log(pagination, filters, sorter);
+      this.getData(pagination.current);
     },
-    handleOk() {}
+    handleOk() {
+      this.$refs.form.validate().then(() => {
+        this.$message.success('操作成功');
+        this.isShowEdit = false;
+      });
+    }
   }
 };
 </script>

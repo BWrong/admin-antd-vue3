@@ -1,6 +1,6 @@
 import { getToken } from '@/utils/token';
 import { setStorage, getStorage } from '@/utils/storage';
-import { Action, ActionContext, Store, useStore } from 'vuex';
+import { ActionTree, GetterTree, MutationTree } from 'vuex';
 
 /**
  * 获取管理用户信息
@@ -17,7 +17,7 @@ const state = {
   userinfo: {}
 };
 type TState = typeof state;
-const mutations = {
+const mutations: MutationTree<TState> = {
   SET_TOKEN(state: TState, token: string) {
     state.token = token;
   },
@@ -35,7 +35,7 @@ const mutations = {
     setStorage('userinfo', data);
   }
 };
-const getters = {
+const getters: GetterTree<TState, object> = {
   // TODO
   userinfo(state: TState) {
     if (state.userinfo) return state.userinfo;
@@ -47,9 +47,9 @@ const getters = {
     return {};
   }
 };
-const actions = {
+const actions: ActionTree<TState, object> = {
   // 更新用户信息
-  getUserinfo({ commit }: any) {
+  getUserinfo({ commit }) {
     let userInfo = getStorage('userinfo');
     commit('SET_USERINFO', userInfo);
     setStorage('userinfo', userInfo);

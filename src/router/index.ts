@@ -9,16 +9,6 @@ import asyncRoutes from './asyncRoutes';
 import { getPageTitle } from '@/utils';
 import { ganerAuthData } from '@bwrong/auth-tool';
 // import authApi from '@/api/auth';
-// 重写路由的push方法，解决同一路由多次跳转报错 message: "Navigating to current location (XXX) is not allowed"
-// const { push: routerPush, replace: routerReplace } = VueRouter.prototype;
-// VueRouter.prototype.push = function push(location, onResolve, onReject) {
-//   if (onResolve || onReject) return routerPush.call(this, location, onResolve, onReject);
-//   return routerPush.call(this, location).catch((err) => err);
-// };
-// VueRouter.prototype.replace = function replace(location, onResolve, onReject) {
-//   if (onResolve || onReject) return routerReplace.call(this, location, onResolve, onReject);
-//   return routerReplace.call(this, location).catch((err) => err);
-// };
 let routerLoaded = false; // 动态路由是否已加载
 const createRouterFactory = () => {
   routerLoaded = false; // 重置状态
@@ -33,7 +23,7 @@ router.beforeEach(async (to, from) => {
   // 进度条
   NProgress.start();
   // 设置页面标题
-  // document.title = getPageTitle(to.meta.title);
+  document.title = getPageTitle(to.meta.title as string);
   const token = get(config.tokenKey);
   // 其实路由拦截后所做跳转仅有一下几种情况：
   // 1.已登录时跳转到登录页（非登出的情况）需要重定向到根路径

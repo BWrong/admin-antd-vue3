@@ -1,13 +1,14 @@
 <template>
-  <div class="logo" @click="handleClick">
+  <div class="logo" @click="$router.push('/')">
     <img class="logo-pic" src="../../assets/images/logo.png" />
     <span class="logo-txt" v-if="!mini">{{ appTitle }}</span>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import config from '@/config';
-export default {
+export default defineComponent({
   props: {
     mini: {
       type: Boolean,
@@ -18,13 +19,8 @@ export default {
     return {
       appTitle: config.appTitle
     };
-  },
-  methods: {
-    handleClick() {
-      this.$router.push('/');
-    }
   }
-};
+});
 </script>
 
 <style lang="less" scoped>

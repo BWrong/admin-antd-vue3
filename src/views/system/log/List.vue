@@ -8,7 +8,15 @@
       <a-input-search class="space" placeholder="请输入关键字" style="width: 300px" enter-button="搜索" allow-clear></a-input-search>
     </a-card>
     <a-card>
-      <a-table :columns="columns" :data-source="tableData" size="small" rowKey="id" :pagination="pagination" @change="handlePageChange">
+      <a-table
+        :columns="columns"
+        :data-source="tableData"
+        size="small"
+        rowKey="id"
+        :pagination="pagination"
+        @change="handleTableChange"
+        :row-selection="{ selectedRowKeys: select, onChange: onSelectChange }"
+      >
         <template #type="type">
           <span>
             {{ logType[type] }}
@@ -16,7 +24,7 @@
         </template>
         <template #action="row">
           <a-space>
-            <a-button @click="handleDetail(row)" type="link" size="small">详情</a-button>
+            <a-button @click="handleDetail(row)" size="small">详情</a-button>
           </a-space>
         </template>
       </a-table>
@@ -45,11 +53,11 @@ export default {
     const columns = [
       { title: '序号', customRender: (value, row, index) => `${ganerTableIndex(this.pagination.current, this.pagination.pageSize, index)}`, width: 50 },
       { title: '动作', dataIndex: 'name', ellipsis: true },
-      { title: '类型', dataIndex: 'type', scopedSlots: { customRender: 'type' } },
+      { title: '类型', dataIndex: 'type', slots: { customRender: 'type' } },
       { title: '用户名', dataIndex: 'userName', ellipsis: true },
       { title: '地址', dataIndex: 'path', ellipsis: true },
       { title: '时间', dataIndex: 'createTime', ellipsis: true },
-      { title: '操作', scopedSlots: { customRender: 'action' }, align: 'center', width: 130 }
+      { title: '操作', slots: { customRender: 'action' }, align: 'center', width: 130 }
     ];
     return {
       logType: LOG_TYPE,
@@ -60,7 +68,7 @@ export default {
         ...pagination,
         pageSize: 20
       },
-      searchValue: '',
+      searchWord: '',
       showDetailModal: false,
       detail: {}
     };
@@ -84,7 +92,7 @@ export default {
       this.detail = row;
       this.showDetailModal = true;
     },
-    handlePageChange(pagination, filters, sorter) {
+    handleTableChange(pagination, filters, sorter) {
       this.pagination = pagination;
       console.log(pagination, filters, sorter);
     }

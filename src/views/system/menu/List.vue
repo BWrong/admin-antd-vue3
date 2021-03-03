@@ -1,45 +1,33 @@
 <template>
   <div class="page-wrap">
     <a-card class="page-control">
-      <a-space>
-        <a-button type="primary" icon="plus" ghost @click="handleAdd">新建 </a-button>
-      </a-space>
+      <a-button type="primary" ghost @click="handleAdd"> <PlusOutlined /> 新建 </a-button>
     </a-card>
     <a-card>
-      <a-table :columns="columns" :data-source="tableData" size="small" rowKey="id" :pagination="pagination" @change="handlePageChange">
-        <template #type="type">
-          <a-tag :color="type === '0' ? '' : 'orange'">{{ type === '0' ? '菜单' : '按钮' }}</a-tag>
+      <basis-table :columns="columns" :data-source="tableData" :pagination="pagination" @change="handleTableChange" :loading="tableLoading">
+        <template #type="{ text: type }">
+          <a-tag :color="type === 0 ? '' : 'orange'">{{ type === 0 ? '菜单' : '按钮' }}</a-tag>
         </template>
-        <template #icon="icon">
-          <a-icon :type="icon" />
+        <template #icon="{ text: icon }">
+          {{ icon }}
         </template>
-        <template #action="row">
-          <div>
-            <a-button @click="handleEdit(row)" type="link" size="small">编辑</a-button>
-            <a-divider type="vertical" class="divider-primary" />
-            <a-button @click="handleAddChild(row)" type="link" size="small">添加子项</a-button>
-            <a-divider type="vertical" class="divider-primary" />
-            <a-button @click="handleHide(row, true)" type="link" v-if="!row.hide" size="small">隐藏</a-button>
-            <a-button @click="handleHide(row, false)" type="link" v-else size="small">显示</a-button>
-            <a-divider type="vertical" class="divider-primary" />
-            <a-button @click="handleDel(row)" type="link" size="small">删除</a-button>
-          </div>
+        <template #action="{ record }">
+          <a-space>
+            <a-button @click="handleEdit(record)" type="primary" size="small">编辑</a-button>
+            <a-button @click="handleAddChild(record)" size="small">添加子项</a-button>
+            <a-button @click="handleHide(record, true)" type="danger" ghost v-if="!record.hide" size="small">隐藏</a-button>
+            <a-button @click="handleHide(record, false)" v-else size="small">显示</a-button>
+            <delete-button @confirm="handleDel(record)" :title="record.name" />
+          </a-space>
         </template>
-      </a-table>
+      </basis-table>
     </a-card>
     <!-- 新增编辑 -->
-    <a-modal
-      v-model:visible="showEditModal"
-      :title="isAdd ? '新建' : '编辑'"
-      :keyboard="false"
-      :maskClosable="false"
-      @ok="handleOk"
-      :afterClose="() => $refs.ruleForm.resetFields()"
-    >
-      <a-form ref="ruleForm" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
+    <a-modal v-model:visible="isShowEdit" :title="isAdd ? '新建' : '编辑'" :keyboard="false" :maskClosable="false" @ok="handleOk" :afterClose="() => $refs.form.resetFields()">
+      <a-form ref="form" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
         <a-form-item has-feedback label="类型" name="type">
           <a-radio-group v-model:value="form.type">
-            <a-radio :value="key" v-for="(item, key) in menuType" :key="key">
+            <a-radio :value="Number(key)" v-for="(item, key) in menuType" :key="key">
               {{ item }}
             </a-radio>
           </a-radio-group>
@@ -53,7 +41,7 @@
         <a-form-item has-feedback label="权限标识" name="code">
           <a-input v-model:value="form.code" />
         </a-form-item>
-        <template v-if="form.type === '0'">
+        <template v-if="form.type === 0">
           <a-form-item has-feedback label="图标" name="icon">
             <a-input v-model:value="form.icon" readonly>
               <template #addonAfter>
@@ -83,23 +71,23 @@ import { getStorage } from '@/utils/storage';
 import { convertToTree } from '@/utils';
 import { RESOURCE_TYPE } from '@/config/dictionary';
 import IconPicker from '@/components/IconPicker';
-import { pagination } from '@/config';
 const initForm = {
   name: '',
   parentId: 0,
-  code: '',
+  permission: '',
   icon: '',
-  type: '0',
+  type: 0,
   priority: 0
 };
 export default {
+  inject: ['$pagination'],
   data() {
     const columns = [
       { title: '菜单名字', dataIndex: 'name', ellipsis: true },
-      { title: '权限标识', dataIndex: 'code', ellipsis: true },
-      { title: '图标', dataIndex: 'icon', scopedSlots: { customRender: 'icon' } },
-      { title: '类型', dataIndex: 'type', scopedSlots: { customRender: 'type' } },
-      { title: '操作', scopedSlots: { customRender: 'action' }, align: 'center', width: 360 }
+      { title: '权限标识', dataIndex: 'permission', ellipsis: true },
+      { title: '图标', dataIndex: 'icon', slots: { customRender: 'icon' } },
+      { title: '类型', dataIndex: 'type', slots: { customRender: 'type' } },
+      { title: '操作', slots: { customRender: 'action' }, align: 'center', width: 360 }
     ];
     const menu = getStorage('menus');
     const menuTree = convertToTree({ data: menu, pid: 0 });
@@ -108,16 +96,15 @@ export default {
       tableLoading: false,
       columns: Object.freeze(columns),
       pagination: {
-        ...pagination,
-        pageSize: 20
+        ...this.$pagination
       },
-      showEditModal: false,
+      isShowEdit: false,
       isAdd: true,
       menuType: RESOURCE_TYPE,
       form: {},
       rules: {
         name: [{ required: true, trigger: 'blur', message: '请输入菜单名称' }],
-        code: [{ required: true, trigger: 'blur', message: '请输入菜单权限标识' }]
+        permission: [{ required: true, trigger: 'blur', message: '请输入菜单权限标识' }]
       }
     };
   },
@@ -127,18 +114,18 @@ export default {
   methods: {
     handleAdd() {
       this.isAdd = true;
-      this.showEditModal = true;
+      this.isShowEdit = true;
       this.form = { ...initForm };
     },
     handleAddChild(row) {
       this.isAdd = true;
-      this.showEditModal = true;
+      this.isShowEdit = true;
       this.form = { ...initForm, parentId: row.id };
     },
     handleEdit(row) {
       console.log(row);
       this.isAdd = false;
-      this.showEditModal = true;
+      this.isShowEdit = true;
       this.form = { ...row };
     },
     handleHide(row, status) {
@@ -147,32 +134,21 @@ export default {
       this.$message.success('操作成功');
     },
     handleDel(row) {
-      this.$modal.confirm({
-        title: '提示',
-        content: () => <span>您确定要删除【{<span class="text-primary">{row.name}</span>}】吗？</span>,
-        okText: '确认',
-        cancelText: '取消',
-        onOk: () => {
-          this.$message.success('操作成功');
-        }
-      });
+      console.log(row);
+      this.$message.success('操作成功');
     },
-    handlePageChange(pagination, filters, sorter) {
+    handleTableChange(pagination, filters, sorter) {
       this.pagination = pagination;
-      console.log(pagination, filters, sorter);
+      this.getData(pagination.current);
     },
     handleOk() {
-      this.showEditModal = false;
-      this.$message.success('操作成功');
+      this.$refs.form.validate().then(() => {
+        this.$message.success('操作成功');
+        this.isShowEdit = false;
+      });
     }
   }
 };
 </script>
 
-<style lang="less" scoped>
-.menu-icon {
-  width: 400px;
-  height: 400px;
-  overflow-y: auto;
-}
-</style>
+<style lang="less" scoped></style>

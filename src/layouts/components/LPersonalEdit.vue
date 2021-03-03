@@ -1,6 +1,6 @@
 <template>
   <a-modal title="修改密码" :visible="visible" :confirm-loading="confirmLoading" @cancel="handleCancel" :keyboard="false" :maskClosable="false">
-    <a-form class="form" :model="updatePwdForm" :rules="rules" @keydown.enter="updatePsd('updatePsdForm')" ref="updatePsdForm" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
+    <a-form class="form" :model="updatePwdForm" :rules="rules" @keydown.enter="updatePsd('updatePsdForm')" ref="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
       <a-form-item name="oldPassword" label="原始密码">
         <a-input auto-complete="off" placeholder="请输入原始密码" type="password" v-model:value="updatePwdForm.oldPassword"></a-input>
       </a-form-item>
@@ -21,10 +21,10 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
 import { CheckOutlined } from '@ant-design/icons-vue';
 import { cryptoPassword } from '@/utils';
-import AuthApi from '@/api/auth';
-export default {
+export default defineComponent({
   components: {
     CheckOutlined
   },
@@ -92,8 +92,8 @@ export default {
     handleCancel() {
       this.$emit('changeVisiblePsd', false);
     },
-    updatePsd(formName) {
-      this.$refs[formName]
+    updatePsd() {
+      this.$refs.form
         .validate()
         .then(() => {
           this.loading = true;
@@ -103,9 +103,8 @@ export default {
             newPassword: cryptoPassword(newPassword),
             reNewPassword: cryptoPassword(reNewPassword)
           };
-          AuthApi.updatePsd(params).then((res) => {
-            console.log(res, 333);
-          });
+          console.log(params);
+          this.$message.success('操作成功！');
         })
         .catch((err) => {
           console.error(err);
@@ -113,7 +112,7 @@ export default {
         });
     }
   }
-};
+});
 </script>
 
 <style lang="less" scoped></style>
