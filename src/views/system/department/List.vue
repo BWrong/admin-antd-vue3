@@ -1,11 +1,10 @@
 <template>
   <div class="page-wrap">
     <a-card class="page-control">
-      <!-- <a-input v-model:value="searchValue" placeholder="请输入部门名称..." allowClear class="vertical-top" style="width: 200px" />
-      <a-button class="space" icon="search">搜索</a-button>
-      <a-button class="space" icon="reload">重置</a-button> -->
-      <a-button type="primary" icon="plus" ghost @click="handleAdd">新建 </a-button>
-      <a-button class="space" type="primary" icon="medicine-box" ghost>数据修复 </a-button>
+      <a-space>
+        <a-button type="primary" icon="plus" ghost @click="handleAdd">新建 </a-button>
+        <a-button class="space" type="primary" icon="medicine-box" ghost>数据修复 </a-button>
+      </a-space>
       <a-input-search class="space fr" placeholder="请输入部门名称" style="width: 300px" enter-button="搜索" allow-clear @search="handleSearch"></a-input-search>
     </a-card>
     <a-card>

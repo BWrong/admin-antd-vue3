@@ -5,19 +5,15 @@ import router from './router';
 import store from './store';
 import plugins from '@/plugins';
 import directives from '@/directives';
+import components from '@/components';
 import config from '@/config';
-import DeleteButton from '@/components/DeleteButton/index.vue';
-import SearchButton from '@/components/SearchButton/index.vue';
-import BasisTable from '@/components/BasisTable/index.vue';
 const app = createApp(App);
 app.use(router);
 app.use(store);
 app.use(plugins); // 注册插件
 app.use(directives); // 注册指令
 // 注册全局组件
-app.component('DeleteButton', DeleteButton);
-app.component('BasisTable', BasisTable);
-app.component('SearchButton', SearchButton);
+app.use(components);
 // 注入分页配置
 app.provide('$pagination', config.pagination);
 app.mount('#app');
