@@ -21,12 +21,9 @@ app.component('SearchButton', SearchButton);
 // 注入分页配置
 app.provide('$pagination', config.pagination);
 app.mount('#app');
-// 分环境处理
-if (process.env.NODE_ENV === 'development') {
-  if ('__VUE_DEVTOOLS_GLOBAL_HOOK__' in window) {
-    // 这里__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue赋值一个createApp实例
-    (window as any).__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor;
-  }
+// 开启dev-tools
+if (process.env.NODE_ENV === 'development' && '__VUE_DEVTOOLS_GLOBAL_HOOK__' in window) {
+  (window as any).__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor;
 }
 
 export default app;
