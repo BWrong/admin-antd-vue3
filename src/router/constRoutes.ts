@@ -8,9 +8,9 @@ const routes: RouteRecordRaw[] = [
     meta: {}
   },
   {
-    path: '/err',
-    name: 'err',
-    component: () => import('@/views/err/Index.vue'),
+    path: '/error',
+    name: 'error',
+    component: () => import('@/views/error/Index.vue'),
     meta: {}
   }
 ];
@@ -19,5 +19,5 @@ export default routes;
 export const noMatchRoute = {
   path: '/:pathMatch(.*)*',
   name: 'notFound',
-  redirect: '/err'
+  redirect: '/error'
 };

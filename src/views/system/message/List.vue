@@ -100,8 +100,8 @@ export default {
       pagination: {
         ...this.$pagination
       },
-      searchType: '',
-      searchStatus: '',
+      searchType: null,
+      searchStatus: null,
       searchTimes: [],
       selectedRowKeys: [],
       isShowDetail: false,

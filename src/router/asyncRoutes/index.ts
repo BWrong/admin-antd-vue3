@@ -14,7 +14,6 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/home/Index.vue'),
         meta: {
           title: '首页'
-          // permission: 'home'
         }
       }
     ]

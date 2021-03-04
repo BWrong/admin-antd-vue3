@@ -70,7 +70,7 @@ export default defineComponent({
   },
   data() {
     return {
-      count: getStorage('count') || 0,
+      count: 12,
       visiblePsd: false,
       drawerVisible: false
     };

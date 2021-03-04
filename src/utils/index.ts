@@ -3,20 +3,26 @@
  * @Github: https://github.com/BWrong
  * @Date: 2020-04-07 10:30:49
  * @LastEditors: Bwrong
- * @LastEditTime: 2021-03-04 10:22:09
+ * @LastEditTime: 2021-03-04 17:34:34
  */
 import dayjs from '@/plugins/dayjs';
 import Utf8 from 'crypto-js/enc-utf8';
 import Base64 from 'crypto-js/enc-base64';
-import config from '@/config';
 import { SEX, MESSAGE_STATUS, MESSAGE_TYPE } from '@/enums';
-/**
- * 拼接title
- * @param {*} pageTitle
- */
-export function getPageTitle(pageTitle: string) {
-  const { appTitle } = config;
-  return pageTitle ? `${pageTitle} - ${appTitle}` : `${appTitle}`;
+
+// 性别
+export function formatSex<T extends keyof typeof SEX>(value: T) {
+  return SEX[value] || '未知';
+}
+
+// 消息状态
+export function messageStatus<T extends keyof typeof MESSAGE_STATUS>(value: T) {
+  return MESSAGE_STATUS[value] || '';
+}
+
+// 消息类型
+export function messageType<T extends keyof typeof MESSAGE_TYPE>(value: T) {
+  return MESSAGE_TYPE[value] || '';
 }
 
 /**
@@ -28,24 +34,9 @@ export function formatTime(time: number | string | Date = new Date(), type = 'YY
   return time ? dayjs(Number(time)).format(type) : '';
 }
 
-// 性别
-export function formatSex<T extends keyof typeof SEX>(value: T) {
-  return SEX[value] || '未知';
-}
-
 // 转换成浮点数
 export function toFixed(val: number | string, dig = 2) {
   return Number(val).toFixed(dig);
-}
-
-// 消息状态
-export function messageStatus<T extends keyof typeof MESSAGE_STATUS>(value: T) {
-  return MESSAGE_STATUS[value] || '';
-}
-
-// 消息类型
-export function messageType<T extends keyof typeof MESSAGE_TYPE>(value: T) {
-  return MESSAGE_TYPE[value] || '';
 }
 
 /**

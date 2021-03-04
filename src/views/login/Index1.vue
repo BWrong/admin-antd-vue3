@@ -1,51 +1,40 @@
 <template>
   <div class="login-page">
-    <div class="title r-nw-fs-c">
-      <img class="block" src="../../assets/images/logo.png" />
-      <h1 style="margin-left: 15px; font-weight: bold">{{ appTitle }}</h1>
-    </div>
-    <div class="bg-form">
-      <a-carousel effect="fade" autoplay>
-        <img class="bg" src="../../assets/images/login/login-bg1.jpg" />
-        <img class="bg" src="../../assets/images/login/login-bg2.jpg" />
-      </a-carousel>
-      <div class="form-bg">
-        <h2 style="text-align: center; letter-spacing: 1px; margin-bottom: 20px; color: #fff" clss="form-title">用户登录</h2>
-        <a-form :model="loginInfo" :rules="rules" @keydown.enter="login('loginForm')" class="form" :wrapperCol="{ span: 24 }" ref="loginForm">
-          <a-form-item name="username">
-            <a-input auto-complete="off" placeholder="账号" type="text" v-model:value="loginInfo.username">
+    <login-background></login-background>
+    <a-card class="login-form">
+      <h3>{{ appTitle }}</h3>
+      <a-form :model="loginInfo" :rules="rules" @keydown.enter="handleLogin" class="form" :wrapperCol="{ span: 24 }" ref="loginForm">
+        <a-form-item name="username">
+          <a-input placeholder="账号" type="text" v-model:value="loginInfo.username">
+            <template #prefix>
+              <user-outlined type="user" />
+            </template>
+          </a-input>
+        </a-form-item>
+        <a-form-item name="password">
+          <a-input auto-complete="off" placeholder="密码" type="password" v-model:value="loginInfo.password">
+            <template #prefix>
+              <LockOutlined />
+            </template>
+          </a-input>
+        </a-form-item>
+        <a-form-item name="code">
+          <div class="r-nw-sb-c">
+            <a-input style="width: 55%" auto-complete="off" placeholder="验证码" v-model:value="loginInfo.code">
               <template #prefix>
-                <user-outlined type="user" />
+                <MobileOutlined />
               </template>
             </a-input>
-          </a-form-item>
-          <a-form-item name="password">
-            <a-input auto-complete="off" placeholder="密码" type="password" v-model:value="loginInfo.password">
-              <template #prefix>
-                <LockOutlined />
-              </template>
-            </a-input>
-          </a-form-item>
-          <a-form-item name="code">
-            <div class="r-nw-sb-c">
-              <a-input style="width: 55%" auto-complete="off" placeholder="验证码" v-model:value="loginInfo.code">
-                <template #prefix>
-                  <MobileOutlined />
-                </template>
-              </a-input>
-              <img width="35%;" height="32px" @click="changeCode()" :src="codeSrc" />
-            </div>
-          </a-form-item>
-          <a-form-item style="width: 100%">
-            <a-button class="login" :loading="loading" @click.prevent="login('loginForm')" type="primary">登 录</a-button>
-          </a-form-item>
-        </a-form>
-      </div>
-    </div>
-    <div class="bottom r-nw-c-c">
-      <span @click="isShowModal = true"
-        >版本号: <span class="version">{{ appTitle }} {{ version }}</span></span
-      >
+            <img width="35%;" height="32px" @click="changeCode()" :src="codeSrc" />
+          </div>
+        </a-form-item>
+        <a-form-item style="width: 100%">
+          <a-button class="login" :loading="loading" @click.prevent="handleLogin" type="primary">登 录</a-button>
+        </a-form-item>
+      </a-form>
+    </a-card>
+    <div class="version" @click="isShowModal = true">
+      版本号: <span>{{ appTitle }} {{ version }}</span>
     </div>
     <a-modal v-model:visible="isShowModal" title="更新日志" :footer="null" :width="800">
       <update-log></update-log>
@@ -60,9 +49,11 @@ import { setStorage } from '@/utils/storage';
 import config from '@/config';
 import AuthApi from '@/api/auth';
 import UpdateLog from './components/UpdateLog.vue';
+import LoginBackground from './components/LoginBackground.vue';
 import { cryptoPassword } from '@/utils';
 export default {
   components: {
+    LoginBackground,
     UpdateLog,
     UserOutlined,
     LockOutlined,
@@ -123,18 +114,17 @@ export default {
       this.codeSrc = `${config.baseUrl}/code/` + str;
     },
     // 登录
-    login(formName) {
-      this.$refs[formName]
+    handleLogin(formName) {
+      this.$refs.loginForm
         .validate()
         .then(() => {
           this.loading = true;
           let { username, password, code } = this.loginInfo;
-          let params = {
+          AuthApi.login({
             username,
             password: cryptoPassword(password),
             code
-          };
-          AuthApi.login(params)
+          })
             .then((res) => {
               this.$message.success('登录成功！');
               set(config.tokenKey, res.access_token);
@@ -178,53 +168,26 @@ export default {
   }
 };
 </script>
-
 <style lang="less" scoped>
 .login-page {
-  // width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   height: 100vh;
-  .title {
-    margin-left: 45px;
-    line-height: 60px;
-    .block {
-      width: 30px;
-      height: 30px;
-    }
-  }
-  .bg-form {
-    position: relative;
-    .form-bg {
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.4);
-      position: absolute;
-      top: 24%;
-      right: 88px;
-      z-index: 999;
-      border-radius: 6px;
-      .form {
-        width: 320px;
-        .login {
-          margin-top: 10px;
-          width: 100%;
-          height: 40px;
-        }
-      }
-    }
-    .bg {
-      width: 100%;
-      height: 75vh;
-      min-height: 600px;
-    }
-  }
-  .bottom {
-    height: 80px;
-    font-weight: 500;
-    font-size: 16px;
-    cursor: pointer;
-    .version {
-      padding-left: 10px;
-      color: #40a9ff;
-    }
+  width: 100vw;
+  position: relative;
+}
+.login-form {
+  width: 360px;
+  text-align: center;
+}
+.version {
+  position: absolute;
+  bottom: 10px;
+  z-index: 2;
+  span {
+    color: @primary-color;
   }
 }
 </style>
