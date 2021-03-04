@@ -142,7 +142,7 @@ export default {
       this.searchTimes = [];
       this.getData(1);
     },
-    handleTableChange(pagination, filters, sorter) {
+    handleTableChange(pagination) {
       this.pagination = pagination;
       this.getData(pagination.current);
     },
@@ -157,16 +157,14 @@ export default {
     },
     // 全部已读
     handleAllRead() {
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
-      let that = this;
       Modal.confirm({
         title: '提示',
         content: '确定把所有未读消息标记为已读吗?',
         okText: '确认',
         cancelText: '取消',
-        onOk() {
-          that.$message.success('操作成功');
-          that.selectedRowKeys = [];
+        onOk: () => {
+          this.$message.success('操作成功');
+          this.selectedRowKeys = [];
         }
       });
     },
@@ -175,16 +173,14 @@ export default {
       if (this.selectedRowKeys.length === 0) {
         this.$message.error('未选择消息');
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        let that = this;
         Modal.confirm({
           title: '提示',
           content: '确定把选择项标记为已读吗?',
           okText: '确认',
           cancelText: '取消',
           onOk() {
-            that.$message.success('操作成功');
-            that.selectedRowKeys = [];
+            this.$message.success('操作成功');
+            this.selectedRowKeys = [];
           }
         });
       }

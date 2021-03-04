@@ -22,6 +22,7 @@ module.exports = {
     '@typescript-eslint/ban-types': 0,
     '@typescript-eslint/no-use-before-define': 1,
     '@typescript-eslint/class-name-casing': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
     'prettier/prettier': [
       'off',
       {

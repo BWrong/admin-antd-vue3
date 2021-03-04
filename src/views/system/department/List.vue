@@ -103,7 +103,7 @@ export default {
       console.log(val);
       this.getData(1);
     },
-    handleTableChange(pagination, filters, sorter) {
+    handleTableChange(pagination) {
       this.pagination = pagination;
       this.getData(pagination.current);
     },

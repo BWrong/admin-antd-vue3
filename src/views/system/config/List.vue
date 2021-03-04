@@ -145,13 +145,14 @@ export default {
       this.form = { ...row };
     },
     handleDel(row) {
+      console.log(row);
       this.$message.success('操作成功');
     },
     handleSearch(val) {
       console.log(val);
       this.getData(1);
     },
-    handleTableChange(pagination, filters, sorter) {
+    handleTableChange(pagination) {
       this.pagination = pagination;
       this.getData(pagination.current);
     },

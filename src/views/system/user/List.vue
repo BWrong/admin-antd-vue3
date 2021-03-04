@@ -135,7 +135,7 @@ export default {
         title: '状态',
         dataIndex: 'status',
         width: 100,
-        customRender: ({ text, record }) => {
+        customRender: ({ record }) => {
           if (record.delFlag == '1') {
             return <a-badge status="error" text="已删除" />;
           } else {
@@ -271,10 +271,12 @@ export default {
       });
     },
     handleSetRole(row) {
+      console.log(row);
       this.showRoleModal = true;
       this.$message.success('操作成功');
     },
     handleDel(row) {
+      console.log(row);
       this.$message.success('操作成功');
     },
     handleTableChange(pagination, filters, sorter) {

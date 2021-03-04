@@ -137,7 +137,7 @@ export default {
       console.log(row);
       this.$message.success('操作成功');
     },
-    handleTableChange(pagination, filters, sorter) {
+    handleTableChange(pagination) {
       this.pagination = pagination;
       this.getData(pagination.current);
     },

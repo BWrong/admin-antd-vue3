@@ -17,6 +17,6 @@ app.provide('$pagination', config.pagination); // 注入分页配置
 app.mount('#app');
 // 开启dev-tools
 if (process.env.NODE_ENV === 'development' && '__VUE_DEVTOOLS_GLOBAL_HOOK__' in window) {
-  (window as any).__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor;
+  window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor;
 }
 export default app;
