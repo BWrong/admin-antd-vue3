@@ -47,9 +47,8 @@ router.beforeEach(async (to, from) => {
   const allowRoutes = _ganerRoutesAndMenus(asyncRoutes, menus);
   // const allowRoutes:any[] = asyncRoutes; // 暂时跳过权限检查
   allowRoutes.push(noMatchRoute);
-  console.log(allowRoutes);
   // 未加载则动态加载
-  allowRoutes.map((item) => router.addRoute(item));
+  allowRoutes.map(router.addRoute);
   routerLoaded = true;
   return { ...to, replace: true };
 });

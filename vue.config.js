@@ -45,7 +45,8 @@ module.exports = {
       // 数据mock
       IS_MOCK &&
         mockServer(app, resolve('./mock/'), {
-          prefix: VUE_APP_API_PREFIX
+          prefix: VUE_APP_API_PREFIX,
+          delay: 3000
         });
     },
     proxy: {
@@ -141,9 +142,7 @@ module.exports = {
     sourceMap: !IS_PRODUCTION,
     loaderOptions: {
       less: {
-        additionalData: `
-          @import "@/assets/styles/_variable.less";
-          @import "@/assets/styles/_mixin.less";`,
+        additionalData: '@import "@/assets/styles/_mixin.less";',
         lessOptions: {
           javascriptEnabled: true,
           modifyVars: {
