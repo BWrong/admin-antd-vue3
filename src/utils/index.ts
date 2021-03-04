@@ -3,7 +3,7 @@
  * @Github: https://github.com/BWrong
  * @Date: 2020-04-07 10:30:49
  * @LastEditors: Bwrong
- * @LastEditTime: 2021-03-03 18:00:05
+ * @LastEditTime: 2021-03-04 00:38:14
  */
 import dayjs from '@/plugins/dayjs';
 import Utf8 from 'crypto-js/enc-utf8';
@@ -71,7 +71,6 @@ export function getQuery(url: string) {
  */
 export function cryptoPassword(password: string, cryptoKey?: string) {
   return Base64.stringify(Utf8.parse(`${cryptoKey}${password}`));
-  // return md5(`${cryptoKey}${password}`).toString();
 }
 
 /**
@@ -108,7 +107,14 @@ export function checkIsVideo(mime: string, types = ['video/mp4'], msg = '上传�
  * @param {*} pidName    父级标识key
  * @param {*} idName     id标识key
  */
-export function convertToTree({ data, pid = 0, children = 'children', pidName = 'parentId', idName = 'id' }: any) {
+interface _ITreeData {
+  data: any[];
+  pid?: number | string;
+  children?: string;
+  pidName?: string;
+  idName?: string;
+}
+export function convertToTree({ data, pid = 0, children = 'children', pidName = 'parentId', idName = 'id' }: _ITreeData) {
   let arr: any[] = [];
   data.map((item: any) => {
     if (item[pidName] === pid) {

@@ -5,14 +5,14 @@
         <a-button type="primary" ghost @click="handleAllRead"><CheckOutlined />全部已读</a-button>
         <a-button type="primary" ghost @click="handleBatchRead"><CheckSquareOutlined />批量已读</a-button>
       </a-space>
-      <a-space class="fr text-right">
-        <a-select placeholder="消息类型(可选)" style="width: 200px" v-model:value="searchType">
-          <a-select-option v-for="(item, key) in messageType" :key="key" :value="item">{{ item }}</a-select-option>
+      <a-space class="fr">
+        <a-select placeholder="消息类型(可选)" style="width: 200px" v-model:value="searchType" allowClear>
+          <a-select-option v-for="(item, key) in messageType" :key="key" :value="key">{{ item }}</a-select-option>
         </a-select>
-        <a-select placeholder="消息状态(可选)" style="width: 200px" v-model:value="searchStatus">
-          <a-select-option v-for="(item, key) in messageStatus" :key="key" :value="item">{{ item }}</a-select-option>
+        <a-select placeholder="消息状态(可选)" style="width: 200px" v-model:value="searchStatus" allowClear>
+          <a-select-option v-for="(item, key) in messageStatus" :key="key" :value="key">{{ item }}</a-select-option>
         </a-select>
-        <a-range-picker show-time format="YYYY-MM-DD HH:mm:ss" @change="selectTimes" v-model:value="searchTimes"></a-range-picker>
+        <a-range-picker show-time format="YYYY-MM-DD HH:mm:ss" v-model:value="searchTimes" allowClear></a-range-picker>
         <a-button type="primary" @click="handleSearch">搜索</a-button>
         <a-button type="primary" ghost @click="handleReset">重置</a-button>
       </a-space>
@@ -23,6 +23,7 @@
           selectedRowKeys: selectedRowKeys,
           onChange: onSelectChange
         }"
+        show-index
         :columns="columns"
         :data-source="tableData"
         :pagination="pagination"
@@ -37,9 +38,9 @@
       </basis-table>
     </a-card>
     <a-modal title="消息详情" :visible="isShowDetail" @ok="handleOk" @cancel="handleCancel" :keyboard="false" :maskClosable="false">
-      <p>{{ row.content }}</p>
+      <p>{{ detail.content }}</p>
       <template #footer>
-        <a-button class="block-center" type="primary" @click="handleOk">已读</a-button>
+        <a-button class="block-center" type="primary" @click="handleOk"><CheckOutlined />已读</a-button>
       </template>
     </a-modal>
   </div>
@@ -49,21 +50,20 @@
 import { CheckOutlined, CheckSquareOutlined } from '@ant-design/icons-vue';
 import { Modal } from 'ant-design-vue';
 import messageApi from '@/api/system/message';
-import { messageStatus } from '@/utils';
 import { MESSAGE_TYPE, MESSAGE_STATUS } from '@/config/dictionary';
 export default {
   data() {
     const columns = [
       {
         title: '发送者',
-        width: '100px',
         dataIndex: 'sender',
-        ellipsis: true
+        width: '180px'
       },
       {
         title: '类型',
         dataIndex: 'type',
-        ellipsis: true
+        width: '180px',
+        customRender: ({ text }) => MESSAGE_TYPE[text]
       },
       {
         title: '内容',
@@ -74,22 +74,18 @@ export default {
         title: '状态',
         width: '100px',
         dataIndex: 'state',
-        ellipsis: true,
         align: 'center',
-        customRender: ({ text, record }) => {
-          const status = messageStatus(record.state);
-          return <a-badge status={status == '未读' ? 'warning' : status == '已读' ? 'processing' : 'warning'} text={status} />;
-        }
+        customRender: ({ text }) => <a-badge status={text == 1 ? 'warning' : 'processing'} text={MESSAGE_STATUS[text]} />
       },
       {
         title: '发送时间',
         dataIndex: 'createTime',
         align: 'center',
-        ellipsis: true
+        width: '220px'
       },
       {
         title: '操作',
-        width: '100px',
+        width: '200px',
         ellipsis: true,
         align: 'center',
         slots: { customRender: 'action' }
@@ -109,7 +105,7 @@ export default {
       searchTimes: [],
       selectedRowKeys: [],
       isShowDetail: false,
-      row: {}
+      detail: {}
     };
   },
   mounted() {
@@ -146,20 +142,13 @@ export default {
       this.searchTimes = [];
       this.getData(1);
     },
-    // 选择时间
-    selectTimes(data, values) {
-      this.searchTimes = data;
-      this.form.startTime = values[0];
-      this.form.endTime = values[1];
-    },
-
     handleTableChange(pagination, filters, sorter) {
       this.pagination = pagination;
       this.getData(pagination.current);
     },
     // 详情
     handleView(row) {
-      this.row = { ...row };
+      this.detail = { ...row };
       this.isShowDetail = true;
     },
     // 选择表格数据
@@ -176,11 +165,6 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk() {
-          // let params = {
-          //   messageIds: this.rowKeys,
-          //   receiver: getStorage('userinfo').username
-          // };
-          // console.log('params', params);
           that.$message.success('操作成功');
           that.selectedRowKeys = [];
         }
@@ -213,7 +197,7 @@ export default {
     // 取消
     handleCancel() {
       this.isShowDetail = false;
-      this.row = {};
+      this.detail = {};
     }
   }
 };

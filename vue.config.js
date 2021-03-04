@@ -63,7 +63,7 @@ module.exports = {
   configureWebpack: (config) => {
     config.plugins.push(
       // dayjs替换moment
-      new AntdDayjsWebpackPlugin()
+      new AntdDayjsWebpackPlugin({ preset: 'antdv3' })
     );
     if (IS_PRODUCTION) {
       config.plugins.push(
