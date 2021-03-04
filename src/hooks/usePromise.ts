@@ -3,6 +3,7 @@ interface _IOptions {
   autoRun?: boolean;
   params?: any;
 }
+
 export default (promiseFn: (runParams?: any) => Promise<any>, options: _IOptions = {}) => {
   let { autoRun = false, params = null } = options as _IOptions;
   let state = reactive({

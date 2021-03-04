@@ -22,7 +22,7 @@ import configApi from '@/api/system/config';
 export default defineComponent({
   setup() {
     let testApi = () => configApi.list({ a: 123 });
-    let { loading, data, error, run } = usePromise(testApi, { autoRun: true });
+    let { loading, data, error, run } = usePromise(testApi);
     return {
       loading,
       data,
