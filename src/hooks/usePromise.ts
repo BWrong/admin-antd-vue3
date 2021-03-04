@@ -14,7 +14,6 @@ export default (promiseFn: (runParams?: any) => Promise<any>, options: _IOptions
     state.loading = true;
     return promiseFn(runParams)
       .then((res) => {
-        console.log('res:', res);
         state.data = res;
       })
       .catch((error) => {
