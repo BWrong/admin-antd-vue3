@@ -46,7 +46,7 @@ module.exports = {
       IS_MOCK &&
         mockServer(app, resolve('./mock/'), {
           prefix: VUE_APP_API_PREFIX,
-          delay: 3000
+          delay: 1000
         });
     },
     proxy: {
