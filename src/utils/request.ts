@@ -4,38 +4,18 @@
  * @Last Modified by: wangwenbing
  * @Last Modified time: 2019-05-24 13:53:33
  */
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { message } from 'ant-design-vue';
 import Cookie from 'js-cookie';
 // import Qs from 'qs';
 import appConfig from '@/config';
+import { HTTP_CODE } from '@/enums/http';
 import auth from '@/api/auth';
 import { logout } from '@/router';
 import { getToken } from '@/utils/token';
 const { NODE_ENV, VUE_APP_API_HOST, VUE_APP_API_PREFIX } = process.env;
-const IS_PRODUCTION = NODE_ENV === 'production';
-const baseURL = IS_PRODUCTION ? VUE_APP_API_HOST : VUE_APP_API_PREFIX;
-// HTTP状态码
-const HTTP_CODE = {
-  400: '请求参数错误',
-  401: '未授权, 请重新登录',
-  403: '服务器拒绝本次访问',
-  404: '请求错误,未找到该资源',
-  405: '请求方法未允许',
-  408: '请求超时',
-  409: '请求发生冲突',
-  410: '请求的资源已删除',
-  413: '请求体过大，服务器无法处理',
-  414: '请求url过长',
-  415: '不支持的媒体类型',
-  429: '请求次数超过限制',
-  500: '服务器端内部错误',
-  501: '服务器不支持该请求中使用的方法',
-  502: '网络错误',
-  503: '服务不可用',
-  504: '网关超时',
-  505: 'HTTP版本不受支持'
-};
+const baseURL = NODE_ENV === 'production' ? VUE_APP_API_HOST : VUE_APP_API_PREFIX;
+
 let refreshDoing = false; // 刷新token加锁
 let reqCache = new Map(); // 请求暂存列表，列表中的请求会被取消
 const request = axios.create({
@@ -47,6 +27,7 @@ const request = axios.create({
     'Content-Type': 'application/json;charset=UTF-8'
   }
 });
+
 // axios request拦截器
 request.interceptors.request.use(
   (config) => {
@@ -55,31 +36,31 @@ request.interceptors.request.use(
     // 处理token
     const token = getToken();
     if (!token) return config;
-    config.headers['Authorization'] = `Bearer ${token}`;
-    // const tokenExpires = Cookie.get(appConfig.tokenExpiresKey);
+    config.headers['Authorization'] = `${appConfig.tokenPrefix} ${token}`;
+    const tokenExpires = Cookie.get(appConfig.tokenExpiresKey);
     //  token即将过期，刷新token
-    // if (Number(tokenExpires) <= Date.now() && !config._noRefresh && !refreshDoing) {
-    //   refreshDoing = true; // 加锁，防止重复刷新
-    //   const refreshToken = Cookie.get(appConfig.refreshTokenKey);
-    //   _handleRefreshToken(refreshToken).then(() => (refreshDoing = false));
-    // }
+    if (Number(tokenExpires) <= Date.now() && !config.isNotRefreshToken && !refreshDoing) {
+      refreshDoing = true; // 加锁，防止重复刷新
+      const refreshToken = Cookie.get(appConfig.refreshTokenKey);
+      _handleRefreshToken(refreshToken).then(() => (refreshDoing = false));
+    }
     return config;
   },
   (error) => Promise.reject(error)
 );
 // axios  respone拦截器，统一处理响应错误
 request.interceptors.response.use(
-  ({ config, data }) => {
+  ({ config, data }: AxiosResponse<IResponseData>) => {
     // 跳过拦截器
-    // if (config._noIntercept) {
-    //   return Promise.resolve(data);
-    // }
+    if (config.isNotIntercept) {
+      return Promise.resolve(data);
+    }
     // 增加延迟，相同请求不得在短时间内重复发送
     _removeRequest(reqCache, config);
     if (data.code === 200) {
-      // if (['post', 'delete', 'put'].includes(config.method) && !config._noTips) {
-      //   data.msg && message.success(data.msg);
-      // }
+      if (['post', 'delete', 'put'].includes(config?.method as string) && !config.isNotTips) {
+        data.msg && message.success(data.msg);
+      }
       return Promise.resolve(data.data);
     } else {
       const msg = data.msg; // 返回接口返回提示信息
@@ -87,7 +68,7 @@ request.interceptors.response.use(
       return Promise.reject(msg);
     }
   },
-  (error) => {
+  (error: AxiosError) => {
     message.destroy();
     if (axios.isCancel(error)) return Promise.reject(error);
     // 相同请求不得在短时间内重复发送
@@ -98,7 +79,7 @@ request.interceptors.response.use(
         message.error('登录失效，请重新登录');
         logout();
       } else {
-        const tips = error.response.data.msg || (HTTP_CODE as any)[error.response.status];
+        const tips = error.response.data.msg || HTTP_CODE[error.response.status];
         tips && message.error(tips);
       }
       return Promise.reject(error);
@@ -121,15 +102,15 @@ export const del = (url: string, data = {}, config = {}) => request({ method: 'd
  * 刷新token
  * @param {string} refreshToken
  */
-function _handleRefreshToken(refreshToken: string) {
+function _handleRefreshToken(refreshToken: string | undefined) {
   return new Promise((resolve, reject) => {
     auth
       .refreshToken({ refresh_token: refreshToken })
       .then((res: any) => {
         Cookie.set(appConfig.tokenKey, res.access_token);
         Cookie.set(appConfig.refreshTokenKey, res.refresh_token);
-        // Cookie.set(appConfig.tokenExpiresKey, Date.now() + res.data.expires_in * 1000 - appConfig.refreshAheadTime);
-        resolve(true);
+        Cookie.set(appConfig.tokenExpiresKey, ((Date.now() + res.data.expires_in * 1000 - appConfig.refreshAheadTime) as unknown) as string);
+        resolve(res);
       })
       .catch(reject);
   });

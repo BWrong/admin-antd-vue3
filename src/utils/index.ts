@@ -3,13 +3,13 @@
  * @Github: https://github.com/BWrong
  * @Date: 2020-04-07 10:30:49
  * @LastEditors: Bwrong
- * @LastEditTime: 2021-03-04 09:16:31
+ * @LastEditTime: 2021-03-04 10:22:09
  */
 import dayjs from '@/plugins/dayjs';
 import Utf8 from 'crypto-js/enc-utf8';
 import Base64 from 'crypto-js/enc-base64';
 import config from '@/config';
-import { SEX, MESSAGE_STATUS, MESSAGE_TYPE } from '@/config/dictionary';
+import { SEX, MESSAGE_STATUS, MESSAGE_TYPE } from '@/enums';
 /**
  * 拼接title
  * @param {*} pageTitle

@@ -1,6 +1,6 @@
-import { DirectiveBinding } from 'vue';
+import { DirectiveBinding, Directive } from 'vue';
 
-const debounce = {
+const debounce: Directive = {
   mounted(el: any, binding: DirectiveBinding) {
     let timer: number;
     el.addEventListener('keyup', () => {

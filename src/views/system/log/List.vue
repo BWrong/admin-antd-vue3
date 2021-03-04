@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { LOG_TYPE } from '@/config/dictionary';
+import { LOG_TYPE } from '@/enums/system';
 import logApi from '@/api/system/log';
 
 export default {

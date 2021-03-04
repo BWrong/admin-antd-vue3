@@ -69,7 +69,7 @@
 <script>
 import { getStorage } from '@/utils/storage';
 import { convertToTree } from '@/utils';
-import { RESOURCE_TYPE } from '@/config/dictionary';
+import { RESOURCE_TYPE } from '@/enums/system';
 import IconPicker from '@/components/IconPicker';
 const initForm = {
   name: '',

@@ -103,7 +103,7 @@
 <script>
 import { createVNode } from 'vue';
 import { LockOutlined, UnlockOutlined, ReloadOutlined, UserOutlined } from '@ant-design/icons-vue';
-import { USER_STATUS } from '@/config/dictionary';
+import { USER_STATUS } from '@/enums/user';
 import userApi from '@/api/system/user';
 import departmentApi from '@/api/system/department';
 import roleApi from '@/api/system/role';

@@ -20,9 +20,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/ban-types': 0,
-    '@typescript-eslint/camelcase': 1,
     '@typescript-eslint/no-use-before-define': 1,
-    '@typescript-eslint/interface-name-prefix': [1, { prefixWithI: 'always', allowUnderscorePrefix: true }],
     '@typescript-eslint/class-name-casing': 0,
     'prettier/prettier': [
       'off',

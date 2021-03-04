@@ -50,7 +50,7 @@
 import { CheckOutlined, CheckSquareOutlined } from '@ant-design/icons-vue';
 import { Modal } from 'ant-design-vue';
 import messageApi from '@/api/system/message';
-import { MESSAGE_TYPE, MESSAGE_STATUS } from '@/config/dictionary';
+import { MESSAGE_TYPE, MESSAGE_STATUS } from '@/enums/message';
 export default {
   data() {
     const columns = [
