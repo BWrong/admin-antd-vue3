@@ -2,7 +2,7 @@
   <a-layout class="layout">
     <a-layout-sider :theme="theme" v-model:collapsed="collapse" :trigger="null" collapsible breakpoint="lg" class="sider">
       <l-logo :mini="collapse" class="logo"></l-logo>
-      <l-sider :menus="menus" :theme="theme" v-model:collapse="collapse" :open-keys="openeds" :selected-keys="curtMenuKey"></l-sider>
+      <l-sider :menus="menus" :theme="theme" v-model:collapse="collapse"></l-sider>
     </a-layout-sider>
     <a-layout class="layout-main">
       <l-header v-model:collapse="collapse" :bread-crumb="parentMenus" />
@@ -20,8 +20,10 @@
     </a-layout>
   </a-layout>
 </template>
-<script>
-import { mapState } from 'vuex';
+<script lang="ts">
+import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 import LSider from '@/layouts/components/LSider.vue';
 import LLogo from '@/layouts/components/LLogo.vue';
 import LFooter from '@/layouts/components/LFooter.vue';
@@ -29,7 +31,6 @@ import LHeader from '@/layouts/components/LHeader.vue';
 import LBreadCrumb from '@/layouts/components/LBreadCrumb.vue';
 import { convertToTree } from '@/utils';
 import { getStorage } from '@/utils/storage';
-import router from '@/router';
 export default {
   name: 'default-layout',
   components: {
@@ -39,45 +40,24 @@ export default {
     LLogo,
     LBreadCrumb
   },
-  data() {
-    return {
-      menus: [],
-      collapse: false
-    };
-  },
-
-  computed: {
-    ...mapState({
-      theme: (state) => state.theme
-    }),
-    curtRoute() {
-      return this.$route;
-    },
-    curtMenuKey() {
-      return this.curtRoute.path ? [this.curtRoute.path] : [];
-    },
-    parentMenus() {
-      return this.curtRoute.matched
-        .filter((item) => item.meta?.name)
-        .map((item) => ({
-          icon: item.meta.icon,
-          title: item.meta.name,
-          url: item.path
-        }));
-    },
-    openeds() {
-      return this.collapse ? [] : this.parentMenus.map((item) => item.url);
-    }
-  },
-  created() {
+  setup() {
+    const store = useStore();
+    const { push } = useRouter();
+    const theme = computed(() => store.state.theme);
     let userInfo = getStorage('userinfo');
     if (userInfo) {
-      this.$store.commit('user/SET_USERINFO', userInfo);
+      store.commit('user/SET_USERINFO', userInfo);
     } else {
-      router.push('/login');
+      push('/login');
     }
     let menus = getStorage('menus') || [];
-    this.menus = convertToTree({ data: menus, pid: 0 });
+    menus = convertToTree({ data: menus, pid: 0 });
+    let collapse = ref(false);
+    return {
+      theme,
+      menus,
+      collapse
+    };
   }
 };
 </script>

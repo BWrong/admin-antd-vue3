@@ -44,7 +44,6 @@ import { Modal } from 'ant-design-vue';
 import { mapState } from 'vuex';
 import { HomeOutlined, FileOutlined, BellOutlined, UserOutlined, LogoutOutlined, ExclamationCircleOutlined, DownOutlined } from '@ant-design/icons-vue';
 import { logout } from '@/router';
-import { getStorage } from '@/utils/storage';
 import LPersonalEdit from './LPersonalEdit.vue';
 export default defineComponent({
   components: {
@@ -60,12 +59,6 @@ export default defineComponent({
     collapse: {
       type: Boolean,
       default: false
-    },
-    breadCrumb: {
-      type: Array,
-      default() {
-        return [];
-      }
     }
   },
   data() {

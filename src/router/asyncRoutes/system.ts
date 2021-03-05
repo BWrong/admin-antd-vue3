@@ -4,7 +4,7 @@ export default [
   {
     path: '/system',
     name: 'system',
-    redirect: '/system/department',
+    redirect: '/system/config',
     // component: () => import(/* webpackChunkName: "default-layout" */ '@/layouts/DefaultLayout.vue'),
     component: () => import(/* webpackChunkName: "vertical-layout" */ '@/layouts/VerticalLayout.vue'),
     meta: {
@@ -18,6 +18,16 @@ export default [
         component: () => import('@/views/system/config/List.vue'),
         meta: {
           permission: 'system/config'
+        }
+      },
+      {
+        path: '/system/config/edit',
+        name: 'config/edit',
+        component: () => import('@/views/system/config/Edit.vue'),
+        meta: {
+          activeMenu: '/system/config',
+          // hideBreadcrumb: true,
+          title: '编辑'
         }
       },
       // 菜单管理

@@ -7,6 +7,7 @@ const routes: RouteRecordRaw[] = [
     name: 'root',
     redirect: '/home',
     component: () => import('@/layouts/VerticalLayout.vue'),
+    alias: '/home',
     children: [
       {
         path: '/home',

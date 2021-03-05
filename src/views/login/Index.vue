@@ -168,7 +168,7 @@ export default {
         setStorage('userinfo', res.detail);
         setStorage('permissions', res.btnPermissions);
         // 存储返回的菜单
-        setStorage('menuList', res.menus);
+        setStorage('rawMenu', res.menus);
         this.$router.replace({
           path: this.redirect,
           query: this.getOtherQuery(this.$route.query)

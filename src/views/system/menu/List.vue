@@ -35,8 +35,8 @@
         <a-form-item has-feedback label="父级目录" name="parentId">
           <a-input v-model:value="form.parentId" />
         </a-form-item>
-        <a-form-item has-feedback :label="`${menuType[form.type]}名称`" name="name">
-          <a-input v-model:value="form.name" />
+        <a-form-item has-feedback :label="`${menuType[form.type]}名称`" name="title">
+          <a-input v-model:value="form.title" />
         </a-form-item>
         <a-form-item has-feedback label="权限标识" name="code">
           <a-input v-model:value="form.code" />
@@ -83,7 +83,7 @@ export default {
   inject: ['$pagination'],
   data() {
     const columns = [
-      { title: '菜单名字', dataIndex: 'name', ellipsis: true },
+      { title: '菜单名字', dataIndex: 'title', ellipsis: true },
       { title: '权限标识', dataIndex: 'permission', ellipsis: true },
       { title: '图标', dataIndex: 'icon', slots: { customRender: 'icon' } },
       { title: '类型', dataIndex: 'type', slots: { customRender: 'type' } },
@@ -103,7 +103,7 @@ export default {
       menuType: RESOURCE_TYPE,
       form: {},
       rules: {
-        name: [{ required: true, trigger: 'blur', message: '请输入菜单名称' }],
+        title: [{ required: true, trigger: 'blur', message: '请输入菜单名称' }],
         permission: [{ required: true, trigger: 'blur', message: '请输入菜单权限标识' }]
       }
     };

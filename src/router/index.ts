@@ -39,7 +39,7 @@ router.beforeEach(async (to) => {
 router.afterEach((to) => {
   NProgress.done();
   // 设置页面标题
-  document.title = to.meta.name ? `${to.meta.name} - ${config.appTitle}` : `${config.appTitle}`;
+  document.title = to.meta.title ? `${to.meta.title} - ${config.appTitle}` : `${config.appTitle}`;
 });
 
 // 获取路由
@@ -48,7 +48,7 @@ async function _getAllowRoutes(asyncRoutes: RouteRecordRaw[]) {
   //     setStorage('userinfo', res.body.sysUser);
   //     return res.menus;
   // });
-  let menus = getStorage('menuList') || [];
+  let menus = getStorage('rawMenu') || [];
   return _ganerRoutesAndMenus(asyncRoutes, menus);
 }
 /**

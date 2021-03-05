@@ -1,7 +1,7 @@
 <template>
   <a-modal :visible="show" title="授权" @cancel="handleCancel" @ok="handleOk" :keyboard="false" :maskClosable="false">
     <div class="auth-menu-wrap">
-      <a-tree v-model:checkedKeys="checkedKeys" checkable :tree-data="menus" :default-checked-keys="value" :replaceFields="{ children: 'children', title: 'name', key: 'id' }" />
+      <a-tree v-model:checkedKeys="checkedKeys" checkable :tree-data="menus" :default-checked-keys="value" :replaceFields="{ children: 'children', title: 'title', key: 'id' }" />
     </div>
   </a-modal>
 </template>

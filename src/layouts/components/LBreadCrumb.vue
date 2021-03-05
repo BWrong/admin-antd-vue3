@@ -1,37 +1,66 @@
 <template>
   <div class="breadcrumb-bar">
     <component class="trigger" :is="collapse ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'" @click="handleCollapse" />
-    <a-breadcrumb separator=">" class="breadcrumb">
-      <a-breadcrumb-item><router-link to="/">首页</router-link></a-breadcrumb-item>
-      <a-breadcrumb-item v-for="item in data" :key="item.id"
-        ><router-link :to="item.url">{{ item.title }}</router-link></a-breadcrumb-item
-      >
+    <!-- <a-breadcrumb :routes="parentRoutes" class="breadcrumb">
+      <template #itemRender="{ route, routes }">
+        <span v-if="routes.indexOf(route) === routes.length - 1">
+          {{ route.meta.title }}
+        </span>
+        <router-link v-else :to="route.path">
+          {{ route.meta.title }}
+        </router-link>
+      </template>
+    </a-breadcrumb> -->
+    <a-breadcrumb class="breadcrumb">
+      <a-breadcrumb-item v-for="item in parentRoutes" :key="item.path" :href="item.path">
+        <router-link :to="item.path">{{ item.meta.title }}</router-link>
+        <template #overlay v-if="item.children?.length">
+          <a-menu mode="inline">
+            <template v-for="subitem in item.children">
+              <a-menu-item :key="subitem.path" v-if="subitem.meta && subitem.meta && !subitem.meta.activeMenu">
+                <router-link :to="subitem.path">{{ subitem.meta.title }}</router-link>
+              </a-menu-item>
+            </template>
+          </a-menu>
+        </template>
+      </a-breadcrumb-item>
     </a-breadcrumb>
   </div>
 </template>
 <script lang="ts">
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
+import { RouteLocationMatched, useRoute, useRouter } from 'vue-router';
 export default defineComponent({
   components: {
     MenuFoldOutlined,
     MenuUnfoldOutlined
   },
   props: {
-    data: {
-      type: Array,
-      required: true
-    },
     collapse: {
       type: Boolean,
       default: false
     }
   },
   emits: ['update:collapse'],
-  methods: {
-    handleCollapse() {
-      this.$emit('update:collapse', !this.collapse);
-    }
+  setup(props, { emit }) {
+    const route = useRoute();
+    const router = useRouter();
+    const parentRoutes = computed(() => {
+      let matched = [...route.matched];
+      let activeMenu = route.meta?.activeMenu || '';
+      if (activeMenu) {
+        let activeRoute = router.resolve(activeMenu);
+        activeRoute && matched.splice(matched.length - 1, 0, (activeRoute as unknown) as RouteLocationMatched);
+      }
+      return matched.filter((item) => item.meta?.title && !item.meta?.hideBreadcrumb);
+    });
+    return {
+      parentRoutes,
+      handleCollapse() {
+        emit('update:collapse', !props.collapse);
+      }
+    };
   }
 });
 </script>
