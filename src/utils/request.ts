@@ -17,7 +17,7 @@ const { NODE_ENV, VUE_APP_API_HOST, VUE_APP_API_PREFIX } = process.env;
 const baseURL = NODE_ENV === 'production' ? VUE_APP_API_HOST : VUE_APP_API_PREFIX;
 
 let refreshDoing = false; // 刷新token加锁
-let reqCache = new Map(); // 请求暂存列表，列表中的请求会被取消
+let requestCache: Map<string, boolean> = new Map(); // 请求暂存列表，列表中的请求会被取消
 const request = axios.create({
   timeout: 30000,
   baseURL,
@@ -32,7 +32,7 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     // 设置cancelToken对象，阻止重复请求。当上个请求未完成时，相同的请求不会进行
-    //  config.cancelToken = new axios.CancelToken((cancel) => _addRequest(reqCache, config, cancel));
+    //  config.cancelToken = new axios.CancelToken((cancel) => _addRequest(requestCache, config, cancel));
     // 处理token
     const token = getToken();
     if (!token) return config;
@@ -56,7 +56,7 @@ request.interceptors.response.use(
       return Promise.resolve(data);
     }
     // 增加延迟，相同请求不得在短时间内重复发送
-    _removeRequest(reqCache, config);
+    _removeRequest(requestCache, config);
     if (data.code === 200) {
       if (['post', 'delete', 'put'].includes(config?.method as string) && !config.isNotTips) {
         data.msg && message.success(data.msg);
@@ -72,7 +72,7 @@ request.interceptors.response.use(
     message.destroy();
     if (axios.isCancel(error)) return Promise.reject(error);
     // 相同请求不得在短时间内重复发送
-    _removeRequest(reqCache, error.config);
+    _removeRequest(requestCache, error.config);
     if (error.response) {
       if (error.response.status === 401) {
         message.destroy();
@@ -91,13 +91,13 @@ request.interceptors.response.use(
 );
 export default request;
 
-export const get = (url: string, params = {}, config = {}) => request({ method: 'get', url, params, ...config });
-export const post = (url: string, data = {}, config = {}) => request({ method: 'post', url, data, ...config });
+export const get = (url: string, params = {}, config: AxiosRequestConfig = {}) => request({ method: 'get', url, params, ...config });
+export const post = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'post', url, data, ...config });
 // 如果接口不能使用json，需要使用qs序列化
-// export const post = (url, data = {}, config = {}) => request({ method: 'post', url, data: Qs.stringify({ ...data,token:getToken() }, { allowDots: true }), ...config });
-export const put = (url: string, data = {}, config = {}) => request({ method: 'put', url, data, ...config });
-export const patch = (url: string, data = {}, config = {}) => request({ method: 'put', url, data, ...config });
-export const del = (url: string, data = {}, config = {}) => request({ method: 'delete', url, data, ...config });
+// export const post = (url, data = {}, config:AxiosRequestConfig = {}) => request({ method: 'post', url, data: Qs.stringify({ ...data,token:getToken() }, { allowDots: true }), ...config });
+export const put = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'put', url, data, ...config });
+export const patch = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'put', url, data, ...config });
+export const del = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'delete', url, data, ...config });
 /**
  * 刷新token
  * @param {string} refreshToken
