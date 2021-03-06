@@ -28,9 +28,9 @@
   </div>
 </template>
 <script lang="ts">
+import useMenuState from '@/hooks/useMenuState';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
-import { computed, defineComponent } from 'vue';
-import { RouteLocationMatched, useRoute, useRouter } from 'vue-router';
+import { defineComponent } from 'vue';
 export default defineComponent({
   components: {
     MenuFoldOutlined,
@@ -44,19 +44,9 @@ export default defineComponent({
   },
   emits: ['update:collapse'],
   setup(props, { emit }) {
-    const route = useRoute();
-    const router = useRouter();
-    const parentRoutes = computed(() => {
-      let matched = [...route.matched];
-      let activeMenu = route.meta?.activeMenu || '';
-      if (activeMenu) {
-        let activeRoute = router.resolve(activeMenu);
-        activeRoute && matched.splice(matched.length - 1, 0, (activeRoute as unknown) as RouteLocationMatched);
-      }
-      return matched.filter((item) => item.meta?.title && !item.meta?.hideBreadcrumb);
-    });
+    const { matchedRoutes } = useMenuState((item) => !!item.meta?.title && !item.meta?.hideBreadcrumb);
     return {
-      parentRoutes,
+      parentRoutes: matchedRoutes,
       handleCollapse() {
         emit('update:collapse', !props.collapse);
       }

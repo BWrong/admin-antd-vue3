@@ -3,22 +3,22 @@
     <a-menu class="menu-box" :theme="theme" mode="inline" :inline-collapsed="collapse" :selected-keys="selectedKeys" v-model:open-keys="localOpeneds">
       <template v-for="item in menus">
         <template v-if="!item.hide">
-          <a-sub-menu :key="item.url" v-if="item.children && item.children.length">
+          <a-sub-menu :key="item.path" v-if="item.children && item.children.length">
             <template #title>
               <SettingOutlined />
               <span>{{ item.title }}</span>
             </template>
             <template v-for="subItem in item.children">
-              <a-menu-item :key="subItem.url" v-if="!subItem.hide">
-                <router-link :to="subItem.url">
+              <a-menu-item :key="subItem.path" v-if="!subItem.hide">
+                <router-link :to="subItem.path">
                   <!-- <a-icon :type="subItem.icon" class="menu-ico" v-if="subItem.icon" /> -->
                   <span>{{ subItem.title }}</span>
                 </router-link>
               </a-menu-item>
             </template>
           </a-sub-menu>
-          <a-menu-item :key="item.url" v-else>
-            <router-link :to="item.url">
+          <a-menu-item :key="item.path" v-else>
+            <router-link :to="item.path">
               <SettingOutlined />
               <span>{{ item.title }}</span>
             </router-link>
@@ -34,6 +34,7 @@ import { SettingOutlined } from '@ant-design/icons-vue';
 import { useRoute } from 'vue-router';
 
 import { IMenu } from '@/types/system';
+import useMenuState from '@/hooks/useMenuState';
 export default defineComponent({
   components: {
     SettingOutlined
@@ -56,18 +57,10 @@ export default defineComponent({
   setup(props, { emit }) {
     const route = useRoute();
     let localOpeneds = ref<string[]>([]);
-    let selectedKeys = computed(() => [route.meta?.activeMenu || route.path]);
-    let parentMenus = computed(() =>
-      route.matched
-        .filter((item) => item.meta?.title)
-        .map((item) => ({
-          icon: item.meta.icon,
-          title: item.meta.title,
-          url: item.path
-        }))
-    );
+    const { matchedRoutes, activeMenu } = useMenuState((item) => !!item.meta?.title);
+    let selectedKeys = computed(() => (activeMenu.value ? [activeMenu.value] : [route.path]));
     watchEffect(() => {
-      localOpeneds.value = props.collapse ? [] : parentMenus.value.map((item) => item.url);
+      localOpeneds.value = props.collapse ? [] : matchedRoutes.value.map((item) => item.path);
     });
     return {
       localOpeneds,

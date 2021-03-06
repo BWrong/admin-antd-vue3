@@ -15,7 +15,7 @@ export default defineComponent({
       default: false
     }
   },
-  data() {
+  setup() {
     return {
       appTitle: config.appTitle
     };

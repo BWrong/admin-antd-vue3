@@ -39,9 +39,9 @@
 </template>
 
 <script lang="ts">
-import { createVNode, defineComponent } from 'vue';
+import { computed, createVNode, defineComponent, reactive, toRefs } from 'vue';
 import { Modal } from 'ant-design-vue';
-import { mapState } from 'vuex';
+import { useStore } from 'vuex';
 import { HomeOutlined, FileOutlined, BellOutlined, UserOutlined, LogoutOutlined, ExclamationCircleOutlined, DownOutlined } from '@ant-design/icons-vue';
 import { logout } from '@/router';
 import LPersonalEdit from './LPersonalEdit.vue';
@@ -61,25 +61,19 @@ export default defineComponent({
       default: false
     }
   },
-  data() {
-    return {
+  emits: ['update:collapse'],
+  setup() {
+    let store = useStore();
+    let state = reactive({
       count: 12,
       visiblePsd: false,
       drawerVisible: false
-    };
-  },
-  computed: mapState({
-    userInfo: (state: any) => state.user.userinfo
-  }),
-  emits: ['update:collapse'],
-  methods: {
-    // handleCollapse() {
-    //   this.$emit('update:collapse', !this.collapse);
-    // },
-    handleClick({ key }: { key: string }) {
+    });
+    let userInfo = computed(() => store.state.user.userinfo);
+    function handleClick({ key }: { key: string }) {
       switch (key) {
         case 'person':
-          this.visiblePsd = true;
+          state.visiblePsd = true;
           break;
         case 'logout':
           Modal.confirm({
@@ -94,18 +88,26 @@ export default defineComponent({
           });
           break;
       }
-    },
-    goToApi() {
-      alert('开发中!');
-    },
-    // 关闭修改密码弹框
-    changeVisiblePsd(val: boolean) {
-      this.visiblePsd = val;
-    },
-    // 导航菜单是否显示
-    showDrawer() {
-      this.drawerVisible = !this.drawerVisible;
     }
+    function goToApi() {
+      alert('开发中!');
+    }
+    // 关闭修改密码弹框
+    function changeVisiblePsd(val: boolean) {
+      state.visiblePsd = val;
+    }
+    // 导航菜单是否显示
+    function showDrawer() {
+      state.drawerVisible = !state.drawerVisible;
+    }
+    return {
+      ...toRefs(state),
+      userInfo,
+      handleClick,
+      goToApi,
+      changeVisiblePsd,
+      showDrawer
+    };
   }
 });
 </script>
