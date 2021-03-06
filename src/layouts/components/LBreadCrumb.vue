@@ -18,7 +18,7 @@
           <a-menu mode="inline">
             <template v-for="subitem in item.children">
               <a-menu-item :key="subitem.path" v-if="subitem.meta && subitem.meta && !subitem.meta.activeMenu">
-                <router-link :to="subitem.path">{{ subitem.meta.title }}</router-link>
+                <router-link :to="subitem.path"><icon-font :type="subitem.meta.icon" v-if="subitem.meta.icon" style="margin-right: 5px" />{{ subitem.meta.title }}</router-link>
               </a-menu-item>
             </template>
           </a-menu>

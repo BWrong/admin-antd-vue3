@@ -12,6 +12,7 @@
         <p>data:{{ data }}</p>
         <p>err:{{ error }}</p>
       </div>
+      <p style="color: red">图标测试：<icon-font type="icon-stepforward" :style="{ color: 'blue' }"></icon-font></p>
     </a-card>
   </div>
 </template>

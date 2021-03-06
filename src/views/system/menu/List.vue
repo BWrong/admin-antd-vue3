@@ -50,9 +50,9 @@
                     <div class="menu-icon">
                       <icon-picker v-model:value="form.icon" />
                     </div>
-                    <a-icon :type="form.icon" v-if="form.icon" />
-                    <span v-else>选择</span>
                   </template>
+                  <icon-font :type="form.icon" v-if="form.icon" />
+                  <span v-else>选择</span>
                 </a-popover>
               </template>
             </a-input>
@@ -151,4 +151,10 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.menu-icon {
+  width: 400px;
+  height: 400px;
+  overflow-y: auto;
+}
+</style>

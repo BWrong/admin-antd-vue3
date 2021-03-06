@@ -111,7 +111,7 @@ export default {
     // 验证码
     changeCode() {
       let str = new Date().getTime();
-      this.codeSrc = `${config.baseUrl}/code/` + str;
+      this.codeSrc = `${config.apiHost}/code/` + str;
     },
     // 登录
     handleLogin(formName) {

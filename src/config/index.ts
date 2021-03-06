@@ -1,12 +1,12 @@
 const env = process.env;
 const IS_PRODUCTION = env.NODE_ENV === 'production';
-const baseUrl = IS_PRODUCTION ? env.VUE_APP_API_HOST : env.VUE_APP_API_ROOT;
+const apiHost = IS_PRODUCTION ? env.VUE_APP_API_HOST : env.VUE_APP_API_PREFIX;
 const pkg = require('../../package');
 const baseConfig = {
   appTitle: env.VUE_APP_API_TITLE, // 应用名称，用于显示在浏览器标签
   appVersion: pkg.version,
   cryptoKey: '', // 密码加密使用的盐
-  baseUrl
+  apiHost //接口服务器地址
 };
 // token相关配置
 const tokenConfig = {
@@ -24,6 +24,7 @@ const routerConfig = {
 // 样式相关配置
 const styleConfig = {
   theme: 'light',
+  iconUrl: env.BASE_URL + 'iconfont/iconfont.js', // 图标库地址，可以换成线上的
   // lang: 'zh_CN',
   pagination: {
     showSizeChanger: false,

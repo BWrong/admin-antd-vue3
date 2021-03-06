@@ -5,13 +5,13 @@
         <template v-if="!item.hide">
           <a-sub-menu :key="item.path" v-if="item.children && item.children.length">
             <template #title>
-              <SettingOutlined />
+              <icon-font :type="item.icon" v-if="item.icon" font-size="16px" />
               <span>{{ item.title }}</span>
             </template>
             <template v-for="subItem in item.children">
               <a-menu-item :key="subItem.path" v-if="!subItem.hide">
                 <router-link :to="subItem.path">
-                  <!-- <a-icon :type="subItem.icon" class="menu-ico" v-if="subItem.icon" /> -->
+                  <icon-font :type="subItem.icon" v-if="subItem.icon" />
                   <span>{{ subItem.title }}</span>
                 </router-link>
               </a-menu-item>
@@ -19,7 +19,7 @@
           </a-sub-menu>
           <a-menu-item :key="item.path" v-else>
             <router-link :to="item.path">
-              <SettingOutlined />
+              <icon-font :type="item.icon" v-if="item.icon" />
               <span>{{ item.title }}</span>
             </router-link>
           </a-menu-item>
@@ -87,12 +87,6 @@ export default defineComponent({
   width: calc(100% + 17px);
   // transition: width 0.5s ease;
 }
-// .menu-ico:not(:empty) {
-//   color: $primary-color;
-//   border: 1px solid $primary-color;
-//   padding: 2px;
-//   border-radius: 0 4px 4px 4px;
-// }
 .sider-trigger {
   position: absolute;
   width: 16px;
@@ -107,18 +101,7 @@ export default defineComponent({
 }
 </style>
 <style>
-.ant-menu-sub .ant-menu-item:before {
-  content: '';
-  display: block;
-  width: 4px;
-  height: 4px;
-  background: #00479d;
-  position: absolute;
-  top: 50%;
-  margin-left: -16px;
-  margin-top: -2px;
-}
-.ant-menu-submenu-popup .ant-menu-item:before {
-  display: none;
+.ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title .anticon {
+  line-height: 1;
 }
 </style>

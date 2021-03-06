@@ -1,0 +1,50 @@
+{
+  "_from": "antd-iconfont",
+  "_id": "antd-iconfont@3.0.3",
+  "_inBundle": false,
+  "_integrity": "sha1-ShCge/xstY8a1m5wZrXVFUEXJnY=",
+  "_location": "/antd-iconfont",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "antd-iconfont",
+    "name": "antd-iconfont",
+    "escapedName": "antd-iconfont",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/antd-iconfont/download/antd-iconfont-3.0.3.tgz",
+  "_shasum": "4a10a07bfc6cb58f1ad66e7066b5d51541172676",
+  "_spec": "antd-iconfont",
+  "_where": "/Users/bwrong/WorkSpace/Misthin/admin-antd-vue3",
+  "author": {
+    "name": "builden",
+    "email": "billdeng@qq.com"
+  },
+  "bugs": {
+    "url": "https://github.com/builden/antd-iconfont/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "antd offline iconfont",
+  "homepage": "https://github.com/builden/antd-iconfont#readme",
+  "keywords": [
+    "antd",
+    "iconfont",
+    "offline"
+  ],
+  "license": "MIT",
+  "main": "iconfont.js",
+  "name": "antd-iconfont",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/builden/antd-iconfont.git"
+  },
+  "version": "3.0.3"
+}

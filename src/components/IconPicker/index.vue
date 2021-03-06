@@ -1,7 +1,7 @@
 <template>
   <div class="icon-picker">
     <div class="icon-item" :class="{ active: value === item }" @click="$emit('input', item)" v-for="item in data" :key="item">
-      <a-icon :type="item" class="icon-picker-icon" />
+      <icon-font :type="item" class="icon-picker-icon" font-size="22px" />
       <span class="icon-picker-title" :title="item">{{ item }}</span>
     </div>
   </div>
@@ -53,12 +53,12 @@ export default defineComponent({
       color: #1b90ff;
     }
   }
-  .icon-picker-icon {
-    font-size: 20px;
-    padding-top: 5px;
-    position: relative;
-    z-index: 1;
-  }
+  // .icon-picker-icon {
+  //   font-size: 20px;
+  //   padding-top: 5px;
+  //   position: relative;
+  //   z-index: 1;
+  // }
   .icon-picker-title {
     display: block;
     line-height: 2;

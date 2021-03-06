@@ -5,7 +5,7 @@
     "title": "系统管理",
     "type": 0,
     "priority":0,
-    "icon": "el-icon-setting",
+    "icon": "icon-setting",
     "parentId": 0
   },
   {
@@ -15,7 +15,7 @@
     "type": 0,
 
     "priority":0,
-    "icon": "el-icon-set-up",
+    "icon": "icon-setting",
     "parentId": 1
   },
   {
@@ -25,7 +25,7 @@
     "type": 0,
 
     "priority":0,
-    "icon": "el-icon-menu",
+    "icon": "icon-appstore-o",
     "parentId": 1
   },
   {
@@ -35,7 +35,7 @@
     "type": 0,
 
     "priority":0,
-    "icon": "el-icon-bangzhu",
+    "icon": "icon-team",
     "parentId": 1
   },
   {
@@ -45,7 +45,7 @@
     "type": 0,
 
     "priority":0,
-    "icon": "el-icon-s-custom",
+    "icon": "icon-addusergroup",
     "parentId": 1
   },
   {
@@ -63,7 +63,7 @@
     "type": 0,
 
     "priority":0,
-    "icon": "el-icon-user",
+    "icon": "icon-user",
     "parentId": 1
   },
   {
@@ -73,7 +73,7 @@
     "type": 0,
 
     "priority":0,
-    "icon": "el-icon-message",
+    "icon": "icon-bells",
     "parentId": 1
   },
   {
@@ -83,7 +83,7 @@
     "type": 0,
 
     "priority":0,
-    "icon": "el-icon-s-opportunity",
+    "icon": "icon-filetext1",
     "parentId": 1
   }
 ]
