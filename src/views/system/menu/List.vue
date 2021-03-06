@@ -47,7 +47,7 @@
               <template #addonAfter>
                 <a-popover placement="right" :autoAdjustOverflow="false" title="选择图标">
                   <template #content>
-                    <div class="menu-icon">
+                    <div class="icon-picker-wrap">
                       <icon-picker v-model:value="form.icon" />
                     </div>
                   </template>
@@ -152,7 +152,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.menu-icon {
+.icon-picker-wrap {
   width: 400px;
   height: 400px;
   overflow-y: auto;

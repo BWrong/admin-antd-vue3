@@ -15,9 +15,11 @@ component: {
 ```
 ```html
 // 使用组件
-<icon-picker v-model:value="icon" />
+<div class="icon-picker-wrap">
+    <icon-picker v-model:value="form.icon" />
+</div>
 ```
-<br />
+
 
 ## API
 ### Props
@@ -25,3 +27,13 @@ component: {
 属性|必须|说明|类型|默认值
 :---:|:---:|:---:|:---:|:---:
 v-model|false|当前选择的按钮名字|String|''
+
+**注意：**
+- 为了更加灵活，该组件只是作为图标列表展示，仅包含列表内的样式，所以一般还需要自己设置容器及其样式。如：
+```css
+.icon-picker-wrap {
+  width: 400px;
+  height: 400px;
+  overflow-y: auto;
+}
+```
