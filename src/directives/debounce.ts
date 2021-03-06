@@ -1,7 +1,7 @@
 import { DirectiveBinding, Directive } from 'vue';
 
 const debounce: Directive = {
-  mounted(el: any, binding: DirectiveBinding) {
+  mounted(el: Element, binding: DirectiveBinding) {
     let timer: number;
     el.addEventListener('keyup', () => {
       if (timer) {

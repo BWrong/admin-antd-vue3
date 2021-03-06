@@ -17,23 +17,11 @@ export default {
 常用的请求方法接收三个参数，分别是：请求url、请求参数（get请求是params，其他请求是data）、配置config。在config中可以传入两个特殊的标记。
 - `isNotRefreshToken`: 默认情况所有的api请求均可能会触发刷新token的机制，如果设置此标记为true，则会不触发此机制。
 - `isNotIntercept`: 默认情况所有的api请求均会途经拦截器，添加此标识则会跳过响应拦截器。
-- `isNotTips: 1`：默认情况下，`'post', 'delete', 'put'`三种方式的请求成功后会有一个`操作成功`的提示，如果不希望出现此行为，可以将该标记设为true。
+- `isNotTips`：默认情况下，`'post', 'delete', 'put'`三种方式的请求成功后会有一个`操作成功`的提示，如果不希望出现此行为，可以将该标记设为true。
 
 ## 使用方法
 ### 全局引入
-直接引入`/src/api/index`，然后将其挂载到Vue的prototype上，在组件中通过`this.$api.xxx`来使用。
-```js
-import Vue from 'vue';
-import api from '@/api';
-
-Vue.prototype.$api = api;
-```
-```js
-// user为文件名字，即模块名字，getInfo为具体api，对应一个具体的请求api
-this.$api.user.getInfo().then(()=>{
-  // ...
-})
-```
+不推荐此方式，固不说说明，有需要自行实现。
 ### 按需引入（推荐）
 在需要的时候直接引入对应模块即可，
 ```js

@@ -5,7 +5,7 @@
 大致流程如下：
 ![](https://gitee.com/letwrong/Picture/raw/master/20201204093426.jpg)
 
-> 整个权限处理流程都是封装在`/src/utils/AuthTool.js`中, 路由相关拦截处理在`/src/router/index.js`中。
+> 整个权限处理流程都是封装在[`@bwrong/auth-tool`](https://github.com/BWrong/auth-tool)中, 路由相关拦截处理在`/src/router/index.js`中。
 
 **建议：**
 - 权限标识命名`permission`包含业务模块结构信息，如:`sys/dictionary`。
