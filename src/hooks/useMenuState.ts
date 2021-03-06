@@ -4,7 +4,7 @@ interface _IFilter {
   (item: RouteLocationMatched): boolean;
 }
 
-export default (filter: _IFilter = () => true) => {
+export default (filter?: _IFilter) => {
   const route = useRoute();
   const router = useRouter();
   let activeMenu = computed(() => route.meta?.activeMenu || '');
@@ -14,7 +14,7 @@ export default (filter: _IFilter = () => true) => {
       let activeRoute = router.resolve(activeMenu.value);
       activeRoute && matched.splice(matched.length - 1, 0, (activeRoute as unknown) as RouteLocationMatched);
     }
-    return matched.filter(filter);
+    return filter ? matched.filter(filter) : matched;
   });
   return { matchedRoutes, activeMenu };
 };
