@@ -219,7 +219,7 @@ export default {
     cursor: pointer;
     .version {
       padding-left: 10px;
-      color: #40a9ff;
+      color: @link-color;
     }
   }
 }

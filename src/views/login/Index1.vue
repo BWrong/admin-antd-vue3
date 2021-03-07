@@ -183,7 +183,7 @@ export default {
   bottom: 10px;
   z-index: 2;
   span {
-    color: @primary-color;
+    color: @link-color;
   }
 }
 </style>
