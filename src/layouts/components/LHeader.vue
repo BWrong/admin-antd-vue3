@@ -6,30 +6,30 @@
     </div>
     <div class="header-right r-nw-fe-c">
       <a-tooltip @click="$router.push('/home')" title="首页">
-        <HomeOutlined class="quick" />
+        <icon-font type="icon-home" class="quick" />
       </a-tooltip>
       <a-tooltip @click="goToApi" title="API文档">
-        <FileOutlined class="quick" />
+        <icon-font type="icon-file1" class="quick" />
       </a-tooltip>
       <a-tooltip @click="$router.push('/system/message')" :title="`${count}未读消息`">
         <a-badge :count="count" class="quick">
-          <BellOutlined class="quick" style="font-size: 22px" />
+          <icon-font type="icon-bells" class="quick" style="font-size: 22px" />
         </a-badge>
       </a-tooltip>
       <a-dropdown>
         <div style="margin-left: 10px; cursor: pointer">
           <a-avatar size="default" style="backgroundcolor: #b7d4ff">
-            <template #icon><UserOutlined /></template>
+            <template #icon><icon-font type="icon-user" /></template>
           </a-avatar>
           <span style="margin-left: 10px; vertical-align: middle; color: #fff">
             {{ userInfo.username }}
-            <DownOutlined style="margin-left: 5px; font-size: 10px" />
+            <icon-font type="icon-down" style="margin-left: 5px; font-size: 10px" />
           </span>
         </div>
         <template #overlay>
           <a-menu @click="handleClick">
-            <a-menu-item key="person"> <UserOutlined />修改密码 </a-menu-item>
-            <a-menu-item key="logout"> <LogoutOutlined />退出登录 </a-menu-item>
+            <a-menu-item key="person"> <icon-font type="icon-user" />修改密码 </a-menu-item>
+            <a-menu-item key="logout"> <icon-font type="icon-logout" />退出登录 </a-menu-item>
           </a-menu>
         </template>
       </a-dropdown>
@@ -39,21 +39,14 @@
 </template>
 
 <script lang="ts">
-import { computed, createVNode, defineComponent, reactive, toRefs } from 'vue';
+import { computed, defineComponent, reactive, toRefs } from 'vue';
 import { Modal } from 'ant-design-vue';
 import { useStore } from 'vuex';
-import { HomeOutlined, FileOutlined, BellOutlined, UserOutlined, LogoutOutlined, ExclamationCircleOutlined, DownOutlined } from '@ant-design/icons-vue';
 import { logout } from '@/router';
 import LPersonalEdit from './LPersonalEdit.vue';
 export default defineComponent({
   components: {
-    LPersonalEdit,
-    HomeOutlined,
-    FileOutlined,
-    BellOutlined,
-    UserOutlined,
-    LogoutOutlined,
-    DownOutlined
+    LPersonalEdit
   },
   props: {
     collapse: {
@@ -78,7 +71,6 @@ export default defineComponent({
         case 'logout':
           Modal.confirm({
             title: '提示',
-            icon: createVNode(ExclamationCircleOutlined),
             content: '您确定要退出吗？',
             okText: '确认',
             cancelText: '取消',

@@ -1,22 +1,15 @@
 <template>
-  <!-- <svg class="icon-font" aria-hidden="true" :style="computedStyle">
-    <use :xlink:href="'#' + type"></use></svg
-  > -->
-  <a-icon-font class="icon-font" :style="computedStyle" :type="type" />
+  <span class="icon-font anticon" :style="computedStyle">
+    <svg aria-hidden="true" width="1em" height="1em" focusable="false" fill="currentColor">
+      <use :xlink:href="'#' + type"></use>
+    </svg>
+  </span>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType, StyleHTMLAttributes } from 'vue';
-import { createFromIconfontCN } from '@ant-design/icons-vue';
-import config from '@/config';
-const AIconFont = createFromIconfontCN({
-  scriptUrl: config.iconUrl
-});
 export default defineComponent({
   name: 'IconFont',
-  components: {
-    AIconFont
-  },
   props: {
     type: {
       type: String,
@@ -24,11 +17,11 @@ export default defineComponent({
     },
     fontSize: {
       type: String,
-      default: 'inherit'
+      default: ''
     },
     color: {
       type: String,
-      default: 'inherit'
+      default: ''
     },
     style: {
       type: Object as PropType<StyleHTMLAttributes>,
@@ -54,8 +47,8 @@ export default defineComponent({
 .icon-font {
   width: 1em;
   height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
+  /* vertical-align: -0.15em; */
   overflow: hidden;
+  box-sizing: border-box;
 }
 </style>

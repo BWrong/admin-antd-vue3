@@ -30,15 +30,11 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, watchEffect } from 'vue';
-import { SettingOutlined } from '@ant-design/icons-vue';
 import { useRoute } from 'vue-router';
 
 import { IMenu } from '@/types/system';
 import useMenuState from '@/hooks/useMenuState';
 export default defineComponent({
-  components: {
-    SettingOutlined
-  },
   props: {
     collapse: {
       type: Boolean,

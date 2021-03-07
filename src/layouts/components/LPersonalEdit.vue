@@ -13,7 +13,7 @@
     </a-form>
     <template #footer>
       <a-button style="margin: 10px 0" :loading="loading" @click.prevent="updatePsd('updatePsdForm')" type="primary">
-        <template #icon><CheckOutlined /></template>
+        <template #icon><icon-font type="icon-check" /></template>
         提 交</a-button
       >
     </template>
@@ -22,12 +22,8 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { CheckOutlined } from '@ant-design/icons-vue';
 import { cryptoPassword } from '@/utils';
 export default defineComponent({
-  components: {
-    CheckOutlined
-  },
   props: {
     visible: {
       type: Boolean,

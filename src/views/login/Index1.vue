@@ -7,14 +7,14 @@
         <a-form-item name="username">
           <a-input placeholder="账号" type="text" v-model:value="loginInfo.username">
             <template #prefix>
-              <user-outlined type="user" />
+              <icon-font type="icon-user" />
             </template>
           </a-input>
         </a-form-item>
         <a-form-item name="password">
           <a-input auto-complete="off" placeholder="密码" type="password" v-model:value="loginInfo.password">
             <template #prefix>
-              <LockOutlined />
+              <icon-font type="icon-lock" />
             </template>
           </a-input>
         </a-form-item>
@@ -22,7 +22,7 @@
           <div class="r-nw-sb-c">
             <a-input style="width: 55%" auto-complete="off" placeholder="验证码" v-model:value="loginInfo.code">
               <template #prefix>
-                <MobileOutlined />
+                <icon-font type="icon-mobile1" />
               </template>
             </a-input>
             <img width="35%;" height="32px" @click="changeCode()" :src="codeSrc" />
@@ -44,7 +44,6 @@
 
 <script>
 import { set } from 'js-cookie';
-import { UserOutlined, LockOutlined, MobileOutlined } from '@ant-design/icons-vue';
 import { setStorage } from '@/utils/storage';
 import config from '@/config';
 import AuthApi from '@/api/auth';
@@ -54,10 +53,7 @@ import { cryptoPassword } from '@/utils';
 export default {
   components: {
     LoginBackground,
-    UpdateLog,
-    UserOutlined,
-    LockOutlined,
-    MobileOutlined
+    UpdateLog
   },
   data() {
     return {

@@ -2,7 +2,7 @@
   <div class="page-wrap">
     <a-card class="page-control">
       <a-space>
-        <a-button type="primary" ghost @click="handleAdd"> <PlusOutlined /> 新建 </a-button>
+        <a-button type="primary" ghost @click="handleAdd"> <icon-font type="icon-plus" /> 新建 </a-button>
       </a-space>
       <search-button class="fr" v-model="searchWord" @search="handleSearch" @reset="getData(1)" placeholder="请输入部门名称" />
     </a-card>

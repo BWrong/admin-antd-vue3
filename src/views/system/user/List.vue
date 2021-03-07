@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrap">
     <a-card class="page-control">
-      <a-button type="primary" ghost @click="handleAdd"> <PlusOutlined /> 新建 </a-button>
+      <a-button type="primary" ghost @click="handleAdd"> <icon-font type="icon-plus" /> 新建 </a-button>
       <span class="fr">
         <search-button class="fr" v-model="searchWord" @search="handleSearch" @reset="handleReset" placeholder="请输入用户名">
           <template #suffix>
@@ -19,7 +19,7 @@
             <a-dropdown placement="bottomRight">
               <a-button size="small" @click.prevent>
                 更多
-                <DownOutlined />
+                <icon-font type="icon-down" />
               </a-button>
               <template #overlay>
                 <a-menu>
@@ -102,7 +102,6 @@
 
 <script>
 import { createVNode } from 'vue';
-import { LockOutlined, UnlockOutlined, ReloadOutlined, UserOutlined } from '@ant-design/icons-vue';
 import { USER_STATUS } from '@/enums/user';
 import userApi from '@/api/system/user';
 import departmentApi from '@/api/system/department';
@@ -119,12 +118,6 @@ const initForm = {
 };
 export default {
   inject: ['$pagination'],
-  components: {
-    LockOutlined,
-    UnlockOutlined,
-    ReloadOutlined,
-    UserOutlined
-  },
   data() {
     const columns = [
       { title: '用户名', dataIndex: 'username', ellipsis: true },
@@ -160,22 +153,22 @@ export default {
       moreAction: [
         {
           text: '锁定账号',
-          icon: <LockOutlined />,
+          icon: <icon-font type="icon-lock" />,
           click: this.handleLock
         },
         {
           text: '解锁账号',
-          icon: <UnlockOutlined />,
+          icon: <icon-font type="icon-unlock" />,
           click: this.handleLock
         },
         {
           text: '重置密码',
-          icon: <ReloadOutlined />,
+          icon: <icon-font type="icon-reload1" />,
           click: this.handleResetPwd
         },
         {
           text: '设置角色',
-          icon: <UserOutlined />,
+          icon: <icon-font type="icon-user" />,
           click: this.handleSetRole
         }
       ],

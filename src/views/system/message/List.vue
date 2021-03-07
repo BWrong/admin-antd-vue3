@@ -2,8 +2,8 @@
   <div class="page-wrap">
     <a-card class="page-control">
       <a-space class="fl">
-        <a-button type="primary" ghost @click="handleAllRead"><CheckOutlined />全部已读</a-button>
-        <a-button type="primary" ghost @click="handleBatchRead"><CheckSquareOutlined />批量已读</a-button>
+        <a-button type="primary" ghost @click="handleAllRead"><icon-font type="icon-check" />全部已读</a-button>
+        <a-button type="primary" ghost @click="handleBatchRead"><icon-font type="icon-filter" />批量已读</a-button>
       </a-space>
       <a-space class="fr">
         <a-select placeholder="消息类型(可选)" style="width: 200px" v-model:value="searchType" allowClear>
@@ -40,14 +40,13 @@
     <a-modal title="消息详情" :visible="isShowDetail" @ok="handleOk" @cancel="handleCancel" :keyboard="false" :maskClosable="false">
       <p>{{ detail.content }}</p>
       <template #footer>
-        <a-button class="block-center" type="primary" @click="handleOk"><CheckOutlined />已读</a-button>
+        <a-button class="block-center" type="primary" @click="handleOk"><icon-font type="icon-check" />已读</a-button>
       </template>
     </a-modal>
   </div>
 </template>
 
 <script>
-import { CheckOutlined, CheckSquareOutlined } from '@ant-design/icons-vue';
 import { Modal } from 'ant-design-vue';
 import messageApi from '@/api/system/message';
 import { MESSAGE_TYPE, MESSAGE_STATUS } from '@/enums/message';
@@ -110,10 +109,6 @@ export default {
   },
   mounted() {
     this.getData();
-  },
-  components: {
-    CheckOutlined,
-    CheckSquareOutlined
   },
   methods: {
     // 获取表格数据

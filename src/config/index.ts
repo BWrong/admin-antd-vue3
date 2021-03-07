@@ -24,7 +24,6 @@ const routerConfig = {
 // 样式相关配置
 const styleConfig = {
   theme: 'light',
-  iconUrl: env.BASE_URL + 'iconfont/iconfont.js', // 图标库地址，可以换成线上的
   // lang: 'zh_CN',
   pagination: {
     showSizeChanger: false,

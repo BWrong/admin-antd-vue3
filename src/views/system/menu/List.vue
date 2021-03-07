@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrap">
     <a-card class="page-control">
-      <a-button type="primary" ghost @click="handleAdd"> <PlusOutlined /> 新建 </a-button>
+      <a-button type="primary" ghost @click="handleAdd"> <icon-font type="icon-plus" /> 新建 </a-button>
     </a-card>
     <a-card>
       <basis-table :columns="columns" :data-source="tableData" :pagination="pagination" @change="handleTableChange" :loading="tableLoading">
@@ -85,8 +85,8 @@ export default {
     const columns = [
       { title: '菜单名字', dataIndex: 'title', ellipsis: true },
       { title: '权限标识', dataIndex: 'permission', ellipsis: true },
-      { title: '图标', dataIndex: 'icon', slots: { customRender: 'icon' } },
-      { title: '类型', dataIndex: 'type', slots: { customRender: 'type' } },
+      { title: '图标', dataIndex: 'icon', align: 'center', width: '200px', customRender: ({ text }) => <icon-font type={text} /> },
+      { title: '类型', dataIndex: 'type', align: 'center', width: '200px', slots: { customRender: 'type' } },
       { title: '操作', slots: { customRender: 'action' }, align: 'center', width: 360 }
     ];
     const menu = getStorage('menus');

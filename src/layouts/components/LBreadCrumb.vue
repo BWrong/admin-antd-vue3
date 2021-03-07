@@ -1,6 +1,6 @@
 <template>
   <div class="breadcrumb-bar">
-    <component class="trigger" :is="collapse ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'" @click="handleCollapse" />
+    <span class="trigger" @click="handleCollapse"><icon-font :type="!collapse ? 'icon-menu-unfold' : 'icon-menu-fold'" /></span>
     <!-- <a-breadcrumb :routes="parentRoutes" class="breadcrumb">
       <template #itemRender="{ route, routes }">
         <span v-if="routes.indexOf(route) === routes.length - 1">
@@ -29,13 +29,8 @@
 </template>
 <script lang="ts">
 import useMenuState from '@/hooks/useMenuState';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
 import { defineComponent } from 'vue';
 export default defineComponent({
-  components: {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined
-  },
   props: {
     collapse: {
       type: Boolean,
@@ -68,7 +63,7 @@ export default defineComponent({
   color: #666;
   padding: 0 10px;
   &:hover {
-    color: #333;
+    color: @primary-color;
   }
 }
 .breadcrumb {
