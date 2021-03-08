@@ -7,7 +7,7 @@ export default (app: App) => {
   // 注册权限指令
   app.use(authDirective, {
     hasAuth(authValue: string) {
-      authMap = authMap || getStorage('permissions') || [];
+      authMap = authMap || getStorage('permissions');
       return authMap?.includes(authValue);
     }
   });
