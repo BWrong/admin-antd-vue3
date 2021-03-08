@@ -1,6 +1,6 @@
 <template>
   <div class="icon-picker">
-    <div class="icon-item" :class="{ active: value === item }" @click="$emit('input', item)" v-for="item in data" :key="item">
+    <div class="icon-item" :class="{ active: value === item }" @click="$emit('update:value', item)" v-for="item in data" :key="item">
       <icon-font :type="item" class="icon-picker-icon" font-size="22px" />
       <span class="icon-picker-title" :title="item">{{ item }}</span>
     </div>
@@ -17,7 +17,7 @@ export default defineComponent({
       default: ''
     }
   },
-  emits: ['input'],
+  emits: ['update:value'],
   setup() {
     return {
       data

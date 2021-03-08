@@ -96,7 +96,7 @@ export const post = (url: string, data = {}, config: AxiosRequestConfig = {}) =>
 // 如果接口不能使用json，需要使用qs序列化
 // export const post = (url, data = {}, config:AxiosRequestConfig = {}) => request({ method: 'post', url, data: Qs.stringify({ ...data,token:getToken() }, { allowDots: true }), ...config });
 export const put = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'put', url, data, ...config });
-export const patch = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'put', url, data, ...config });
+export const patch = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'patch', url, data, ...config });
 export const del = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'delete', url, data, ...config });
 /**
  * 刷新token
