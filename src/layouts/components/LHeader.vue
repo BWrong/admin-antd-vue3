@@ -59,8 +59,7 @@ export default defineComponent({
     let store = useStore();
     let state = reactive({
       count: 12,
-      visiblePsd: false,
-      drawerVisible: false
+      visiblePsd: false
     });
     let userInfo = computed(() => store.state.user.userinfo);
     function handleClick({ key }: { key: string }) {
@@ -88,17 +87,12 @@ export default defineComponent({
     function changeVisiblePsd(val: boolean) {
       state.visiblePsd = val;
     }
-    // 导航菜单是否显示
-    function showDrawer() {
-      state.drawerVisible = !state.drawerVisible;
-    }
     return {
       ...toRefs(state),
       userInfo,
       handleClick,
       goToApi,
-      changeVisiblePsd,
-      showDrawer
+      changeVisiblePsd
     };
   }
 });

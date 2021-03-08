@@ -14,7 +14,6 @@ module.exports = {
     semi: 1,
     'prefer-const': 0,
     quotes: [1, 'single'],
-    indent: [1, 2],
     'object-shorthand': 1,
     camelcase: 1,
     '@typescript-eslint/no-empty-function': 0,
