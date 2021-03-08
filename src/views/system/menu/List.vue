@@ -85,7 +85,7 @@ export default {
     const columns = [
       { title: '菜单名字', dataIndex: 'title', ellipsis: true },
       { title: '权限标识', dataIndex: 'permission', ellipsis: true },
-      { title: '图标', dataIndex: 'icon', align: 'center', width: '200px', customRender: ({ text }) => <icon-font type={text} /> },
+      { title: '图标', dataIndex: 'icon', align: 'center', width: '200px', customRender: ({ text }) => (text ? <icon-font type={text} /> : '') },
       { title: '类型', dataIndex: 'type', align: 'center', width: '200px', slots: { customRender: 'type' } },
       { title: '操作', slots: { customRender: 'action' }, align: 'center', width: 360 }
     ];

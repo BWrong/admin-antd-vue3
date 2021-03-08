@@ -12,7 +12,7 @@ import appConfig from '@/config';
 import { HTTP_CODE } from '@/enums/http';
 import auth from '@/api/auth';
 import { logout } from '@/router';
-import { getToken } from '@/utils/token';
+import { getToken, computedExpires } from '@/utils/token';
 const { NODE_ENV, VUE_APP_API_HOST, VUE_APP_API_PREFIX } = process.env;
 const baseURL = NODE_ENV === 'production' ? VUE_APP_API_HOST : VUE_APP_API_PREFIX;
 
@@ -109,7 +109,7 @@ function _handleRefreshToken(refreshToken: string | undefined) {
       .then((res: any) => {
         Cookie.set(appConfig.tokenKey, res.access_token);
         Cookie.set(appConfig.refreshTokenKey, res.refresh_token);
-        Cookie.set(appConfig.tokenExpiresKey, ((Date.now() + res.data.expires_in * 1000 - appConfig.refreshAheadTime) as unknown) as string);
+        Cookie.set(appConfig.tokenExpiresKey, String(computedExpires(res.data.expires_in)));
         resolve(res);
       })
       .catch(reject);

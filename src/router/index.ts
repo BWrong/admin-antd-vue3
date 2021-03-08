@@ -44,10 +44,11 @@ router.afterEach((to) => {
 
 // 获取路由
 async function _getAllowRoutes(asyncRoutes: RouteRecordRaw[]) {
-  // const menus = await authApi.getMenus({}).then(res =>  {
-  //     setStorage('userinfo', res.body.sysUser);
-  //     return res.menus;
+  // const menus = await authApi.getMenus().then((res: any) =>  {
+  //   setStorage('userinfo', res.detail);
+  //   return res.menus;
   // });
+
   let menus = getStorage('rawMenu') || [];
   return _ganerRoutesAndMenus(asyncRoutes, menus);
 }

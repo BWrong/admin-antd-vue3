@@ -5,5 +5,6 @@ export declare interface IMenu {
   type?: number;
   hide?: boolean;
   path: string;
+  children?: IMenu[];
   [K: string]: string;
 }
