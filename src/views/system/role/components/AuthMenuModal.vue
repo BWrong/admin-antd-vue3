@@ -9,10 +9,9 @@
   </a-modal>
 </template>
 
-<script lang="ts">
+<script>
 import { getStorage } from '@/utils/storage';
 import { convertToTree } from '@/utils';
-import { IMenu } from '@/types/system';
 const menu = getStorage('menus');
 const menuTree = convertToTree({ data: menu, pid: 0 });
 export default {
@@ -52,12 +51,12 @@ export default {
         this.checkedKeys = [];
       }
     },
-    onCheck(checkedKeys: string[], e: { checked: boolean }) {
+    onCheck(checkedKeys, e) {
       e.checked || (this.checkAll = false);
     },
-    getAllIds(data: IMenu[], ids: string[] = []) {
-      data.forEach((item: IMenu) => {
-        ids.push((item.id as unknown) as string);
+    getAllIds(data, ids = []) {
+      data.forEach((item) => {
+        ids.push(item.id);
         item.children && this.getAllIds(item.children, ids);
       });
       return ids;
