@@ -54,7 +54,7 @@ export default defineComponent({
     const route = useRoute();
     let localOpeneds = ref<string[]>([]);
     const { matchedRoutes, activeMenu } = useMenuState((item) => !!item.meta?.title);
-    let selectedKeys = computed(() => (activeMenu.value ? [activeMenu.value] : [route.path]));
+    let selectedKeys = computed(() => (activeMenu.value ? [activeMenu.value, route.path] : [route.path]));
     watchEffect(() => {
       localOpeneds.value = props.collapse ? [] : matchedRoutes.value.map((item) => item.path);
     });
