@@ -5,10 +5,8 @@ import config from '@/config';
 
 export default createStore({
   strict: process.env.NODE_ENV !== 'production',
-  state() {
-    return {
-      theme: config.theme
-    };
+  state: {
+    theme: config.theme
   },
   mutations: {},
   actions: {},
