@@ -9,7 +9,7 @@ import asyncRoutes from './asyncRoutes';
 import { ganerAuthData } from '@bwrong/auth-tool';
 // import authApi from '@/api/auth';
 let routerLoaded = false; // 动态路由是否已加载
-let removeRouters: Function[] = [];
+let removeRouters: Array<() => void> = [];
 // 创建路由
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -30,7 +30,7 @@ router.beforeEach(async (to) => {
   let allowRoutes = await _getAllowRoutes(asyncRoutes);
   allowRoutes.push(noMatchRoute);
   // 未加载则动态加载
-  removeRouters = allowRoutes.map(router.addRoute);
+  removeRouters = allowRoutes.map((item) => router.addRoute(item));
   routerLoaded = true;
   return { ...to, replace: true };
 });

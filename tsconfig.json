@@ -15,10 +15,15 @@
     "types": [
       "webpack-env"
     ],
-    "typeRoots": ["./src/types/*"],
     "paths": {
+      "types/*": [
+        "src/types/*"
+      ],
       "@/*": [
         "src/*"
+      ],
+      "components/*": [
+        "src/components/*"
       ]
     },
     "lib": [

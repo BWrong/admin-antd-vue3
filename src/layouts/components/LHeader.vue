@@ -34,7 +34,7 @@
         </template>
       </a-dropdown>
     </div>
-    <l-personal-edit :visible="visiblePsd" @changeVisiblePsd="changeVisiblePsd"></l-personal-edit>
+    <l-personal-edit v-model:visible="visiblePsd"></l-personal-edit>
   </a-layout-header>
 </template>
 
@@ -73,7 +73,7 @@ export default defineComponent({
             content: '您确定要退出吗？',
             okText: '确认',
             cancelText: '取消',
-            onOk() {
+            onOk: () => {
               logout();
             }
           });
@@ -83,16 +83,11 @@ export default defineComponent({
     function goToApi() {
       alert('开发中!');
     }
-    // 关闭修改密码弹框
-    function changeVisiblePsd(val: boolean) {
-      state.visiblePsd = val;
-    }
     return {
       ...toRefs(state),
       userInfo,
       handleClick,
-      goToApi,
-      changeVisiblePsd
+      goToApi
     };
   }
 });

@@ -50,6 +50,7 @@
 import { Modal } from 'ant-design-vue';
 import messageApi from '@/api/system/message';
 import { MESSAGE_TYPE, MESSAGE_STATUS } from '@/enums/message';
+import { message } from 'ant-design-vue';
 export default {
   data() {
     const columns = [
@@ -158,7 +159,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          this.$message.success('操作成功');
+          message.success('操作成功');
           this.selectedRowKeys = [];
         }
       });
@@ -166,15 +167,15 @@ export default {
     // 批量已读
     handleBatchRead() {
       if (this.selectedRowKeys.length === 0) {
-        this.$message.error('未选择消息');
+        message.error('未选择消息');
       } else {
         Modal.confirm({
           title: '提示',
           content: '确定把选择项标记为已读吗?',
           okText: '确认',
           cancelText: '取消',
-          onOk() {
-            this.$message.success('操作成功');
+          onOk: () => {
+            message.success('操作成功');
             this.selectedRowKeys = [];
           }
         });
@@ -182,7 +183,7 @@ export default {
     },
     // 已读
     handleOk() {
-      this.$message.success('该消息状态变更为已读');
+      message.success('该消息状态变更为已读');
       this.handleCancel();
     },
     // 取消

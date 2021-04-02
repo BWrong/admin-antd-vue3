@@ -58,7 +58,7 @@ export default {
         ...this.$pagination
       },
       searchWord: '',
-      searchType: '',
+      searchType: undefined,
       searchTimes: [],
       isShowDetail: false,
       detail: {}

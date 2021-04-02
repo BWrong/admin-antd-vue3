@@ -1,5 +1,5 @@
 // HTTP状态码
-export const HTTP_CODE: IHttpCode = {
+export const HTTP_CODE: Record<number, string> = {
   400: '请求参数错误',
   401: '未授权, 请重新登录',
   403: '服务器拒绝本次访问',

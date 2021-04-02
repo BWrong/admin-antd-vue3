@@ -3,27 +3,11 @@
  * @Github: https://github.com/BWrong
  * @Date: 2020-04-07 10:30:49
  * @LastEditors: Bwrong
- * @LastEditTime: 2021-03-04 17:34:34
+ * @LastEditTime: 2021-04-02 10:51:31
  */
 import dayjs from '@/plugins/dayjs';
 import Utf8 from 'crypto-js/enc-utf8';
 import Base64 from 'crypto-js/enc-base64';
-import { SEX, MESSAGE_STATUS, MESSAGE_TYPE } from '@/enums';
-
-// 性别
-export function formatSex<T extends keyof typeof SEX>(value: T) {
-  return SEX[value] || '未知';
-}
-
-// 消息状态
-export function messageStatus<T extends keyof typeof MESSAGE_STATUS>(value: T) {
-  return MESSAGE_STATUS[value] || '';
-}
-
-// 消息类型
-export function messageType<T extends keyof typeof MESSAGE_TYPE>(value: T) {
-  return MESSAGE_TYPE[value] || '';
-}
 
 /**
  * 格式化时间
@@ -125,4 +109,48 @@ export function convertToTree({ data, pid = 0, children = 'children', pidName = 
  */
 export function ganerTableIndex(pageNow = 1, pageSize = 10, index = 0) {
   return (pageNow - 1) * pageSize + index + 1;
+}
+
+/**
+ * 根据后缀名获取文件类型
+ * @param filePath
+ * @returns
+ */
+const fileTypeMap: Record<string, string[]> = {
+  excel: ['.xls', '.xlsx', '.csv'],
+  word: ['.doc', '.docx', '.dot', '.dotx'],
+  ppt: ['.ppt', '.pptx', '.pps', '.pot', '.potx'],
+  code: ['.java', '.js', '.html', '.py', '.go']
+};
+export function getFileType(filePath: string) {
+  const suffixMatch = filePath.match(/\.[^.]+$/);
+  const suffix = String(suffixMatch).toLowerCase();
+  for (const key in fileTypeMap) {
+    if (fileTypeMap[key].includes(suffix)) return key;
+  }
+  return 'other';
+}
+/**
+ * 下载文件
+ * @param content
+ * @param filename
+ */
+export function downloadFile(content: BlobPart, filename: string) {
+  const a = document.createElement('a');
+  const blob = content instanceof Blob ? content : new Blob([content]);
+  const url = window.URL.createObjectURL(blob);
+  a.href = url;
+  a.download = filename;
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
+/**
+ * 将数组转换成对象
+ * @param arraryData
+ * @param key
+ * @param value
+ * @returns
+ */
+export function arrayToObj<T extends Record<string, any> = any, K extends keyof T = string>(arraryData: T[], key: K, value?: K) {
+  return arraryData.reduce((temp, item) => ((temp[item[key]] = value ? item[value] : item), temp), {} as Record<T[K], T[K] | T>);
 }

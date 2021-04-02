@@ -21,6 +21,7 @@ component: {
 属性|必须|说明|类型|默认值
 :---:|:---:|:---:|:---:|:---:
 title|false|删除数据的名称|String|''
+type|false|按钮类型，可为`button`、`icon`|String|`button`
 
 该组件同样接收[`Button`](https://element.eleme.cn/#/zh-CN/component/button)的`Attributes`
 

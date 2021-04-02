@@ -31,6 +31,7 @@ import LHeader from '@/layouts/components/LHeader.vue';
 import LBreadCrumb from '@/layouts/components/LBreadCrumb.vue';
 import { convertToTree } from '@/utils';
 import { getStorage } from '@/utils/storage';
+import { IMenu } from '@/types/interface/common';
 export default {
   name: 'default-layout',
   components: {
@@ -42,15 +43,16 @@ export default {
   },
   setup() {
     const store = useStore();
-    const { push } = useRouter();
     const theme = computed(() => store.state.theme);
-    let userInfo = getStorage('userinfo');
-    if (userInfo) {
-      store.commit('user/SET_USERINFO', userInfo);
-    } else {
-      push('/login');
-    }
-    let menus = getStorage('menus') || [];
+    // const { push } = useRouter();
+    // let userInfo = getStorage('userinfo');
+    // if (userInfo) {
+    //   store.commit('user/SET_USERINFO', userInfo);
+    // } else {
+    //   push('/login');
+    // }
+    let menus: IMenu[] = getStorage('menus') || [];
+    menus = menus.filter((item) => item.type === 0);
     menus = convertToTree({ data: menus, pid: 0 });
     let collapse = ref(false);
     return {

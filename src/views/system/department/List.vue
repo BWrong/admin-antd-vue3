@@ -35,6 +35,7 @@
 
 <script>
 import departmentApi from '@/api/system/department';
+import { message } from 'ant-design-vue';
 const initForm = {
   title: '',
   code: '',
@@ -97,7 +98,7 @@ export default {
     },
     handleDel(row) {
       console.log(row);
-      this.$message.success('操作成功');
+      message.success('操作成功');
     },
     handleSearch(val) {
       console.log(val);
@@ -109,7 +110,7 @@ export default {
     },
     handleOk() {
       this.$refs.form.validate().then(() => {
-        this.$message.success('操作成功');
+        message.success('操作成功');
         this.isShowEdit = false;
       });
     }

@@ -32,7 +32,7 @@
 import { computed, defineComponent, PropType, ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { IMenu } from '@/types/system';
+import { IMenu } from 'types/interface/common';
 import useMenuState from '@/hooks/useMenuState';
 export default defineComponent({
   props: {

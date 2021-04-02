@@ -90,7 +90,7 @@
       </a-form>
     </a-modal>
     <!-- 设置角色 -->
-    <a-modal v-model:visible="showRoleModal" title="设置角色" @ok="handleOk" :keyboard="false" :maskClosable="false">
+    <a-modal v-model:visible="showRoleModal" title="设置角色" @ok="showRoleModal = false" :keyboard="false" :maskClosable="false">
       <a-select v-model:value="selectRole" mode="multiple" placeholder="请选择角色" @change="handleRoleChange" style="width: 100%">
         <a-select-option v-for="item in roleList" :key="item.id" :value="item.id">
           {{ item.title }}
@@ -106,6 +106,7 @@ import { USER_STATUS } from '@/enums/user';
 import userApi from '@/api/system/user';
 import departmentApi from '@/api/system/department';
 import roleApi from '@/api/system/role';
+import { message } from 'ant-design-vue';
 const initForm = {
   username: '',
   name: '',
@@ -248,7 +249,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          this.$message.success('操作成功');
+          message.success('操作成功');
         }
       });
     },
@@ -259,18 +260,18 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          this.$message.success('操作成功');
+          message.success('操作成功');
         }
       });
     },
     handleSetRole(row) {
       console.log(row);
       this.showRoleModal = true;
-      this.$message.success('操作成功');
+      // message.success('操作成功');
     },
     handleDel(row) {
       console.log(row);
-      this.$message.success('操作成功');
+      message.success('操作成功');
     },
     handleTableChange(pagination, filters, sorter) {
       this.pagination = pagination;
@@ -287,7 +288,7 @@ export default {
     },
     handleOk() {
       this.$refs.form.validate().then(() => {
-        this.$message.success('操作成功');
+        message.success('操作成功');
         this.isShowEdit = false;
       });
     },

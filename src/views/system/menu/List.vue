@@ -71,6 +71,7 @@ import { getStorage } from '@/utils/storage';
 import { convertToTree } from '@/utils';
 import { RESOURCE_TYPE } from '@/enums/system';
 import IconPicker from '@/components/IconPicker';
+import { message } from 'ant-design-vue';
 const initForm = {
   name: '',
   parentId: 0,
@@ -131,11 +132,11 @@ export default {
     handleHide(row, status) {
       console.log(row, status);
       row.hide = status;
-      this.$message.success('操作成功');
+      message.success('操作成功');
     },
     handleDel(row) {
       console.log(row);
-      this.$message.success('操作成功');
+      message.success('操作成功');
     },
     handleTableChange(pagination) {
       this.pagination = pagination;
@@ -143,7 +144,7 @@ export default {
     },
     handleOk() {
       this.$refs.form.validate().then(() => {
-        this.$message.success('操作成功');
+        message.success('操作成功');
         this.isShowEdit = false;
       });
     }

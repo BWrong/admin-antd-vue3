@@ -14,8 +14,20 @@
 <script>
 export default {};
 </script>
-
 <style lang="less">
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, 0) rotateZ(0deg);
+  }
+  50% {
+    transform: translate(-50%, -1.5%) rotateZ(180deg);
+  }
+  100% {
+    transform: translate(-50%, 0%) rotateZ(360deg);
+  }
+}
+</style>
+<style lang="less" scoped>
 .site-wrapper.site-page--not-found {
   position: absolute;
   top: 60px;
@@ -85,17 +97,6 @@ export default {};
     opacity: 0.5;
     border-radius: 47%;
     animation-duration: 20s;
-  }
-}
-@keyframes rotate {
-  0% {
-    transform: translate(-50%, 0) rotateZ(0deg);
-  }
-  50% {
-    transform: translate(-50%, -1.5%) rotateZ(180deg);
-  }
-  100% {
-    transform: translate(-50%, 0%) rotateZ(360deg);
   }
 }
 </style>

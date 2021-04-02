@@ -23,6 +23,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { cryptoPassword } from '@/utils';
+import { message } from 'ant-design-vue';
 export default defineComponent({
   props: {
     visible: {
@@ -100,7 +101,8 @@ export default defineComponent({
             reNewPassword: cryptoPassword(reNewPassword)
           };
           console.log(params);
-          this.$message.success('操作成功！');
+          message.success('操作成功！');
+          this.$emit('update:visible', false);
         })
         .catch((err) => {
           console.error(err);

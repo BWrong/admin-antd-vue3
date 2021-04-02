@@ -51,12 +51,12 @@ module.exports = {
     },
     proxy: {
       [VUE_APP_API_PREFIX]: {
-        target: VUE_APP_API_HOST, // 你接口的域名
+        target: VUE_APP_API_HOST,
         // secure: false,
         // ws: true,
-        // changeOrigin: true,
+        changeOrigin: false, // 将Origin的来源更改为目标URL
         pathRewrite: {
-          [`^${VUE_APP_API_PREFIX}`]: '/api' // 需要rewrite的,即真实的服务器地址中是否包含api_root
+          [`^${VUE_APP_API_PREFIX}`]: '/api' // 需要rewrite的,即真实的服务器地址中是否包含VUE_APP_API_PREFIX
         }
       }
     }

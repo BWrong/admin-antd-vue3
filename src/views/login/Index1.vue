@@ -50,6 +50,7 @@ import AuthApi from '@/api/auth';
 import UpdateLog from './components/UpdateLog.vue';
 import LoginBackground from './components/LoginBackground.vue';
 import { cryptoPassword } from '@/utils';
+import { message } from 'ant-design-vue';
 export default {
   components: {
     LoginBackground,
@@ -122,7 +123,7 @@ export default {
             code
           })
             .then((res) => {
-              this.$message.success('登录成功！');
+              message.success('登录成功！');
               set(config.tokenKey, res.access_token);
               set(config.refreshTokenKey, res.refresh_token);
               set(config.tokenExpiresKey, Date.now() + res.expires_in * 1000 - config.refreshAheadTime);
@@ -138,7 +139,7 @@ export default {
         .catch((err) => {
           console.log(err);
           this.loading = false;
-          this.$message.error('用户名或密码输入不正确！');
+          message.error('用户名或密码输入不正确！');
           this.changeCode();
         });
     },

@@ -12,7 +12,7 @@
 <script lang="ts">
 import { getStorage } from '@/utils/storage';
 import { convertToTree } from '@/utils';
-import { IMenu } from '@/types/system';
+import { IMenu } from '@/types/interface/common';
 import { defineComponent } from '@vue/runtime-core';
 const menu = getStorage('menus');
 const menuTree = convertToTree({ data: menu, pid: 0 });

@@ -47,6 +47,7 @@
 import AuthMenuModal from './components/AuthMenuModal.vue';
 import roleApi from '@/api/system/role';
 import departmentApi from '@/api/system/department';
+import { message } from 'ant-design-vue';
 const initForm = {
   title: '',
   code: '',
@@ -138,11 +139,11 @@ export default {
     },
     handleSetAuth(keys) {
       console.log(keys);
-      this.$message.success('操作成功');
+      message.success('操作成功');
     },
     handleDel(row) {
       console.log(row);
-      this.$message.success('操作成功');
+      message.success('操作成功');
     },
     handleSearch(key) {
       console.log(key);
@@ -154,7 +155,7 @@ export default {
     },
     handleOk() {
       this.$refs.form.validate().then(() => {
-        this.$message.success('操作成功');
+        message.success('操作成功');
         this.isShowEdit = false;
       });
     }
