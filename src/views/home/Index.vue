@@ -57,13 +57,11 @@ import { IPagination } from 'types/interface/common';
 const columns = readonly([
   {
     title: 'title',
-    dataIndex: 'title',
-    width: '180px'
+    dataIndex: 'title'
   },
   {
     title: 'code',
-    dataIndex: 'code',
-    width: '180px'
+    dataIndex: 'code'
   },
   {
     title: 'type',
@@ -79,8 +77,6 @@ const columns = readonly([
   },
   {
     title: '操作',
-    width: '200px',
-    ellipsis: true,
     align: 'center',
     slots: { customRender: 'action' }
   }
