@@ -103,3 +103,8 @@ export default defineComponent({
   }
 });
 </script>
+<style scoped>
+h3 {
+  margin: 20px 0;
+}
+</style>
