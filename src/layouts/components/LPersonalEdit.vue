@@ -87,7 +87,7 @@ export default defineComponent({
   },
   methods: {
     handleCancel() {
-      this.$emit('changeVisiblePsd', false);
+      this.$emit('update:visible', false);
     },
     updatePsd() {
       this.$refs.form
