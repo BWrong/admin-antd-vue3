@@ -2,7 +2,7 @@ import { reactive, toRefs } from 'vue';
 interface _IOptions {
   autoRun?: boolean;
   params?: any;
-  initData?: [];
+  initData?: any;
 }
 export default <T = any>(promiseFn: (runParams?: any) => Promise<any>, options: _IOptions = {}) => {
   let { autoRun = false, params = null, initData = [] } = options as _IOptions;
