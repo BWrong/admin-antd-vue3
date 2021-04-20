@@ -4,7 +4,7 @@
  * @Last Modified by: wangwenbing
  * @Last Modified time: 2019-05-24 13:53:33
  */
-import axios, { AxiosError, AxiosPromise, AxiosRequestConfig, AxiosResponse, IResponseData } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, IResponseData } from 'axios';
 import Cookie from 'js-cookie';
 // import Qs from 'qs';
 import message from './message';
@@ -16,8 +16,6 @@ import { handleRefreshToken, removeRequest, addRequest } from './helper';
 const { NODE_ENV, VUE_APP_API_HOST, VUE_APP_API_PREFIX } = process.env;
 const baseURL = NODE_ENV === 'production' ? VUE_APP_API_HOST : VUE_APP_API_PREFIX;
 
-let refreshDoing = false; // 刷新token加锁
-let requestCache: Map<string, boolean> = new Map(); // 请求暂存列表，列表中的请求会被取消
 const request = axios.create({
   timeout: 30000,
   baseURL,
@@ -33,17 +31,15 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     // 设置cancelToken对象，阻止重复请求。当上个请求未完成时，相同的请求不会进行
-    //  config.cancelToken = new axios.CancelToken((cancel) => addRequest(requestCache, config, cancel));
+    //  config.cancelToken = ganerCancelToken(config);
     // 处理token
     const token = getToken();
     if (!token) return config;
     config.headers['Authorization'] = `${appConfig.tokenPrefix} ${token}`;
     // token即将过期，刷新token
     // const tokenExpires = Cookie.get(appConfig.tokenExpiresKey);
-    // if (Number(tokenExpires) <= Date.now() && !config.isNotRefreshToken && !refreshDoing) {
-    //   refreshDoing = true; // 加锁，防止重复刷新
-    //   const refreshToken = Cookie.get(appConfig.refreshTokenKey);
-    //   handleRefreshToken(refreshToken).then(() => (refreshDoing = false));
+    // if (Number(tokenExpires) <= Date.now() && !config.isNotRefreshToken) {
+    //   handleRefreshToken(Cookie.get(appConfig.refreshTokenKey));
     // }
     return config;
   },
@@ -57,7 +53,7 @@ request.interceptors.response.use(
       return Promise.resolve(data);
     }
     // 相同请求不得在短时间内重复发送
-    removeRequest(requestCache, config);
+    // removeRequest(config);
     if (data.code === 200) {
       // if (['post', 'delete', 'put'].includes(config?.method as string) && !config.isNotTips) {
       //   data.message && message.success(data.message);
@@ -73,7 +69,7 @@ request.interceptors.response.use(
     message.destroy();
     if (axios.isCancel(error)) return Promise.reject(error);
     // 相同请求不得在短时间内重复发送
-    removeRequest(requestCache, error.config);
+    removeRequest(error.config);
     if (error.response) {
       if (error.response.status === 401) {
         message.destroy();
