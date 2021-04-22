@@ -138,7 +138,6 @@ module.exports = {
     });
   },
   css: {
-    extract: IS_PRODUCTION,
     sourceMap: !IS_PRODUCTION,
     loaderOptions: {
       less: {

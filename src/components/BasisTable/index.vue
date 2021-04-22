@@ -1,9 +1,6 @@
 <template>
   <div class="basic-table">
     <a-table bordered size="small" :rowKey="rowKey" :columns="computedColumns" :pagination="pagination" v-bind="$attrs">
-      <template #index="{ index }">
-        {{ index }}
-      </template>
       <template v-for="(item, key) in $slots" v-slot:[key]="data">
         <slot :name="key" v-bind="data"></slot>
       </template>

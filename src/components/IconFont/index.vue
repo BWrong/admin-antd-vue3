@@ -25,7 +25,7 @@ export default defineComponent({
     },
     style: {
       type: Object as PropType<StyleHTMLAttributes>,
-      default: {}
+      default:()=>{}
     }
   },
   setup(props) {
