@@ -8,6 +8,7 @@ interface IRefreshToken {
   refreshDoing?: boolean;
 }
 let requestCache: Map<string, boolean> = new Map(); // 请求暂存列表，列表中的请求会被取消
+const { tokenExpiresKey, refreshTokenKey } = appConfig;
 /**
  * 刷新token
  * @param {string} refreshToken
@@ -27,12 +28,15 @@ export const handleRefreshToken: IRefreshToken = (refreshToken) => {
     });
 };
 /**
- * 生成cancelToken
+ * 检查更新token
  * @param config
- * @returns
  */
-export function ganerCancelToken(config: AxiosRequestConfig) {
-  return new axios.CancelToken((cancel) => addRequest(config, cancel));
+export function checkAndUpdateToken(config: AxiosRequestConfig) {
+  //  token即将过期，刷新token
+  const tokenExpires = Cookie.get(tokenExpiresKey);
+  if (Number(tokenExpires) <= Date.now() && !config.isNotRefreshToken) {
+    handleRefreshToken(Cookie.get(refreshTokenKey));
+  }
 }
 /**
  * 生成存储的key
@@ -50,6 +54,14 @@ export function generateKey({ method, url, params }: AxiosRequestConfig) {
 export function addRequest(config: AxiosRequestConfig, cancel: any) {
   const key = generateKey(config);
   requestCache.has(key) ? cancel('请求被取消,config:', config) : requestCache.set(key, true);
+}
+/**
+ * 生成cancelToken
+ * @param config
+ * @returns
+ */
+export function ganerCancelToken(config: AxiosRequestConfig) {
+  return new axios.CancelToken((cancel) => addRequest(config, cancel));
 }
 /**
  * 从暂存列表删除请求，即释放拦截

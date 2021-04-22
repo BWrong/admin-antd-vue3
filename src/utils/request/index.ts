@@ -5,23 +5,20 @@
  * @Last Modified time: 2019-05-24 13:53:33
  */
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, IResponseData } from 'axios';
-import Cookie from 'js-cookie';
 // import Qs from 'qs';
 import message from './message';
 import appConfig from '@/config';
 import { HTTP_CODE } from '@/enums/http';
 import { logout } from '@/router';
 import { getToken } from '@/utils/token';
-import { handleRefreshToken, removeRequest, addRequest } from './helper';
-const { NODE_ENV, VUE_APP_API_HOST, VUE_APP_API_PREFIX } = process.env;
-const baseURL = NODE_ENV === 'production' ? VUE_APP_API_HOST : VUE_APP_API_PREFIX;
-
+import { checkAndUpdateToken, removeRequest, ganerCancelToken, addRequest } from './helper';
+const { apiHost, tokenPrefix } = appConfig;
 const request = axios.create({
   timeout: 30000,
-  baseURL,
+  baseURL: apiHost,
   // responseType: 'json',
   withCredentials: false, // 是否允许带cookie
-  // paramsSerializer:(params) => Qs.stringify(params, {allowDots: true}), // qs序列化
+  // paramsSerializer:(params) => Qs.stringify(params, {allowDots: true}), // 开启qs序列化
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
   }
@@ -35,12 +32,9 @@ request.interceptors.request.use(
     // 处理token
     const token = getToken();
     if (!token) return config;
-    config.headers['Authorization'] = `${appConfig.tokenPrefix} ${token}`;
-    // token即将过期，刷新token
-    // const tokenExpires = Cookie.get(appConfig.tokenExpiresKey);
-    // if (Number(tokenExpires) <= Date.now() && !config.isNotRefreshToken) {
-    //   handleRefreshToken(Cookie.get(appConfig.refreshTokenKey));
-    // }
+    config.headers['Authorization'] = `${tokenPrefix} ${token}`;
+    // 检查更新token
+    // checkAndUpdateToken(config);
     return config;
   },
   (error) => Promise.reject(error)
