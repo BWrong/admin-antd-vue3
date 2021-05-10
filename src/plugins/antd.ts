@@ -38,7 +38,8 @@ import {
   Popover,
   InputNumber,
   DatePicker,
-  Descriptions
+  Descriptions,
+  Result
 } from 'ant-design-vue';
 import '@/assets/styles/rewrite.less';
 export default (app: App): void => {
@@ -81,4 +82,5 @@ export default (app: App): void => {
   app.use(InputNumber);
   app.use(DatePicker);
   app.use(Descriptions);
+  app.use(Result);
 };
