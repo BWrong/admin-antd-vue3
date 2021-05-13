@@ -95,15 +95,18 @@ module.exports = {
     config.plugin('html').tap((args) => {
       // 修改title
       args[0].title = VUE_APP_API_TITLE;
-      // 注入版本信息
-      const GitRevision = new GitRevisionPlugin();
-      args[0].appVersion = `
-        app-version=${pkg.version},
-        git-hash=${GitRevision.version()},
-        git-branch=${GitRevision.branch()},
-        build-date=${new Date().toLocaleString()}
-      `;
       if (IS_PRODUCTION) {
+        // 注入版本信息
+        let appVersion = `app-version=${pkg.version},build-date=${new Date().toLocaleString()}`;
+        try {
+          const GitRevision = new GitRevisionPlugin();
+          appVersion += `,
+            git-hash=${GitRevision.version()},
+            git-branch=${GitRevision.branch()}`;
+        } catch (error) {
+          console.warn('当前项目未设置有效git仓库,无法注入git相关信息!');
+        }
+        args[0].appVersion = appVersion;
         // cdn
         ENABLE_CDN && (args[0].cdn = assetsCDN);
       }
