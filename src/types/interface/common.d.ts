@@ -8,7 +8,7 @@ export interface IMenu {
   type?: number;
   hide?: boolean;
   children?: IMenu[];
-  [K: string]: string;
+  [K: string]: any;
 }
 // 分页设置
 export interface IPagination {

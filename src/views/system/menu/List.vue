@@ -38,8 +38,8 @@
         <a-form-item has-feedback :label="`${menuType[form.type]}名称`" name="title">
           <a-input v-model:value="form.title" />
         </a-form-item>
-        <a-form-item has-feedback label="权限标识" name="code">
-          <a-input v-model:value="form.code" />
+        <a-form-item has-feedback label="权限标识" name="permission">
+          <a-input v-model:value="form.permission" />
         </a-form-item>
         <template v-if="form.type === 0">
           <a-form-item has-feedback label="图标" name="icon">
