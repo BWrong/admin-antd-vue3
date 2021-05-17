@@ -43,7 +43,6 @@ module.exports = {
 }
 ```
 
-在mock目录中，`index.js`用来做文件自动载入，而其他文件则为模拟数据，每个功能模块可以分割为一个文件，模块化管理。
 
 *提示：mock的这些文件是在webpack中使用的，需要遵循commonjs规范。*
 
