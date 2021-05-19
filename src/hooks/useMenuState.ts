@@ -15,7 +15,7 @@ function getActiveRoute(activeMenuPath: string, router: Router, activeRoutes: Ro
   let activeRoute = router.resolve(activeMenuPath);
   activeRoutes.unshift(activeRoute);
   let activeMenu = activeRoute.meta?.activeMenu;
-  return activeMenu ? getActiveRoute(activeMenu, router, activeRoutes) : activeRoutes;
+  return activeMenu && activeMenuPath !== activeMenu ? getActiveRoute(activeMenu, router, activeRoutes) : activeRoutes;
 }
 /**
  * 获取当前路由/菜单相关信息
@@ -28,7 +28,7 @@ export default (filter?: _IFilter) => {
   const matchedRoutes = computed(() => {
     let matched = [...route.matched];
     if (activeMenu.value) {
-      let activeRoutes = (getActiveRoute(activeMenu.value, router) as unknown) as RouteLocationMatched[];
+      let activeRoutes = getActiveRoute(activeMenu.value, router) as unknown as RouteLocationMatched[];
       matched.splice(matched.length - 1, 0, ...activeRoutes);
     }
     return filter ? matched.filter(filter) : matched;
