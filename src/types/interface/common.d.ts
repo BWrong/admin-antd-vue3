@@ -6,10 +6,10 @@ interface IResponseData {
 }
 // 分页接口返回数据
 interface IPageData {
-  current?: number;
-  list?: any[];
-  size?: number;
-  total?: number;
+  current: number;
+  list: any[];
+  size: number;
+  total: number;
   [key: string]: any;
 }
 

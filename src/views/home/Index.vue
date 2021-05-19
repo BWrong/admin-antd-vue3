@@ -54,7 +54,6 @@ import { defineComponent, inject, readonly } from 'vue';
 import usePromise from '@/hooks/usePromise';
 import configApi from '@/api/system/config';
 import { IPagination } from 'types/interface/common';
-
 const columns = readonly([
   {
     title: 'title',
