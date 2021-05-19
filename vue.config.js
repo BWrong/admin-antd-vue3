@@ -12,7 +12,7 @@ const productionGzipExtensions = ['js', 'css', 'html', 'svg'];
 const ENABLE_CDN = false; // 开启cdn
 // cdn配置
 const assetsCDN = {
-  // webpack build externals
+  // 需要cdn的资源需要在此处添加，并且和开发时安装的对应包版本必须一致
   externals: {
     vue: 'Vue',
     'vue-router': 'VueRouter',
@@ -23,8 +23,8 @@ const assetsCDN = {
   },
   css: [],
   js: [
-    '//cdn.jsdelivr.net/npm/vue@3.0.7/dist/vue.runtime.global.prod.js',
-    '//cdn.jsdelivr.net/npm/vue-router@4.0.4/dist/vue-router.global.prod.js',
+    '//cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.runtime.global.prod.js',
+    '//cdn.jsdelivr.net/npm/vue-router@4.0.6/dist/vue-router.global.prod.js',
     '//cdn.jsdelivr.net/npm/vuex@4.0.0/dist/vuex.global.prod.js',
     '//cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js',
     '//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js',

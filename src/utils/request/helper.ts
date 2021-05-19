@@ -8,7 +8,7 @@ interface IRefreshToken {
   refreshDoing?: boolean;
 }
 let requestCache: Map<string, boolean> = new Map(); // 请求暂存列表，列表中的请求会被取消
-const { tokenExpiresKey, refreshTokenKey } = appConfig;
+const { tokenExpiresKey, refreshTokenKey, tokenKey } = appConfig;
 /**
  * 刷新token
  * @param {string} refreshToken
@@ -19,9 +19,9 @@ export const handleRefreshToken: IRefreshToken = (refreshToken) => {
   auth
     .refreshToken({ refresh_token: refreshToken })
     .then((res: any) => {
-      Cookie.set(appConfig.tokenKey, res.access_token);
-      Cookie.set(appConfig.refreshTokenKey, res.refresh_token);
-      Cookie.set(appConfig.tokenExpiresKey, String(computedExpires(res.data.expires_in)));
+      Cookie.set(tokenKey, res.access_token);
+      Cookie.set(refreshTokenKey, res.refresh_token);
+      Cookie.set(tokenExpiresKey, String(computedExpires(res.data.expires_in)));
     })
     .finally(() => {
       handleRefreshToken.refreshDoing = false;

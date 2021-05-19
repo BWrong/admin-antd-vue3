@@ -3,7 +3,7 @@
  * @Github: https://github.com/BWrong
  * @Date: 2020-04-07 10:30:49
  * @LastEditors: Bwrong
- * @LastEditTime: 2021-04-02 10:51:31
+ * @LastEditTime: 2021-05-19 10:49:39
  */
 import dayjs from '@/plugins/dayjs';
 import Utf8 from 'crypto-js/enc-utf8';
@@ -153,4 +153,21 @@ export function downloadFile(content: BlobPart, filename: string) {
  */
 export function arrayToObj<T extends Record<string, any> = any, K extends keyof T = string>(arraryData: T[], key: K, value?: K) {
   return arraryData.reduce((temp, item) => ((temp[item[key]] = value ? item[value] : item), temp), {} as Record<T[K], T[K] | T>);
+}
+/**
+ * 获取根路径
+ * @param url
+ * @returns
+ */
+export function getRootPath(url: string) {
+  return '' + url.match(/^\/?[^/#?]+/);
+}
+/**
+ * 检查列表中的字段是否为非空
+ * @param data
+ * @param checkKeys
+ * @returns
+ */
+export function checkEmptyFieldOfList<T, K extends keyof T>(data: T[], checkKeys: K[]) {
+  return data.every((item) => checkKeys.every((subitem) => item[subitem]));
 }

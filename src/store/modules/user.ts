@@ -2,17 +2,11 @@ import { Module } from 'vuex';
 import { IState as IRootState } from '@/store';
 import { setStorage, getStorage } from '@/utils/storage';
 interface IState {
-  name: string;
-  avatar: string;
-  roles: string[];
   userinfo: object;
 }
 export default {
   namespaced: true,
   state: {
-    name: '',
-    avatar: '',
-    roles: [] as string[],
     userinfo: {}
   },
   mutations: {

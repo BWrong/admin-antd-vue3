@@ -1,10 +1,8 @@
 <template>
   <a-config-provider :locale="zhCN">
-    <div id="app">
-      <router-view v-slot="{ Component }">
-        <component :is="Component" />
-      </router-view>
-    </div>
+    <router-view v-slot="{ Component }">
+      <component :is="Component" />
+    </router-view>
   </a-config-provider>
 </template>
 <script lang="ts">
