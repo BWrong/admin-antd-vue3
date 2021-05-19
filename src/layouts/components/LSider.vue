@@ -5,7 +5,7 @@
         <template v-if="!item.hide">
           <a-sub-menu :key="item.path" v-if="item.children && item.children.length">
             <template #title>
-              <icon-font :type="item.icon" v-if="item.icon" font-size="16px" />
+              <icon-font :type="item.icon" v-if="item.icon" />
               <span>{{ item.title }}</span>
             </template>
             <template v-for="subItem in item.children">

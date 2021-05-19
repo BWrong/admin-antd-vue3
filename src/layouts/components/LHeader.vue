@@ -13,7 +13,7 @@
       </a-tooltip>
       <a-tooltip @click="$router.push('/system/message')" :title="`${count}未读消息`">
         <a-badge :count="count" class="quick">
-          <icon-font type="icon-bells" style="font-size: 22px" />
+          <icon-font type="icon-bells" />
         </a-badge>
       </a-tooltip>
       <a-dropdown>

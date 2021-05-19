@@ -5,7 +5,7 @@
         <l-logo style="margin: 0 20px 0 0"></l-logo>
       </template>
     </l-header>
-    <a-layout class="layout-main" style="padding-top: 64px">
+    <a-layout class="layout-main">
       <a-layout-sider :theme="theme" v-model:collapsed="collapse" :trigger="null" collapsible breakpoint="lg">
         <l-sider :menus="menus" :theme="theme" v-model:collapse="collapse"></l-sider>
       </a-layout-sider>
@@ -68,4 +68,7 @@ export default {
 </script>
 <style lang="less" scoped>
 @import '../assets/styles/layout.less';
+.layout-main {
+  padding-top: 64px;
+}
 </style>
