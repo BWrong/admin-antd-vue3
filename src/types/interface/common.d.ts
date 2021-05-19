@@ -1,15 +1,29 @@
-// 菜单
-export interface IMenu {
-  title: string;
-  path: string;
-  url?: string;
-  id?: number;
-  icon?: string;
-  type?: number;
-  hide?: boolean;
-  children?: IMenu[];
-  [K: string]: any;
+// 接口返回数据
+interface IResponseData {
+  code: number;
+  msg: string;
+  data: IResponseDataPage;
 }
+// 分页接口返回数据
+interface IPageData {
+  current?: number;
+  list?: any[];
+  size?: number;
+  total?: number;
+  [key: string]: any;
+}
+
+// 接口参数
+export interface IParams {
+  pageQuery?: {
+    page: number;
+    size?: number;
+  };
+  query?: {
+    [key: string]: any;
+  };
+}
+
 // 分页设置
 export interface IPagination {
   current: number;
@@ -26,24 +40,6 @@ export interface IPagination {
   simple?: boolean;
   size?: 'default' | 'small';
 }
-// 分页接口返回数据
-export interface IPageData {
-  currentPage: string;
-  items: any[];
-  pageSize: string;
-  totalPage: string;
-  totalRows: string;
-}
-// 接口参数
-export interface IParams {
-  pageQuery?: {
-    page: number;
-    size?: number;
-  };
-  query?: {
-    [key: string]: any;
-  };
-}
 // 每条记录基础属性
 export interface IRecordBase {
   createTime?: string;
@@ -51,4 +47,16 @@ export interface IRecordBase {
   updateTime?: string;
   updateUser?: string;
   id?: string;
+}
+// 菜单
+export interface IMenu {
+  title: string;
+  path: string;
+  url?: string;
+  id?: number;
+  icon?: string;
+  type?: number;
+  hide?: boolean;
+  children?: IMenu[];
+  [K: string]: any;
 }
