@@ -5,7 +5,7 @@
 - 私有变量或者私有方法建议以_开头命名。
 - class类名采用`kebab-case`，对大小写不敏感。
 ### 样式
-默认使用scss预处理器，如果需要定义全局变量和mixin，可以分别在`/src/assets/style/_variable.scss`和`/src/assets/style/_mixin.scss`,这两个文件会在每个scss文件自动引入，可以直接使用变量和mixin。
+如果需要定义全局变量和mixin，可以分别在`/src/assets/style/_variable`和`/src/assets/style/_mixin`,这两个文件会在每个相应格式的样式文件自动引入，可以直接使用变量和mixin。
 `common.css`为全局通用的样式。其他样式尽量采用`scoped`模式，尽量避免使用`important`更改优先级。
 
 ### Vue
