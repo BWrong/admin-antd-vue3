@@ -119,7 +119,7 @@ export default {
           let { username, password, code } = this.loginInfo;
           AuthApi.login({
             username,
-            password: cryptoPassword(password),
+            password: cryptoPassword(password, config.cryptoKey),
             code
           })
             .then((res) => {
