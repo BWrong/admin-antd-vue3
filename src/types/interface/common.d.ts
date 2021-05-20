@@ -5,9 +5,9 @@ interface IResponseData {
   data: IResponseDataPage;
 }
 // 分页接口返回数据
-interface IPageData {
+interface IPageData<T = any> {
   current: number;
-  list: any[];
+  list: T[];
   size: number;
   total: number;
   [key: string]: any;

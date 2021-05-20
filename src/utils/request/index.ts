@@ -4,16 +4,22 @@
  * @Last Modified by: wangwenbing
  * @Last Modified time: 2019-05-24 13:53:33
  */
-import { AxiosRequestConfig } from 'axios';
+import { AxiosPromise, AxiosRequestConfig } from 'axios';
+import { IPageData } from 'types/interface/common';
 import request from './request';
+
+interface IMethod {
+  (url: string, params?: object, config?: AxiosRequestConfig): AxiosPromise<IPageData>;
+}
+
 export default request;
 
-export const get = (url: string, params = {}, config: AxiosRequestConfig = {}) => request({ method: 'get', url, params, ...config });
+export const get: IMethod = (url, params = {}, config = {}) => request({ method: 'get', url, params, ...config });
 
-export const post = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'post', url, data, ...config });
+export const post: IMethod = (url, data = {}, config = {}) => request({ method: 'post', url, data, ...config });
 
-export const put = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'put', url, data, ...config });
+export const put: IMethod = (url, data = {}, config = {}) => request({ method: 'put', url, data, ...config });
 
-export const patch = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'patch', url, data, ...config });
+export const patch: IMethod = (url, data = {}, config = {}) => request({ method: 'patch', url, data, ...config });
 
-export const del = (url: string, data = {}, config: AxiosRequestConfig = {}) => request({ method: 'delete', url, data, ...config });
+export const del: IMethod = (url, data = {}, config = {}) => request({ method: 'delete', url, data, ...config });
