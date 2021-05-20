@@ -1,7 +1,7 @@
 const env = process.env;
 const IS_PRODUCTION = env.NODE_ENV === 'production';
 const apiHost = IS_PRODUCTION ? env.VUE_APP_API_HOST : env.VUE_APP_API_PREFIX;
-const pkg = require('../../package');
+import pkg from '../../package.json';
 const baseConfig = {
   appTitle: env.VUE_APP_TITLE, // 应用名称，用于显示在浏览器标签
   appVersion: pkg.version,
