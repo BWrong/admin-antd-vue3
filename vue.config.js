@@ -92,6 +92,12 @@ module.exports = {
       args[0].terserOptions.compress.drop_debugger = true;
       return args;
     });
+
+    // 限制fork-ts-checker插件内存, 防止占用较高
+    config.plugin('fork-ts-checker').tap((args) => {
+      args[0].typescript.memoryLimit = 500;
+      return args;
+    });
     config.plugin('html').tap((args) => {
       // 修改title
       args[0].title = VUE_APP_API_TITLE;
