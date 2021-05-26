@@ -20,9 +20,9 @@
   },
   "dependencies": {
     "@bwrong/auth-tool": "^1.2.4",
-    "ant-design-vue": "^2.1.5",
+    "ant-design-vue": "^2.1.6",
     "axios": "^0.21.1",
-    "core-js": "^3.12.1",
+    "core-js": "^3.13.0",
     "crypto-js": "^4.0.0",
     "dayjs": "^1.10.4",
     "js-cookie": "^2.2.1",
@@ -30,8 +30,8 @@
     "nprogress": "^0.2.0",
     "qs": "^6.10.1",
     "vue": "^3.0.11",
-    "vue-router": "^4.0.6",
-    "vuex": "^4.0.0"
+    "vue-router": "^4.0.8",
+    "vuex": "^4.0.1"
   },
   "devDependencies": {
     "@bwrong/mock": "0.0.14",
@@ -39,8 +39,8 @@
     "@types/js-cookie": "^2.2.6",
     "@types/lodash-es": "^4.17.4",
     "@types/nprogress": "^0.2.0",
-    "@typescript-eslint/eslint-plugin": "^4.23.0",
-    "@typescript-eslint/parser": "^4.23.0",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
     "@vue/cli-plugin-babel": "^4.5.13",
     "@vue/cli-plugin-eslint": "^4.5.13",
     "@vue/cli-plugin-router": "^4.5.13",
