@@ -8,5 +8,5 @@ export default (newTitle?: TMaybeRef<string | null | undefined>) => {
   });
   return title;
 };
-// 设置title：useTitle('newTitle')
+// 设置title：useTitle('newTitle') 或 useTitle().value= ’newTitle‘
 // 获取title（响应式的）：useTitle().value
