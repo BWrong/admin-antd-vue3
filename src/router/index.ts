@@ -7,6 +7,7 @@ import config from '@/config';
 import routes, { noMatchRoute } from './constRoutes';
 import asyncRoutes from './asyncRoutes';
 import { ganerAuthData } from '@bwrong/auth-tool';
+import useTitle from '@/hooks/useTitle';
 // import authApi from '@/api/auth';
 let routerLoaded = false; // 动态路由是否已加载
 let removeRouters: Array<() => void> = [];
@@ -39,7 +40,7 @@ router.beforeEach(async (to) => {
 router.afterEach((to) => {
   NProgress.done();
   // 设置页面标题
-  document.title = to.meta.title ? `${to.meta.title} - ${config.appTitle}` : `${config.appTitle}`;
+  useTitle(to.meta.title ? `${to.meta.title} - ${config.appTitle}` : `${config.appTitle}`);
 });
 
 // 获取路由
@@ -58,7 +59,11 @@ async function _getAllowRoutes(asyncRoutes: RouteRecordRaw[]) {
  * @param {*} permissions 菜单和权限标识集
  */
 function _ganerRoutesAndMenus(routes: Array<RouteRecordRaw>, permissions: any[]) {
-  const { routes: filterRoutes, menus, authMap } = ganerAuthData({
+  const {
+    routes: filterRoutes,
+    menus,
+    authMap
+  } = ganerAuthData({
     routes,
     permissions,
     authKey: 'permission'
