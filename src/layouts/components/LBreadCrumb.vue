@@ -17,7 +17,7 @@
         <template #overlay v-if="item.children?.length">
           <a-menu mode="inline">
             <template v-for="subitem in item.children">
-              <a-menu-item :key="subitem.path" v-if="subitem.meta && subitem.meta && !subitem.meta.activeMenu">
+              <a-menu-item :key="subitem.path" v-if="subitem.meta && subitem.meta && !subitem.meta.activeMenu" class="breadcrumb-menu-item">
                 <router-link :to="subitem.path"><icon-font :type="subitem.meta.icon" v-if="subitem.meta.icon" style="margin-right: 5px" />{{ subitem.meta.title }}</router-link>
               </a-menu-item>
             </template>
@@ -72,6 +72,12 @@ export default defineComponent({
   .home-ico {
     color: #d1e9ff;
     margin-right: 8px;
+  }
+}
+.breadcrumb-menu-item a {
+  color: @text-color;
+  &.router-link-active {
+    color: @primary-color;
   }
 }
 </style>
