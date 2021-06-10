@@ -25,7 +25,7 @@ export default defineComponent({
     },
     style: {
       type: Object as PropType<StyleHTMLAttributes>,
-      default:()=>{}
+      default: () => {}
     }
   },
   setup(props) {
@@ -50,5 +50,6 @@ export default defineComponent({
   /* vertical-align: -0.15em; */
   overflow: hidden;
   box-sizing: border-box;
+  line-height: 1 !important;
 }
 </style>

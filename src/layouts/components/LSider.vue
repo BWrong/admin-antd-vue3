@@ -1,6 +1,6 @@
 <template>
   <div class="x-sider">
-    <a-menu class="menu-box" :theme="theme" mode="inline" :inline-collapsed="collapse" :selected-keys="selectedKeys" v-model:open-keys="localOpeneds">
+    <a-menu class="menu-box" :theme="theme" mode="inline" :selected-keys="selectedKeys" v-model:open-keys="localOpeneds">
       <template v-for="item in menus">
         <template v-if="!item.hide">
           <a-sub-menu :key="item.path" v-if="item.children && item.children.length">
@@ -80,7 +80,7 @@ export default defineComponent({
   overflow-x: hidden;
   overflow-y: scroll;
   max-height: calc(100vh - 64px);
-  width: calc(100% + 17px);
+  width: calc(100% + 17px) !important;
   // transition: width 0.5s ease;
 }
 .sider-trigger {

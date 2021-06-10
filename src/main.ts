@@ -1,12 +1,12 @@
 import { createApp } from 'vue';
-import '@/assets/styles/common.less';
-import App from './App.vue';
 import store from './store';
 import router from './router';
 import plugins from '@/plugins';
 import directives from '@/directives';
-import components from '@/components';
 import config from '@/config';
+import '@/assets/styles/common.less';
+import components from '@/components';
+import App from './App.vue';
 const app = createApp(App);
 app.use(router);
 app.use(store);

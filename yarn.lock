@@ -1631,36 +1631,36 @@
     "semver" "^6.1.0"
     "strip-ansi" "^6.0.0"
 
-"@vue/compiler-core@3.0.11":
-  "integrity" "sha1-XvV55G17M2uHNSKHWNHCxQWq5po="
-  "resolved" "https://registry.npm.taobao.org/@vue/compiler-core/download/@vue/compiler-core-3.0.11.tgz"
-  "version" "3.0.11"
+"@vue/compiler-core@3.1.1":
+  "integrity" "sha1-TyxdcOq9RUZ1cUzIvSuX9qjvsZY="
+  "resolved" "https://registry.nlark.com/@vue/compiler-core/download/@vue/compiler-core-3.1.1.tgz"
+  "version" "3.1.1"
   dependencies:
     "@babel/parser" "^7.12.0"
     "@babel/types" "^7.12.0"
-    "@vue/shared" "3.0.11"
+    "@vue/shared" "3.1.1"
     "estree-walker" "^2.0.1"
     "source-map" "^0.6.1"
 
-"@vue/compiler-dom@3.0.11":
-  "integrity" "sha1-sV/ByQk3H9ZxdGAgulW12rSnMO4="
-  "resolved" "https://registry.npm.taobao.org/@vue/compiler-dom/download/@vue/compiler-dom-3.0.11.tgz?cache=0&sync_timestamp=1617321696823&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40vue%2Fcompiler-dom%2Fdownload%2F%40vue%2Fcompiler-dom-3.0.11.tgz"
-  "version" "3.0.11"
+"@vue/compiler-dom@3.1.1":
+  "integrity" "sha1-72DYVqwu3lsq1ccqemgSKJXj1lI="
+  "resolved" "https://registry.nlark.com/@vue/compiler-dom/download/@vue/compiler-dom-3.1.1.tgz"
+  "version" "3.1.1"
   dependencies:
-    "@vue/compiler-core" "3.0.11"
-    "@vue/shared" "3.0.11"
+    "@vue/compiler-core" "3.1.1"
+    "@vue/shared" "3.1.1"
 
-"@vue/compiler-sfc@^3.0.7", "@vue/compiler-sfc@>=3.0.9":
-  "integrity" "sha1-zYyiFUuIlntSH1rTsQ9fi2tmVnk="
-  "resolved" "https://registry.npm.taobao.org/@vue/compiler-sfc/download/@vue/compiler-sfc-3.0.11.tgz"
-  "version" "3.0.11"
+"@vue/compiler-sfc@^3.1.1", "@vue/compiler-sfc@>=3.1.0":
+  "integrity" "sha1-1ORQfAE9CyGfCxBrMX7FuxzeM5g="
+  "resolved" "https://registry.nlark.com/@vue/compiler-sfc/download/@vue/compiler-sfc-3.1.1.tgz"
+  "version" "3.1.1"
   dependencies:
     "@babel/parser" "^7.13.9"
     "@babel/types" "^7.13.0"
-    "@vue/compiler-core" "3.0.11"
-    "@vue/compiler-dom" "3.0.11"
-    "@vue/compiler-ssr" "3.0.11"
-    "@vue/shared" "3.0.11"
+    "@vue/compiler-core" "3.1.1"
+    "@vue/compiler-dom" "3.1.1"
+    "@vue/compiler-ssr" "3.1.1"
+    "@vue/shared" "3.1.1"
     "consolidate" "^0.16.0"
     "estree-walker" "^2.0.1"
     "hash-sum" "^2.0.0"
@@ -1672,13 +1672,13 @@
     "postcss-selector-parser" "^6.0.4"
     "source-map" "^0.6.1"
 
-"@vue/compiler-ssr@3.0.11":
-  "integrity" "sha1-rFoF/RJXQS+mYHnII9ggO2qImhM="
-  "resolved" "https://registry.npm.taobao.org/@vue/compiler-ssr/download/@vue/compiler-ssr-3.0.11.tgz"
-  "version" "3.0.11"
+"@vue/compiler-ssr@3.1.1":
+  "integrity" "sha1-HQi5hgE5cljtBZt1lm4OlKOF13A="
+  "resolved" "https://registry.nlark.com/@vue/compiler-ssr/download/@vue/compiler-ssr-3.1.1.tgz"
+  "version" "3.1.1"
   dependencies:
-    "@vue/compiler-dom" "3.0.11"
-    "@vue/shared" "3.0.11"
+    "@vue/compiler-dom" "3.1.1"
+    "@vue/shared" "3.1.1"
 
 "@vue/component-compiler-utils@^3.1.0", "@vue/component-compiler-utils@^3.1.2":
   "integrity" "sha1-j4UYLO7Sjps8dTE95mn4MWbRHl0="
@@ -1720,34 +1720,34 @@
   "resolved" "https://registry.npm.taobao.org/@vue/preload-webpack-plugin/download/@vue/preload-webpack-plugin-1.1.2.tgz"
   "version" "1.1.2"
 
-"@vue/reactivity@3.0.11":
-  "integrity" "sha1-B7WINJ/QViaxfzUAy+99S9tNvQs="
-  "resolved" "https://registry.npm.taobao.org/@vue/reactivity/download/@vue/reactivity-3.0.11.tgz"
-  "version" "3.0.11"
+"@vue/reactivity@3.1.1":
+  "integrity" "sha1-nAL9FGpsOwPn1li3z3b0tpsPmMg="
+  "resolved" "https://registry.nlark.com/@vue/reactivity/download/@vue/reactivity-3.1.1.tgz"
+  "version" "3.1.1"
   dependencies:
-    "@vue/shared" "3.0.11"
+    "@vue/shared" "3.1.1"
 
-"@vue/runtime-core@3.0.11":
-  "integrity" "sha1-xS38as8yFUk2I1UsHCkZCAxWLkQ="
-  "resolved" "https://registry.npm.taobao.org/@vue/runtime-core/download/@vue/runtime-core-3.0.11.tgz?cache=0&sync_timestamp=1617321642288&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40vue%2Fruntime-core%2Fdownload%2F%40vue%2Fruntime-core-3.0.11.tgz"
-  "version" "3.0.11"
+"@vue/runtime-core@3.1.1":
+  "integrity" "sha1-VCEQwJpkPX2AZGovBxr/azJMQVg="
+  "resolved" "https://registry.nlark.com/@vue/runtime-core/download/@vue/runtime-core-3.1.1.tgz"
+  "version" "3.1.1"
   dependencies:
-    "@vue/reactivity" "3.0.11"
-    "@vue/shared" "3.0.11"
+    "@vue/reactivity" "3.1.1"
+    "@vue/shared" "3.1.1"
 
-"@vue/runtime-dom@3.0.11":
-  "integrity" "sha1-elUt8hkHlCch/raWHEGOIippkzc="
-  "resolved" "https://registry.npm.taobao.org/@vue/runtime-dom/download/@vue/runtime-dom-3.0.11.tgz?cache=0&sync_timestamp=1617321643408&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40vue%2Fruntime-dom%2Fdownload%2F%40vue%2Fruntime-dom-3.0.11.tgz"
-  "version" "3.0.11"
+"@vue/runtime-dom@3.1.1":
+  "integrity" "sha1-VTm7zhMtKfZEW0lky3tBZKiaXOY="
+  "resolved" "https://registry.nlark.com/@vue/runtime-dom/download/@vue/runtime-dom-3.1.1.tgz"
+  "version" "3.1.1"
   dependencies:
-    "@vue/runtime-core" "3.0.11"
-    "@vue/shared" "3.0.11"
+    "@vue/runtime-core" "3.1.1"
+    "@vue/shared" "3.1.1"
     "csstype" "^2.6.8"
 
-"@vue/shared@3.0.11":
-  "integrity" "sha1-INIt0Np9NYuyHBf5vehigVJkLHc="
-  "resolved" "https://registry.npm.taobao.org/@vue/shared/download/@vue/shared-3.0.11.tgz"
-  "version" "3.0.11"
+"@vue/shared@3.1.1":
+  "integrity" "sha1-IofPw9wg5bIK62XCw6VlM73KgBw="
+  "resolved" "https://registry.nlark.com/@vue/shared/download/@vue/shared-3.1.1.tgz"
+  "version" "3.1.1"
 
 "@vue/web-component-wrapper@^1.2.0":
   "integrity" "sha1-trQKdiVCnSvXwigd26YB7QXcfxo="
@@ -2053,10 +2053,10 @@
   dependencies:
     "color-convert" "^2.0.1"
 
-"ant-design-vue@^2.2.0-beta.1":
-  "integrity" "sha1-g++lec2ya4o8BGKUj1pWVvmtu30="
-  "resolved" "https://registry.nlark.com/ant-design-vue/download/ant-design-vue-2.2.0-beta.1.tgz"
-  "version" "2.2.0-beta.1"
+"ant-design-vue@^2.2.0-beta.2":
+  "integrity" "sha1-9qlyRageSqv7eSw/8XKSkZohEqc="
+  "resolved" "https://registry.nlark.com/ant-design-vue/download/ant-design-vue-2.2.0-beta.2.tgz?cache=0&sync_timestamp=1623136656408&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fant-design-vue%2Fdownload%2Fant-design-vue-2.2.0-beta.2.tgz"
+  "version" "2.2.0-beta.2"
   dependencies:
     "@ant-design-vue/use" "^0.0.1-0"
     "@ant-design/icons-vue" "^6.0.0"
@@ -3833,9 +3833,9 @@
     "css-tree" "^1.1.2"
 
 "csstype@^2.6.8":
-  "integrity" "sha1-VE1p9UcBO4WkDRW/912zjzT+nDk="
-  "resolved" "https://registry.npm.taobao.org/csstype/download/csstype-2.6.16.tgz"
-  "version" "2.6.16"
+  "integrity" "sha1-TPMOuH4dGgBdi2UQ+VKSQT9qHA4="
+  "resolved" "https://registry.nlark.com/csstype/download/csstype-2.6.17.tgz?cache=0&sync_timestamp=1618818427821&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcsstype%2Fdownload%2Fcsstype-2.6.17.tgz"
+  "version" "2.6.17"
 
 "currently-unhandled@^0.4.1":
   "integrity" "sha1-mI3zP+qxke95mmE2nddsF635V+o="
@@ -10824,14 +10824,14 @@
   dependencies:
     "is-plain-object" "3.0.1"
 
-"vue@^2.0.0 || ^3.0.0", "vue@^3.0.0", "vue@^3.0.11", "vue@^3.0.2", "vue@>=3.0.9":
-  "integrity" "sha1-yC+VlMv03MhpJB1MjdPgjZqPS18="
-  "resolved" "https://registry.npm.taobao.org/vue/download/vue-3.0.11.tgz?cache=0&sync_timestamp=1617321643721&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-3.0.11.tgz"
-  "version" "3.0.11"
+"vue@^2.0.0 || ^3.0.0", "vue@^3.0.0", "vue@^3.0.2", "vue@^3.1.1", "vue@>=3.1.0", "vue@3.1.1":
+  "integrity" "sha1-mtZVdYoPpsDe5bPSQx05Eqmzgao="
+  "resolved" "https://registry.nlark.com/vue/download/vue-3.1.1.tgz"
+  "version" "3.1.1"
   dependencies:
-    "@vue/compiler-dom" "3.0.11"
-    "@vue/runtime-dom" "3.0.11"
-    "@vue/shared" "3.0.11"
+    "@vue/compiler-dom" "3.1.1"
+    "@vue/runtime-dom" "3.1.1"
+    "@vue/shared" "3.1.1"
 
 "vuex@^4.0.1":
   "integrity" "sha1-6DxUHW8xFzlp76uyxdHEZbaCiH4="

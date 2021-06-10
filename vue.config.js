@@ -3,7 +3,6 @@ const mockServer = require('@bwrong/mock');
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
-const openInEditor = require('launch-editor-middleware');
 const pkg = require('./package');
 const { VUE_APP_API_HOST, VUE_APP_API_TITLE, VUE_APP_API_PREFIX } = process.env;
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
@@ -40,8 +39,6 @@ module.exports = {
     open: true,
     port: 8080,
     before(app) {
-      // 支持在vue-dev-tools中打开组件
-      app.use('/__open-in-editor', openInEditor());
       // 数据mock
       IS_MOCK &&
         mockServer(app, resolve('./mock/'), {
