@@ -1,6 +1,6 @@
 <template>
   <a-modal title="修改密码" :visible="visible" :confirm-loading="confirmLoading" @cancel="handleCancel" :keyboard="false" :maskClosable="false">
-    <a-form class="form" :model="updatePwdForm" :rules="rules" @keydown.enter="updatePsd('updatePsdForm')" ref="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
+    <a-form class="form" :model="updatePwdForm" :rules="rules" @keydown.enter="updatePsd()" ref="formRef" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
       <a-form-item name="oldPassword" label="原始密码">
         <a-input auto-complete="off" placeholder="请输入原始密码" type="password" v-model:value="updatePwdForm.oldPassword"></a-input>
       </a-form-item>
@@ -12,7 +12,7 @@
       </a-form-item>
     </a-form>
     <template #footer>
-      <a-button style="margin: 10px 0" :loading="loading" @click.prevent="updatePsd('updatePsdForm')" type="primary">
+      <a-button style="margin: 10px 0" :loading="loading" @click.prevent="updatePsd()" type="primary">
         <template #icon><icon-font type="icon-check" /></template>
         提 交</a-button
       >
@@ -20,8 +20,8 @@
   </a-modal>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script lang="ts">
+import { defineComponent, reactive, ref, toRefs } from 'vue';
 import { cryptoPassword } from '@/utils';
 import { message } from 'ant-design-vue';
 export default defineComponent({
@@ -31,23 +31,10 @@ export default defineComponent({
       default: false
     }
   },
-  data() {
-    let validateNewPassword = async (rule, value) => {
-      let regx = new RegExp(/(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{6,15}$)/);
-      if (regx.test(value)) {
-        return Promise.resolve();
-      } else {
-        return Promise.reject('长度至少8位，至少一个大写字母，一个小写字母，一个特殊字符，一个数字！');
-      }
-    };
-    let validateRePassword = async (rule, value) => {
-      if (value !== this.updatePwdForm.newPassword) {
-        return Promise.reject('两次输入的新密码不一致');
-      } else {
-        return Promise.resolve();
-      }
-    };
-    return {
+  emits: ['update:visible'],
+  setup(props, { emit }) {
+    let formRef = ref();
+    let state = reactive({
       confirmLoading: false,
       loading: false,
       updatePwdForm: {
@@ -83,18 +70,31 @@ export default defineComponent({
           { validator: validateRePassword }
         ]
       }
-    };
-  },
-  methods: {
-    handleCancel() {
-      this.$emit('update:visible', false);
-    },
-    updatePsd() {
-      this.$refs.form
+    });
+    async function validateNewPassword(rule: object, value: string) {
+      let regx = new RegExp(/(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{6,15}$)/);
+      if (regx.test(value)) {
+        return Promise.resolve();
+      } else {
+        return Promise.reject('长度至少8位，至少一个大写字母，一个小写字母，一个特殊字符，一个数字！');
+      }
+    }
+    async function validateRePassword(rule: object, value: string) {
+      if (value !== state.updatePwdForm.newPassword) {
+        return Promise.reject('两次输入的新密码不一致');
+      } else {
+        return Promise.resolve();
+      }
+    }
+    function handleCancel() {
+      emit('update:visible', false);
+    }
+    function updatePsd() {
+      formRef.value
         .validate()
         .then(() => {
-          this.loading = true;
-          let { oldPassword, newPassword, reNewPassword } = this.updatePwdForm;
+          state.loading = true;
+          let { oldPassword, newPassword, reNewPassword } = state.updatePwdForm;
           let params = {
             oldPassword: cryptoPassword(oldPassword),
             newPassword: cryptoPassword(newPassword),
@@ -102,13 +102,19 @@ export default defineComponent({
           };
           console.log(params);
           message.success('操作成功！');
-          this.$emit('update:visible', false);
+          emit('update:visible', false);
         })
-        .catch((err) => {
+        .catch((err: Error) => {
           console.error(err);
-          this.loading = false;
+          state.loading = false;
         });
     }
+    return {
+      ...toRefs(state),
+      formRef,
+      handleCancel,
+      updatePsd
+    };
   }
 });
 </script>

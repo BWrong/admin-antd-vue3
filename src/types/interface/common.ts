@@ -1,11 +1,11 @@
 // 接口返回数据
-interface IResponseData {
+export interface IResponseData {
   code: number;
   msg: string;
-  data: IResponseDataPage;
+  data: IPageData;
 }
 // 分页接口返回数据
-interface IPageData<T = any> {
+export interface IPageData<T = any> {
   current: number;
   list: T[];
   size: number;

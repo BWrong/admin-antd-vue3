@@ -34,7 +34,7 @@ import LHeader from '@/layouts/components/LHeader.vue';
 import LBreadCrumb from '@/layouts/components/LBreadCrumb.vue';
 import { convertToTree } from '@/utils';
 import { getStorage } from '@/utils/storage';
-import { IMenu } from '@/types/interface/common';
+import { IMenu } from 'types/interface/common';
 export default {
   name: 'vertical-layout',
   components: {

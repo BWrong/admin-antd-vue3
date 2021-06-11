@@ -3,12 +3,12 @@
   <span v-else>{{ value }}</span>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue';
 export default defineComponent({
   props: {
     value: {
-      type: String,
+      type: [Number, String],
       default: ''
     },
     isEdit: {
@@ -17,10 +17,12 @@ export default defineComponent({
     }
   },
   emits: ['update:value'],
-  methods: {
-    handleInput(value) {
-      this.$emit('update:value', value);
-    }
+  setup(props, { emit }) {
+    return {
+      handleInput(value: string) {
+        emit('update:value', value);
+      }
+    };
   }
 });
 </script>

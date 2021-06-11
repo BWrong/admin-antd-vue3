@@ -9,6 +9,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowJs": true,
+    "noImplicitAny": false, // 无隐含的any
     "resolveJsonModule": true, // 允许导入json
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,

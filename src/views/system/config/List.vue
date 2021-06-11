@@ -19,7 +19,7 @@
     </a-card>
     <!-- 新增编辑 -->
     <a-modal v-model:visible="isShowEdit" :title="isAdd ? '新建' : '编辑'" :keyboard="false" :mask-closable="false" @ok="handleOk" :after-close="handleClose">
-      <a-form ref="form" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
+      <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
         <a-form-item label="配置项代码" name="code">
           <a-input v-model:value="form.code" :disabled="!isAdd" />
         </a-form-item>
@@ -31,31 +31,33 @@
         </a-form-item>
         <a-form-item label="配置类型" name="type">
           <a-select v-model:value="form.type">
-            <a-select-option :value="String(item.value)" v-for="item in types" :key="item.value"> {{ item.title }} </a-select-option>
+            <a-select-option :value="item.value" v-for="item in types" :key="item.value"> {{ item.title }} </a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="说明" name="describe">
-          <a-textarea :rows="3" v-model:value="form.discription" />
+          <a-textarea :rows="3" v-model:value="form.describe" />
         </a-form-item>
       </a-form>
     </a-modal>
   </div>
 </template>
 
-<script>
-import configComponent from './components/index.ts';
+<script lang="tsx">
+import configComponent from './components';
 import configApi from '@/api/system/config';
 import { message } from 'ant-design-vue';
-const initForm = {
+import { defineComponent, inject, reactive, ref, toRefs } from 'vue';
+import { IPagination } from 'types/interface/common';
+import { IConfig, IConfigComponent } from 'types/interface/system';
+const initForm: IConfig = {
   code: '',
   title: '',
   value: '',
   type: configComponent[0].value,
   describe: ''
 };
-export default {
-  inject: ['$pagination'],
-  data() {
+export default defineComponent({
+  setup() {
     const columns = [
       {
         title: '配置项代码',
@@ -70,7 +72,7 @@ export default {
         align: 'center',
         width: 150,
         customRender: ({ text }) => {
-          const type = configComponent.find((item) => item.value === Number(text));
+          const type = configComponent.find((item) => item.value === Number(text)) as IConfigComponent;
           return type.title;
         }
       },
@@ -81,8 +83,8 @@ export default {
         align: 'center',
         width: 150,
         customRender: ({ text }) => {
-          const type = configComponent.find((item) => item.value === Number(text));
-          return type?.component ? <type.component value={String(text)} is-edit={false} title={text}></type.component> : '';
+          const type = configComponent.find((item) => item.value === text);
+          return type?.component ? <type.component value={text} is-edit={false}></type.component> : '';
         }
       },
       {
@@ -90,86 +92,96 @@ export default {
         dataIndex: 'describe',
         ellipsis: true,
         customRender: ({ text }) => (
-          <a-tooltip>
-            <template slot="title">{text}</template>
+          <a-tooltip title={text}>
             <div class="text-nowrap">{text}</div>
           </a-tooltip>
         )
       },
       { title: '操作', slots: { customRender: 'action' }, align: 'center', width: 200 }
     ];
-    return {
+    let pagination = reactive({ ...inject<IPagination>('$pagination') });
+    let tableState = reactive({
       searchWord: '',
-      tableData: [],
+      tableData: [] as IConfig[],
       tableLoading: false,
-      types: configComponent,
-      columns: Object.freeze(columns),
-      pagination: {
-        ...this.$pagination
-      },
+      types: configComponent
+    });
+    function getData(pageNow = 1) {
+      tableState.tableLoading = true;
+      configApi
+        .list({
+          searchWord: tableState.searchWord,
+          pageSize: pagination.pageSize,
+          pageNow
+        })
+        .then((res) => {
+          pagination.current = res.current;
+          pagination.total = res.total;
+          tableState.tableData = res.list;
+          tableState.tableLoading = false;
+        });
+    }
+    getData(1);
+    function handleSearch(val: string) {
+      console.log(val);
+      getData(1);
+    }
+    function handleTableChange(paginationConfig: IPagination) {
+      pagination = paginationConfig;
+      getData(paginationConfig.current);
+    }
+    const formRef = ref();
+    let editState = reactive({
       isShowEdit: false,
       isAdd: true,
-      form: {},
+      form: {} as IConfig,
       rules: {
         code: [{ required: true, trigger: 'blur', message: '请输入配置项代码' }],
         title: [{ required: true, trigger: 'blur', message: '请输入配置项名称' }],
         value: [{ required: true, trigger: 'blur', message: '请输入配置项值' }],
         type: [{ required: true, trigger: 'blur', message: '请选择配置类型' }]
       }
-    };
-  },
-  created() {
-    this.getData(1);
-  },
-  methods: {
-    getData(pageNow = 1) {
-      this.tableLoading = true;
-      configApi
-        .list({
-          searchWord: this.searchWord,
-          pageSize: this.pagination.pageSize,
-          pageNow
-        })
-        .then((res) => {
-          this.pagination.current = res.current;
-          this.pagination.total = res.total;
-          this.tableData = res.list;
-          this.tableLoading = false;
-        });
-    },
-    handleAdd() {
-      this.isAdd = true;
-      this.isShowEdit = true;
-      this.form = { ...initForm };
-    },
-    handleEdit(row) {
+    });
+    function handleAdd() {
+      editState.isAdd = true;
+      editState.isShowEdit = true;
+      editState.form = { ...initForm };
+    }
+    function handleEdit(row: IConfig) {
       console.log(row);
-      this.isAdd = false;
-      this.isShowEdit = true;
-      this.form = { ...row };
-    },
-    handleDel(row) {
+      editState.isAdd = false;
+      editState.isShowEdit = true;
+      editState.form = { ...row };
+    }
+    function handleDel(row: IConfig) {
       console.log(row);
       message.success('操作成功');
-    },
-    handleSearch(val) {
-      console.log(val);
-      this.getData(1);
-    },
-    handleTableChange(pagination) {
-      this.pagination = pagination;
-      this.getData(pagination.current);
-    },
-    handleClose() {
-      this.$refs.form.resetFields();
-      this.isShowEdit = false;
-    },
-    handleOk() {
-      this.$refs.form.validate().then(() => {
+    }
+    function handleClose() {
+      formRef.value.resetFields();
+      editState.isShowEdit = false;
+    }
+    function handleOk() {
+      formRef.value.validate().then(() => {
         message.success('操作成功');
-        this.isShowEdit = false;
+        editState.isShowEdit = false;
       });
     }
+    return {
+      columns,
+      pagination,
+      ...toRefs(tableState),
+      getData,
+      handleSearch,
+      handleTableChange,
+      formRef,
+      ...toRefs(editState),
+      handleAdd,
+      handleEdit,
+      handleDel,
+      handleClose,
+      handleOk
+    };
   }
-};
+});
 </script>

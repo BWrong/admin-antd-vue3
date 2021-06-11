@@ -3,7 +3,7 @@
     <login-background></login-background>
     <a-card class="login-form">
       <h3>{{ appTitle }}</h3>
-      <a-form :model="loginInfo" :rules="rules" @keydown.enter="handleLogin" class="form" :wrapperCol="{ span: 24 }" ref="loginForm">
+      <a-form :model="loginInfo" :rules="rules" @keydown.enter="handleLogin" class="form" :wrapperCol="{ span: 24 }" ref="formRef">
         <a-form-item name="username">
           <a-input placeholder="账号" type="text" v-model:value="loginInfo.username">
             <template #prefix>
@@ -42,7 +42,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { set } from 'js-cookie';
 import { setStorage } from '@/utils/storage';
 import config from '@/config';
@@ -51,13 +51,18 @@ import UpdateLog from './components/UpdateLog.vue';
 import LoginBackground from './components/LoginBackground.vue';
 import { cryptoPassword } from '@/utils';
 import { message } from 'ant-design-vue';
-export default {
+import { computed, defineComponent, reactive, ref, toRefs } from 'vue';
+import { LocationQuery, useRoute, useRouter } from 'vue-router';
+export default defineComponent({
   components: {
     LoginBackground,
     UpdateLog
   },
-  data() {
-    return {
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    let formRef = ref();
+    let state = reactive({
       loginInfo: {
         username: 'admin',
         password: '123456',
@@ -95,75 +100,78 @@ export default {
       version: config.appVersion,
       codeSrc: '',
       isShowModal: false
-    };
-  },
-  computed: {
-    redirect() {
+    });
+    const redirect = computed(() => {
       let noRedirect = ['/err', '/login'];
-      let redirectUrl = this.$route.query.redirect || '/';
+      let redirectUrl = (route.query.redirect as string) || '/';
       return noRedirect.includes(redirectUrl) ? '/' : redirectUrl;
-    }
-  },
-  methods: {
+    });
     // 验证码
-    changeCode() {
+    function changeCode() {
       let str = new Date().getTime();
-      this.codeSrc = `${config.apiHost}/code/` + str;
-    },
-    // 登录
-    handleLogin(formName) {
-      this.$refs.loginForm
-        .validate()
-        .then(() => {
-          this.loading = true;
-          let { username, password, code } = this.loginInfo;
-          AuthApi.login({
-            username,
-            password: cryptoPassword(password, config.cryptoKey),
-            code
-          })
-            .then((res) => {
-              message.success('登录成功！');
-              set(config.tokenKey, res.access_token);
-              set(config.refreshTokenKey, res.refresh_token);
-              set(config.tokenExpiresKey, Date.now() + res.expires_in * 1000 - config.refreshAheadTime);
-              this.getMenuList();
-              this.loading = false;
-            })
-            .catch((err) => {
-              console.log(err);
-              this.loading = false;
-              this.changeCode();
-            });
-        })
-        .catch((err) => {
-          console.log(err);
-          this.loading = false;
-          message.error('用户名或密码输入不正确！');
-          this.changeCode();
-        });
-    },
-    getOtherQuery(query) {
+      state.codeSrc = `${config.apiHost}/code/` + str;
+    }
+    function getOtherQuery(query: LocationQuery) {
       return Object.keys(query).reduce((acc, cur) => {
         return cur !== 'redirect' ? (acc[cur] = query[cur]) : acc;
-      }, {});
-    },
+      }, {} as any);
+    }
     // 储存菜单及用户信息
-    getMenuList() {
-      AuthApi.getMenus({}).then((res) => {
+    async function getMenuList() {
+      await AuthApi.getMenus().then((res) => {
         // 存储用户信息
         setStorage('userinfo', res.detail);
         setStorage('permissions', res.btnPermissions);
         // 存储返回的菜单
         setStorage('rawMenu', res.menus);
-        this.$router.replace({
-          path: this.redirect,
-          query: this.getOtherQuery(this.$route.query)
-        });
       });
     }
+
+    // 登录
+    function handleLogin() {
+      formRef.value
+        .validate()
+        .then(() => {
+          state.loading = true;
+          let { username, password, code } = state.loginInfo;
+          AuthApi.login({
+            username,
+            password: cryptoPassword(password, config.cryptoKey),
+            code
+          })
+            .then(async (res) => {
+              message.success('登录成功！');
+              set(config.tokenKey, res.access_token);
+              set(config.refreshTokenKey, res.refresh_token);
+              set(config.tokenExpiresKey, String(Date.now() + res.expires_in * 1000 - config.refreshAheadTime));
+              await getMenuList();
+              router.replace({
+                path: redirect.value,
+                query: getOtherQuery(route.query)
+              });
+              state.loading = false;
+            })
+            .catch((err) => {
+              console.log(err);
+              state.loading = false;
+              changeCode();
+            });
+        })
+        .catch((err: Error) => {
+          console.log(err);
+          state.loading = false;
+          message.error('用户名或密码输入不正确！');
+          changeCode();
+        });
+    }
+    return {
+      ...toRefs(state),
+      formRef,
+      changeCode,
+      handleLogin
+    };
   }
-};
+});
 </script>
 <style lang="less" scoped>
 .login-page {
