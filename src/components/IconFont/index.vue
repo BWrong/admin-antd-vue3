@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, StyleHTMLAttributes } from 'vue';
+import { computed, defineComponent } from 'vue';
 export default defineComponent({
   name: 'IconFont',
   props: {
@@ -22,18 +22,13 @@ export default defineComponent({
     color: {
       type: String,
       default: ''
-    },
-    style: {
-      type: Object as PropType<StyleHTMLAttributes>,
-      default: () => {}
     }
   },
   setup(props) {
     const computedStyle = computed(() => {
       return {
         color: props.color,
-        fontSize: props.fontSize,
-        ...props.style
+        fontSize: props.fontSize
       };
     });
     return {
