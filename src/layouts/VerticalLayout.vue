@@ -23,10 +23,9 @@
     </a-layout>
   </a-layout>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
 import LSider from '@/layouts/components/LSider.vue';
 import LLogo from '@/layouts/components/LLogo.vue';
 import LFooter from '@/layouts/components/LFooter.vue';
@@ -34,37 +33,20 @@ import LHeader from '@/layouts/components/LHeader.vue';
 import LBreadCrumb from '@/layouts/components/LBreadCrumb.vue';
 import { convertToTree } from '@/utils';
 import { getStorage } from '@/utils/storage';
-import { IMenu } from 'types/interface/common';
-export default {
-  name: 'vertical-layout',
-  components: {
-    LSider,
-    LFooter,
-    LHeader,
-    LLogo,
-    LBreadCrumb
-  },
-  setup() {
-    const store = useStore();
-    const theme = computed(() => store.state.theme);
-    // const { push } = useRouter();
-    // let userInfo = getStorage('userinfo');
-    // if (userInfo) {
-    //   store.commit('user/SET_USERINFO', userInfo);
-    // } else {
-    //   push('/login');
-    // }
-    let menus: IMenu[] = getStorage('menus') || [];
-    menus = menus.filter((item) => item.type === 0);
-    menus = convertToTree({ data: menus, pid: 0 });
-    let collapse = ref(false);
-    return {
-      theme,
-      menus,
-      collapse
-    };
-  }
-};
+import type { IMenu } from 'types/interface/common';
+const store = useStore();
+const theme = computed(() => store.state.theme);
+// const { push } = useRouter();
+// let userInfo = getStorage('userinfo');
+// if (userInfo) {
+//   store.commit('user/SET_USERINFO', userInfo);
+// } else {
+//   push('/login');
+// }
+let menus: IMenu[] = getStorage('menus') || [];
+menus = menus.filter((item) => item.type === 0);
+menus = convertToTree({ data: menus, pid: 0 });
+let collapse = ref(false);
 </script>
 <style lang="less" scoped>
 @import '../assets/styles/layout.less';

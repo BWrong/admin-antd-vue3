@@ -1,27 +1,22 @@
 <template>
-  <a-switch checked-children="开" un-checked-children="关" :default-checked="value === 1" @change="onChange" v-bind="$attrs" />
+  <a-switch checked-children="开" un-checked-children="关" :default-checked="value === 1" @change="hanldeChange" v-bind="attrs" />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  props: {
-    value: {
-      type: Number,
-      default: 0
-    },
-    isEdit: {
-      type: Boolean,
-      default: true
-    }
+<script lang="ts" setup>
+import { defineEmits, defineProps, useAttrs } from 'vue';
+const props = defineProps({
+  value: {
+    type: [Number, String],
+    default: ''
   },
-  emits: ['update:value'],
-  setup(props, { emit }) {
-    return {
-      onChange(value: string) {
-        emit('update:value', value);
-      }
-    };
+  isEdit: {
+    type: Boolean,
+    default: true
   }
 });
+const attrs = useAttrs();
+const emit = defineEmits(['update:value']);
+function hanldeChange(value: string) {
+  emit('update:value', value);
+}
 </script>

@@ -16,6 +16,7 @@ module.exports = {
     quotes: [1, 'single'],
     'object-shorthand': 1,
     camelcase: 1,
+    // "@vue/script-setup-uses-vars":1,
     '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/ban-types': 0,

@@ -6,35 +6,27 @@
   </span>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue';
-export default defineComponent({
-  name: 'IconFont',
-  props: {
-    type: {
-      type: String,
-      required: true
-    },
-    fontSize: {
-      type: String,
-      default: ''
-    },
-    color: {
-      type: String,
-      default: ''
-    }
+<script lang="ts" setup>
+import { computed, defineProps } from 'vue';
+const props = defineProps({
+  type: {
+    type: String,
+    required: true
   },
-  setup(props) {
-    const computedStyle = computed(() => {
-      return {
-        color: props.color,
-        fontSize: props.fontSize
-      };
-    });
-    return {
-      computedStyle
-    };
+  fontSize: {
+    type: String,
+    default: ''
+  },
+  color: {
+    type: String,
+    default: ''
   }
+});
+const computedStyle = computed(() => {
+  return {
+    color: props.color,
+    fontSize: props.fontSize
+  };
 });
 </script>
 

@@ -4,25 +4,17 @@
   </a-button>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue';
+<script lang="ts" setup>
+import { computed, defineProps } from 'vue';
 import { getStorage } from '@/utils/storage';
-export default defineComponent({
-  name: 'AuthButton',
-  props: {
-    auth: {
-      type: String,
-      default: ''
-    }
-  },
-  setup(props) {
-    let permissions = Object.freeze(getStorage('permissions')) || [];
-    let hasAuth = computed(() => {
-      return !props.auth || permissions.includes(props.auth);
-    });
-    return {
-      hasAuth
-    };
+const props = defineProps({
+  auth: {
+    type: String,
+    default: ''
   }
+});
+let permissions = Object.freeze(getStorage('permissions')) || [];
+let hasAuth = computed(() => {
+  return !props.auth || permissions.includes(props.auth);
 });
 </script>

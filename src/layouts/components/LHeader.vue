@@ -11,8 +11,8 @@
       <a-tooltip @click="goToApi" title="API文档">
         <icon-font type="icon-file1" class="quick" />
       </a-tooltip>
-      <a-tooltip @click="$router.push('/system/message')" :title="`${count}未读消息`">
-        <a-badge :count="count" class="quick">
+      <a-tooltip @click="$router.push('/system/message')" :title="`${state.count}未读消息`">
+        <a-badge :count="state.count" class="quick">
           <icon-font type="icon-bells" />
         </a-badge>
       </a-tooltip>
@@ -34,63 +34,50 @@
         </template>
       </a-dropdown>
     </div>
-    <l-personal-edit v-model:visible="visiblePsd"></l-personal-edit>
+    <l-personal-edit v-model:visible="state.visiblePsd"></l-personal-edit>
   </a-layout-header>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, reactive, toRefs } from 'vue';
+<script lang="ts" setup>
+import { computed, defineEmits, reactive, defineProps } from 'vue';
 import { Modal } from 'ant-design-vue';
 import { useStore } from 'vuex';
 import { logout } from '@/router';
 import LPersonalEdit from './LPersonalEdit.vue';
-export default defineComponent({
-  components: {
-    LPersonalEdit
-  },
-  props: {
-    collapse: {
-      type: Boolean,
-      default: false
-    }
-  },
-  emits: ['update:collapse'],
-  setup() {
-    let store = useStore();
-    let state = reactive({
-      count: 12,
-      visiblePsd: false
-    });
-    let userInfo = computed(() => store.state.user.userinfo);
-    function handleClick({ key }: { key: string }) {
-      switch (key) {
-        case 'person':
-          state.visiblePsd = true;
-          break;
-        case 'logout':
-          Modal.confirm({
-            title: '提示',
-            content: '您确定要退出吗？',
-            okText: '确认',
-            cancelText: '取消',
-            onOk: () => {
-              logout();
-            }
-          });
-          break;
-      }
-    }
-    function goToApi() {
-      alert('开发中!');
-    }
-    return {
-      ...toRefs(state),
-      userInfo,
-      handleClick,
-      goToApi
-    };
+const props = defineProps({
+  collapse: {
+    type: Boolean,
+    default: false
   }
 });
+const emit = defineEmits(['update:collapse']);
+let store = useStore();
+let state = reactive({
+  count: 12,
+  visiblePsd: false
+});
+let userInfo = computed(() => store.state.user.userinfo);
+function handleClick({ key }: { key: string }) {
+  switch (key) {
+    case 'person':
+      state.visiblePsd = true;
+      break;
+    case 'logout':
+      Modal.confirm({
+        title: '提示',
+        content: '您确定要退出吗？',
+        okText: '确认',
+        cancelText: '取消',
+        onOk: () => {
+          logout();
+        }
+      });
+      break;
+  }
+}
+function goToApi() {
+  alert('开发中!');
+}
 </script>
 
 <style lang="less" scoped>

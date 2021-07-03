@@ -5,22 +5,17 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { defineProps } from 'vue';
 import config from '@/config';
-export default defineComponent({
-  props: {
-    mini: {
-      type: Boolean,
-      default: false
-    }
-  },
-  setup() {
-    return {
-      appTitle: config.appTitle
-    };
+const props = defineProps({
+  mini: {
+    type: Boolean,
+    default: false
   }
 });
+const appTitle = config.appTitle;
+const mini = props.mini;
 </script>
 
 <style lang="less" scoped>

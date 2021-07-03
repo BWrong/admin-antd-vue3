@@ -13,44 +13,37 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      log: [
-        {
-          title: 'V0.0.2',
-          detail: [
-            '修复 Textarea 组件高度不正确问题',
-            '回滚 Menu 组件到 1.6.5 版本一致',
-            '修复 Menu 组件，错误展示 Tooltip 提示的问题',
-            '修复 Textarea 组件高度不正确问题',
-            '回滚 Menu 组件到 1.6.5 版本一致',
-            '修复 Menu 组件，错误展示 Tooltip 提示的问题',
-            '修复 Textarea 组件高度不正确问题',
-            '回滚 Menu 组件到 1.6.5 版本一致',
-            '修复 Menu 组件，错误展示 Tooltip 提示的问题'
-          ]
-        },
-        {
-          title: 'V0.0.1',
-          detail: [
-            '修复 Textarea 组件高度不正确问题',
-            '回滚 Menu 组件到 1.6.5 版本一致',
-            '修复 Menu 组件，错误展示 Tooltip 提示的问题',
-            '修复 Textarea 组件高度不正确问题',
-            '回滚 Menu 组件到 1.6.5 版本一致',
-            '修复 Menu 组件，错误展示 Tooltip 提示的问题',
-            '修复 Textarea 组件高度不正确问题',
-            '回滚 Menu 组件到 1.6.5 版本一致',
-            '修复 Menu 组件，错误展示 Tooltip 提示的问题'
-          ]
-        }
-      ]
-    };
+<script lang="ts" setup>
+const log = [
+  {
+    title: 'V0.0.2',
+    detail: [
+      '修复 Textarea 组件高度不正确问题',
+      '回滚 Menu 组件到 1.6.5 版本一致',
+      '修复 Menu 组件，错误展示 Tooltip 提示的问题',
+      '修复 Textarea 组件高度不正确问题',
+      '回滚 Menu 组件到 1.6.5 版本一致',
+      '修复 Menu 组件，错误展示 Tooltip 提示的问题',
+      '修复 Textarea 组件高度不正确问题',
+      '回滚 Menu 组件到 1.6.5 版本一致',
+      '修复 Menu 组件，错误展示 Tooltip 提示的问题'
+    ]
+  },
+  {
+    title: 'V0.0.1',
+    detail: [
+      '修复 Textarea 组件高度不正确问题',
+      '回滚 Menu 组件到 1.6.5 版本一致',
+      '修复 Menu 组件，错误展示 Tooltip 提示的问题',
+      '修复 Textarea 组件高度不正确问题',
+      '回滚 Menu 组件到 1.6.5 版本一致',
+      '修复 Menu 组件，错误展示 Tooltip 提示的问题',
+      '修复 Textarea 组件高度不正确问题',
+      '回滚 Menu 组件到 1.6.5 版本一致',
+      '修复 Menu 组件，错误展示 Tooltip 提示的问题'
+    ]
   }
-});
+];
 </script>
 
 <style lang="less" scoped>

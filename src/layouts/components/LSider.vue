@@ -28,45 +28,37 @@
     </a-menu>
   </div>
 </template>
-<script lang="ts">
-import { computed, defineComponent, PropType, ref, watchEffect } from 'vue';
+<script lang="ts" setup>
+import { computed, defineEmits, defineProps, ref, watchEffect } from 'vue';
+import type { PropType } from 'vue';
 import { useRoute } from 'vue-router';
-
-import { IMenu } from 'types/interface/common';
+import type { IMenu } from 'types/interface/common';
 import useMenuState from '@/hooks/useMenuState';
-export default defineComponent({
-  props: {
-    collapse: {
-      type: Boolean,
-      default: false
-    },
-    menus: {
-      type: Array as PropType<IMenu[]>,
-      required: true
-    },
-    theme: {
-      type: String,
-      default: 'dark'
-    }
+const emit = defineEmits(['update:collapse']);
+const props = defineProps({
+  collapse: {
+    type: Boolean,
+    default: false
   },
-  emits: ['update:collapse'],
-  setup(props, { emit }) {
-    const route = useRoute();
-    let localOpeneds = ref<string[]>([]);
-    const { matchedRoutes, activeMenu } = useMenuState((item) => !!item.meta?.title);
-    let selectedKeys = computed(() => (activeMenu.value ? [activeMenu.value, route.path] : [route.path]));
-    watchEffect(() => {
-      localOpeneds.value = props.collapse ? [] : matchedRoutes.value.map((item) => item.path);
-    });
-    return {
-      localOpeneds,
-      selectedKeys,
-      handleCollapse() {
-        emit('update:collapse', !props.collapse);
-      }
-    };
+  menus: {
+    type: Array as PropType<IMenu[]>,
+    required: true
+  },
+  theme: {
+    type: String,
+    default: 'dark'
   }
 });
+const route = useRoute();
+let localOpeneds = ref<string[]>([]);
+const { matchedRoutes, activeMenu } = useMenuState((item) => !!item.meta?.title);
+let selectedKeys = computed(() => (activeMenu.value ? [activeMenu.value, route.path] : [route.path]));
+watchEffect(() => {
+  localOpeneds.value = props.collapse ? [] : matchedRoutes.value.map((item) => item.path);
+});
+function handleCollapse() {
+  emit('update:collapse', !props.collapse);
+}
 </script>
 
 <style lang="less" scoped>

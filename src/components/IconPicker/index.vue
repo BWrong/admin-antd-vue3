@@ -1,29 +1,24 @@
 <template>
   <div class="icon-picker">
-    <div class="icon-item" :class="{ active: value === item }" @click="$emit('update:value', item)" v-for="item in data" :key="item">
+    <div class="icon-item" :class="{ active: value === item }" @click="handleSelect(item)" v-for="item in data" :key="item">
       <icon-font :type="item" class="icon-picker-icon" font-size="22px" />
       <span class="icon-picker-title" :title="item">{{ item }}</span>
     </div>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { defineProps, defineEmits } from 'vue';
 import data from './data.json';
-export default defineComponent({
-  name: 'IconPicker',
-  props: {
-    value: {
-      type: String,
-      default: ''
-    }
-  },
-  emits: ['update:value'],
-  setup() {
-    return {
-      data
-    };
+const props = defineProps({
+  value: {
+    type: String,
+    default: ''
   }
 });
+const emit = defineEmits(['update:value']);
+function handleSelect(data) {
+  emit('update:value', data);
+}
 </script>
 <style lang="less" scoped>
 .icon-picker {

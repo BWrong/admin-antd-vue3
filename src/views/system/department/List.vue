@@ -69,7 +69,6 @@ function getData(pageNow = 1) {
       tableLoading.value = false;
     });
 }
-console.log(1);
 getData(1);
 // 编辑
 let formRef = ref();

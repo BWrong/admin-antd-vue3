@@ -8,7 +8,7 @@
       </a-space>
       <h3>Hooks</h3>
       <div>
-        <a-button :loading="loading" @click="handleClick">usePromise</a-button>
+        <a-button :loading="loading" @click="run">usePromise</a-button>
         <p>测试结果</p>
         <p>data:{{ data }}</p>
         <p>err:{{ error }}</p>
@@ -49,11 +49,11 @@
     </a-card>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent, inject, readonly } from 'vue';
+<script lang="ts" setup>
+import { inject, readonly } from 'vue';
 import usePromise from '@/hooks/usePromise';
 import configApi from '@/api/system/config';
-import { IPagination } from 'types/interface/common';
+import type { IPagination } from 'types/interface/common';
 const columns = readonly([
   {
     title: 'title',
@@ -81,23 +81,12 @@ const columns = readonly([
     slots: { customRender: 'action' }
   }
 ]);
-export default defineComponent({
-  setup() {
-    let testApi = () => configApi.list({ a: 123 });
-    let { loading, data, error, run } = usePromise(testApi);
-    return {
-      columns,
-      pagination: {
-        ...inject<IPagination>('$pagination'),
-        pageSize: 5
-      },
-      loading,
-      data,
-      error,
-      handleClick: run
-    };
-  }
-});
+let testApi = () => configApi.list({ a: 123 });
+let { loading, data, error, run } = usePromise(testApi);
+const pagination = {
+  ...inject<IPagination>('$pagination'),
+  pageSize: 5
+};
 </script>
 <style scoped>
 h3 {

@@ -1,18 +1,18 @@
 <template>
-  <a-modal title="修改密码" :visible="visible" :confirm-loading="confirmLoading" @cancel="handleCancel" :keyboard="false" :maskClosable="false">
-    <a-form class="form" :model="updatePwdForm" :rules="rules" @keydown.enter="updatePsd()" ref="formRef" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
+  <a-modal title="修改密码" :visible="props.visible" :confirm-loading="state.confirmLoading" @cancel="handleCancel" :keyboard="false" :maskClosable="false">
+    <a-form class="form" :model="state.updatePwdForm" :rules="rules" @keydown.enter="updatePsd()" ref="formRef" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
       <a-form-item name="oldPassword" label="原始密码">
-        <a-input auto-complete="off" placeholder="请输入原始密码" type="password" v-model:value="updatePwdForm.oldPassword"></a-input>
+        <a-input auto-complete="off" placeholder="请输入原始密码" type="password" v-model:value="state.updatePwdForm.oldPassword"></a-input>
       </a-form-item>
       <a-form-item name="newPassword" label="新密码">
-        <a-input auto-complete="off" placeholder="请输入新密码" type="password" v-model:value="updatePwdForm.newPassword"></a-input>
+        <a-input auto-complete="off" placeholder="请输入新密码" type="password" v-model:value="state.updatePwdForm.newPassword"></a-input>
       </a-form-item>
       <a-form-item name="reNewPassword" label="重复密码">
-        <a-input auto-complete="off" placeholder="请输入重复密码" type="password" v-model:value="updatePwdForm.reNewPassword"></a-input>
+        <a-input auto-complete="off" placeholder="请输入重复密码" type="password" v-model:value="state.updatePwdForm.reNewPassword"></a-input>
       </a-form-item>
     </a-form>
     <template #footer>
-      <a-button style="margin: 10px 0" :loading="loading" @click.prevent="updatePsd()" type="primary">
+      <a-button style="margin: 10px 0" :loading="state.loading" @click.prevent="updatePsd()" type="primary">
         <template #icon><icon-font type="icon-check" /></template>
         提 交</a-button
       >
@@ -20,103 +20,93 @@
   </a-modal>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, ref, toRefs } from 'vue';
+<script lang="ts" setup>
+import { defineEmits, reactive, ref, defineProps, toRefs } from 'vue';
 import { cryptoPassword } from '@/utils';
 import { message } from 'ant-design-vue';
-export default defineComponent({
-  props: {
-    visible: {
-      type: Boolean,
-      default: false
-    }
-  },
-  emits: ['update:visible'],
-  setup(props, { emit }) {
-    let formRef = ref();
-    let state = reactive({
-      confirmLoading: false,
-      loading: false,
-      updatePwdForm: {
-        oldPassword: '',
-        newPassword: '',
-        reNewPassword: ''
-      },
-      rules: {
-        oldPassword: [
-          {
-            type: 'string',
-            required: true,
-            trigger: 'blur',
-            message: '请输入原始密码'
-          }
-        ],
-        newPassword: [
-          {
-            type: 'string',
-            required: true,
-            trigger: 'blur',
-            message: '请输入新密码'
-          },
-          { validator: validateNewPassword }
-        ],
-        reNewPassword: [
-          {
-            type: 'string',
-            required: true,
-            trigger: 'blur',
-            message: '请再次输入密码'
-          },
-          { validator: validateRePassword }
-        ]
-      }
-    });
-    async function validateNewPassword(rule: object, value: string) {
-      let regx = new RegExp(/(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{6,15}$)/);
-      if (regx.test(value)) {
-        return Promise.resolve();
-      } else {
-        return Promise.reject('长度至少8位，至少一个大写字母，一个小写字母，一个特殊字符，一个数字！');
-      }
-    }
-    async function validateRePassword(rule: object, value: string) {
-      if (value !== state.updatePwdForm.newPassword) {
-        return Promise.reject('两次输入的新密码不一致');
-      } else {
-        return Promise.resolve();
-      }
-    }
-    function handleCancel() {
-      emit('update:visible', false);
-    }
-    function updatePsd() {
-      formRef.value
-        .validate()
-        .then(() => {
-          state.loading = true;
-          let { oldPassword, newPassword, reNewPassword } = state.updatePwdForm;
-          let params = {
-            oldPassword: cryptoPassword(oldPassword),
-            newPassword: cryptoPassword(newPassword),
-            reNewPassword: cryptoPassword(reNewPassword)
-          };
-          console.log(params);
-          message.success('操作成功！');
-          emit('update:visible', false);
-        })
-        .catch((err: Error) => {
-          console.error(err);
-          state.loading = false;
-        });
-    }
-    return {
-      ...toRefs(state),
-      formRef,
-      handleCancel,
-      updatePsd
-    };
+const props = defineProps({
+  visible: {
+    type: Boolean,
+    default: false
   }
 });
+const emit = defineEmits(['update:visible']);
+let formRef = ref();
+let state = reactive({
+  confirmLoading: false,
+  loading: false,
+  updatePwdForm: {
+    oldPassword: '',
+    newPassword: '',
+    reNewPassword: ''
+  }
+});
+async function validateNewPassword(rule: object, value: string) {
+  let regx = new RegExp(/(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{6,15}$)/);
+  if (regx.test(value)) {
+    return Promise.resolve();
+  } else {
+    return Promise.reject('长度至少8位，至少一个大写字母，一个小写字母，一个特殊字符，一个数字！');
+  }
+}
+async function validateRePassword(rule: object, value: string) {
+  if (value !== state.updatePwdForm.newPassword) {
+    return Promise.reject('两次输入的新密码不一致');
+  } else {
+    return Promise.resolve();
+  }
+}
+const rules = {
+  oldPassword: [
+    {
+      type: 'string',
+      required: true,
+      trigger: 'blur',
+      message: '请输入原始密码'
+    }
+  ],
+  newPassword: [
+    {
+      type: 'string',
+      required: true,
+      trigger: 'blur',
+      message: '请输入新密码'
+    },
+    { validator: validateNewPassword }
+  ],
+  reNewPassword: [
+    {
+      type: 'string',
+      required: true,
+      trigger: 'blur',
+      message: '请再次输入密码'
+    },
+    { validator: validateRePassword }
+  ]
+};
+function handleCancel() {
+  emit('update:visible', false);
+}
+function updatePsd() {
+  formRef.value
+    .validate()
+    .then(() => {
+      state.loading = true;
+      let { oldPassword, newPassword, reNewPassword } = state.updatePwdForm;
+      let params = {
+        oldPassword: cryptoPassword(oldPassword),
+        newPassword: cryptoPassword(newPassword),
+        reNewPassword: cryptoPassword(reNewPassword)
+      };
+      console.log(params);
+      message.success('操作成功！');
+      emit('update:visible', false);
+    })
+    .catch((err: Error) => {
+      console.error(err);
+      state.loading = false;
+    });
+}
 </script>
 
 <style lang="less" scoped></style>

@@ -5,14 +5,6 @@
     </router-view>
   </a-config-provider>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
-import { defineComponent } from 'vue';
-export default defineComponent({
-  setup() {
-    return {
-      zhCN
-    };
-  }
-});
 </script>

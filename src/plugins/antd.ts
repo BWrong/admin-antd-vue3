@@ -10,7 +10,6 @@ import {
   Breadcrumb,
   Table,
   Button,
-  Icon,
   Tabs,
   Steps,
   Tooltip,
@@ -54,7 +53,6 @@ export default (app: App): void => {
   app.use(Breadcrumb);
   app.use(Button);
   app.use(Table);
-  app.use(Icon);
   app.use(Tabs);
   app.use(Steps);
   app.use(Tooltip);

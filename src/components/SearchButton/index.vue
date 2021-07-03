@@ -8,45 +8,37 @@
   </a-space>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  name: 'SearchButton',
-  props: {
-    placeholder: {
-      type: String,
-      default: '请输入搜索关键词'
-    },
-    modelValue: {
-      type: String,
-      default: ''
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    inputWidth: {
-      type: String,
-      default: '200px'
-    }
+<script lang="ts" setup>
+import { defineProps, ref, defineEmits } from 'vue';
+const props = defineProps({
+  placeholder: {
+    type: String,
+    default: '请输入搜索关键词'
   },
-  emits: ['update:modelValue', 'search', 'reset'],
-  setup(props, { emit }) {
-    let searchWord = ref(props.modelValue);
-    return {
-      searchWord,
-      onChange({ target }: any) {
-        emit('update:modelValue', target.value);
-      },
-      handleSearch() {
-        emit('search', searchWord.value);
-      },
-      handleReset() {
-        searchWord.value = '';
-        emit('update:modelValue', '');
-        emit('reset');
-      }
-    };
+  modelValue: {
+    type: String,
+    default: ''
+  },
+  loading: {
+    type: Boolean,
+    default: false
+  },
+  inputWidth: {
+    type: String,
+    default: '200px'
   }
 });
+const emit = defineEmits(['update:modelValue', 'search', 'reset']);
+let searchWord = ref(props.modelValue);
+function onChange({ target }: any) {
+  emit('update:modelValue', target.value);
+}
+function handleSearch() {
+  emit('search', searchWord.value);
+}
+function handleReset() {
+  searchWord.value = '';
+  emit('update:modelValue', '');
+  emit('reset');
+}
 </script>

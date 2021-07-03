@@ -27,27 +27,20 @@
     </a-breadcrumb>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import useMenuState from '@/hooks/useMenuState';
-import { defineComponent } from 'vue';
-export default defineComponent({
-  props: {
-    collapse: {
-      type: Boolean,
-      default: false
-    }
-  },
-  emits: ['update:collapse'],
-  setup(props, { emit }) {
-    const { matchedRoutes } = useMenuState((item) => !!item.meta?.title && !item.meta?.hideBreadcrumb);
-    return {
-      parentRoutes: matchedRoutes,
-      handleCollapse() {
-        emit('update:collapse', !props.collapse);
-      }
-    };
+import { defineProps, defineEmits } from 'vue';
+const props = defineProps({
+  collapse: {
+    type: Boolean,
+    default: false
   }
 });
+const emit = defineEmits(['update:collapse']);
+const { matchedRoutes: parentRoutes } = useMenuState((item) => !!item.meta?.title && !item.meta?.hideBreadcrumb);
+function handleCollapse() {
+  emit('update:collapse', !props.collapse);
+}
 </script>
 <style lang="less" scoped>
 .breadcrumb-bar {
