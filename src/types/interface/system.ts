@@ -27,3 +27,40 @@ export interface IDepartment extends IRecordBase {
   code: string;
   describe: string;
 }
+// 日志
+export interface ILog extends IRecordBase {
+  name: string;
+  type: number;
+  username: string;
+  path: string;
+  parameters: string;
+  result: string;
+}
+// 消息
+export interface IMessage extends IRecordBase {
+  sender: string;
+  type: number;
+  content: string;
+  dataIndex: number;
+}
+// 角色
+export interface IRole extends IRecordBase {
+  title: string;
+  code: string;
+  deptCode: number;
+  deptId: number;
+  deptName: string;
+  describe: string;
+}
+// 用户
+export interface IUser extends IRecordBase {
+  username: string;
+  name: string;
+  nickname: string;
+  email: string;
+  idCard: string;
+  deptId: string;
+  deptCode?: string;
+  tel: string;
+  describe: string;
+}

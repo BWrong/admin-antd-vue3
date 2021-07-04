@@ -39,11 +39,6 @@ import { inject, reactive, ref } from 'vue';
 import { message } from 'ant-design-vue';
 import type { IDepartment } from 'types/interface/system';
 import type { IPagination } from 'types/interface/common';
-const initForm: IDepartment = {
-  title: '',
-  code: '',
-  describe: ''
-};
 const columns = [
   { title: '部门名称', dataIndex: 'title', ellipsis: true },
   { title: '部门编码', dataIndex: 'code' },
@@ -71,10 +66,16 @@ function getData(pageNow = 1) {
 }
 getData(1);
 // 编辑
-let formRef = ref();
+const initForm: IDepartment = {
+  title: '',
+  code: '',
+  describe: ''
+};
+const formRef = ref();
 let isShowEdit = ref(false);
 let isAdd = ref(true);
 let form = reactive<IDepartment>({ ...initForm });
+
 let rules = {
   title: [{ required: true, trigger: 'blur', message: '请输入部门名称' }],
   code: [{ required: true, trigger: 'blur', message: '请输入部门编码' }]

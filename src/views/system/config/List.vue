@@ -49,13 +49,7 @@ import { message } from 'ant-design-vue';
 import { inject, reactive, ref } from 'vue';
 import type { IPagination } from 'types/interface/common';
 import type { IConfig, IConfigComponent } from 'types/interface/system';
-const initForm: IConfig = {
-  code: '',
-  title: '',
-  value: '',
-  type: configComponent[0].value,
-  describe: ''
-};
+// 列表
 const columns = [
   {
     title: '配置项代码',
@@ -127,7 +121,15 @@ function handleTableChange(paginationConfig: IPagination) {
   pagination = paginationConfig;
   getData(paginationConfig.current);
 }
+// 新增编辑
 const formRef = ref();
+const initForm: IConfig = {
+  code: '',
+  title: '',
+  value: '',
+  type: configComponent[0].value,
+  describe: ''
+};
 let editState = reactive({
   isShowEdit: false,
   isAdd: true,
