@@ -31,7 +31,9 @@ function handleClick() {
       type: 'danger'
     },
     cancelText: '取消',
-    onOk: () => emit('confirm')
+    onOk: () => {
+      emit('confirm');
+    }
   });
 }
 </script>
