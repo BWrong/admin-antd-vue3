@@ -92,7 +92,7 @@ module.exports = {
 
     // 限制fork-ts-checker插件内存, 防止占用较高
     config.plugin('fork-ts-checker').tap((args) => {
-      args[0].typescript.memoryLimit = 500;
+      args[0].typescript.memoryLimit = 1024;
       return args;
     });
     config.plugin('html').tap((args) => {
