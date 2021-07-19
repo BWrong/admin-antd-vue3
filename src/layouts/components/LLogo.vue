@@ -15,7 +15,6 @@ const props = defineProps({
   }
 });
 const appTitle = config.appTitle;
-const mini = props.mini;
 </script>
 
 <style lang="less" scoped>
