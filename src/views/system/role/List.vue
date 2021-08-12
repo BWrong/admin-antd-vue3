@@ -142,10 +142,10 @@ function handleAuth(row) {
   editState.isShowAuth = true;
   editState.editRow = { ...row };
 }
-function handleSetAuth(keys) {
-  console.log(keys);
-  message.success('操作成功');
-}
+// function handleSetAuth(keys) {
+//   console.log(keys);
+//   message.success('操作成功');
+// }
 function handleDel(row) {
   console.log(row);
   message.success('操作成功');

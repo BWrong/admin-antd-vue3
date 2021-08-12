@@ -5,7 +5,7 @@
 
 <script lang="ts" setup>
 import { defineEmits, defineProps, useAttrs } from 'vue';
-const props = defineProps({
+defineProps({
   value: {
     type: [Number, String],
     default: ''

@@ -12,6 +12,10 @@ const routes: RouteRecordRaw[] = [
     name: 'error',
     component: () => import('@/views/error/Index.vue'),
     meta: {}
+  },
+  {
+    path: '/demo',
+    component: () => import('@/views/PersonnelCirculation.vue')
   }
 ];
 export default routes;

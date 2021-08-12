@@ -20,7 +20,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/ban-types': 0,
-    '@typescript-eslint/no-use-before-define': 1,
+    '@typescript-eslint/no-use-before-define': 0,
     '@typescript-eslint/class-name-casing': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
     'prettier/prettier': [

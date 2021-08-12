@@ -74,7 +74,7 @@ function getData(pageNow = 1) {
     });
 }
 getData(1);
-function handleTableChange(page, filters, sorter) {
+function handleTableChange(page) {
   pagination = page;
   getData(pagination.current);
 }
