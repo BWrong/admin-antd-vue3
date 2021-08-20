@@ -1,14 +1,11 @@
 // vuex.d.ts
-import { ComponentCustomProperties } from 'vue';
+import store from '@/store';
 import { Store } from 'vuex';
 
 declare module '@vue/runtime-core' {
-  // declare your own store states
-  interface State {
-    theme: string;
-  }
-
-  // provide typings for `this.$store`
+  // 为useStore提供类型推断
+  export function useStore(): typeof store;
+  //  为 `this.$store` 提供类型声明
   interface ComponentCustomProperties {
     $store: Store<State>;
   }
