@@ -15,7 +15,7 @@
           <a-space>
             <a-button @click="handleEdit(record)" type="primary" size="small">编辑</a-button>
             <a-button @click="handleAddChild(record)" size="small">添加子项</a-button>
-            <a-button @click="handleHide(record, true)" type="danger" ghost v-if="!record.hide" size="small">隐藏</a-button>
+            <a-button @click="handleHide(record, true)" danger ghost v-if="!record.hide" size="small">隐藏</a-button>
             <a-button @click="handleHide(record, false)" v-else size="small">显示</a-button>
             <delete-button @confirm="handleDel(record)" :title="record.name" />
           </a-space>

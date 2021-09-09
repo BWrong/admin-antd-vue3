@@ -3,7 +3,7 @@
     <icon-font type="icon-shanchu" title="删除"></icon-font>
     <slot></slot>
   </span>
-  <a-button type="danger" size="small" v-bind="$attrs" @click.stop="handleClick" v-if="type === 'button'">
+  <a-button danger size="small" v-bind="$attrs" @click.stop="handleClick" v-if="type === 'button'">
     <slot>删除</slot>
   </a-button>
 </template>

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { get, remove } from 'js-cookie';
 
 import NProgress from '@/plugins/nprogress';
-import { removeStorage, setStorage, getStorage } from '@/utils/storage';
+import { setStorage, getStorage, clearStorage } from '@/utils/storage';
 import config from '@/config';
 import routes, { noMatchRoute } from './constRoutes';
 import asyncRoutes from './asyncRoutes';
@@ -58,7 +58,7 @@ async function _getAllowRoutes(asyncRoutes: RouteRecordRaw[]) {
  * @param {*} routes 需要鉴权的路由
  * @param {*} permissions 菜单和权限标识集
  */
-function _ganerRoutesAndMenus(routes: Array<RouteRecordRaw>, permissions: any[]) {
+function _ganerRoutesAndMenus(routes: Array<RouteRecordRaw>, permissions: Record<string, unknown>[]) {
   const {
     routes: filterRoutes,
     menus,
@@ -82,7 +82,7 @@ export function logout() {
   remove(config.tokenKey);
   remove(config.refreshTokenKey);
   remove(config.tokenExpiresKey);
-  removeStorage('userinfo', 'menus');
+  clearStorage();
   router.replace('/login');
   resetRouter();
   // location.reload();
