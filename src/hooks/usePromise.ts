@@ -1,17 +1,17 @@
 import { reactive, toRefs } from 'vue';
 interface _IOptions {
   autoRun?: boolean;
-  params?: any;
-  initData?: any;
+  params?: unknown;
+  initData?: unknown;
 }
-export default <T = any>(promiseFn: (runParams?: any) => Promise<any>, options: _IOptions = {}) => {
-  let { autoRun = false, params = null, initData = [] } = options as _IOptions;
-  let state = reactive({
+export default <T = unknown>(promiseFn: (runParams?: unknown) => Promise<any>, options: _IOptions = {}) => {
+  const { autoRun = false, params = null, initData = [] } = options as _IOptions;
+  const state = reactive({
     loading: false,
-    data: (initData as unknown) as T,
+    data: initData as T,
     error: null
   });
-  const run = (runParams?: any) => {
+  const run = (runParams?: unknown) => {
     state.loading = true;
     return promiseFn(runParams)
       .then((res) => {
@@ -31,7 +31,3 @@ export default <T = any>(promiseFn: (runParams?: any) => Promise<any>, options: 
     ...toRefs(state)
   };
 };
-// TODO:
-// 1. 取消请求
-// 2. 监听
-// 3. 泛型指定data类型

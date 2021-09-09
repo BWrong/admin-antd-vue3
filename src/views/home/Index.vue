@@ -82,7 +82,7 @@ const columns = readonly([
   }
 ]);
 let testApi = () => configApi.list({ a: 123 });
-let { loading, data, error, run } = usePromise(testApi);
+let { loading, data, error, run } = usePromise<{ list: string[] }>(testApi);
 const pagination = {
   ...inject<IPagination>('$pagination'),
   pageSize: 5
