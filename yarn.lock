@@ -6496,10 +6496,10 @@
   "resolved" "https://registry.npm.taobao.org/javascript-stringify/download/javascript-stringify-2.0.1.tgz"
   "version" "2.0.1"
 
-"js-cookie@^2.2.1":
-  "integrity" "sha1-aeEG3F1YBolFYpAqpbrsN0Tpsrg="
-  "resolved" "https://registry.npm.taobao.org/js-cookie/download/js-cookie-2.2.1.tgz"
-  "version" "2.2.1"
+"js-cookie@^3.0.1":
+  "integrity" "sha1-njm0xsL1ZWNwjX0x9vXyGHOpJBQ="
+  "resolved" "https://registry.nlark.com/js-cookie/download/js-cookie-3.0.1.tgz"
+  "version" "3.0.1"
 
 "js-message@1.0.7":
   "integrity" "sha1-+93QU8ekcCGHG7iyyVOXzBfCDkc="
