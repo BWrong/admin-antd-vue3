@@ -85,8 +85,8 @@ module.exports = {
     config.resolve.alias.set('components', resolve('src/components'));
     // 优化js压缩
     config.optimization.minimizer('terser').tap((args) => {
-      // args[0].terserOptions.compress.drop_console = true;
-      // args[0].terserOptions.compress.drop_debugger = true;
+      args[0].terserOptions.compress.drop_console = true;
+      args[0].terserOptions.compress.drop_debugger = true;
       return args;
     });
 
