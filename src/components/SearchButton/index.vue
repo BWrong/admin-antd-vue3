@@ -29,7 +29,7 @@ const props = defineProps({
   }
 });
 const emit = defineEmits(['update:modelValue', 'search', 'reset']);
-let searchWord = ref(props.modelValue);
+const searchWord = ref(props.modelValue);
 function onChange({ target }: any) {
   emit('update:modelValue', target.value);
 }

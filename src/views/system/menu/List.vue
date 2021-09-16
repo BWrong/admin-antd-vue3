@@ -116,8 +116,8 @@ const initForm = {
   type: 0,
   priority: 0
 };
-let isShowEdit = ref(false);
-let isAdd = ref(true);
+const isShowEdit = ref(false);
+const isAdd = ref(true);
 let form = reactive<IMenu>({} as IMenu);
 
 function handleAdd() {

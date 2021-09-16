@@ -31,7 +31,7 @@ const props = defineProps({
   }
 });
 const emit = defineEmits(['update:visible']);
-let formRef = ref();
+const formRef = ref();
 let state = reactive({
   confirmLoading: false,
   loading: false,

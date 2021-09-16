@@ -86,7 +86,7 @@ const appTitle = config.appTitle;
 const version = config.appVersion;
 const route = useRoute();
 const router = useRouter();
-let formRef = ref();
+const formRef = ref();
 let state = reactive({
   loginInfo: {
     username: 'admin',
@@ -125,6 +125,8 @@ async function getMenuList() {
 
 // 登录
 function handleLogin() {
+  console.log(formRef.value);
+
   formRef.value
     .validate()
     .then(() => {

@@ -43,7 +43,7 @@ const theme = computed(() => store.state.theme);
 let menus: IMenu[] = getStorage('menus') || [];
 menus = menus.filter((item) => item.type === 0);
 menus = convertToTree({ data: menus, pid: 0 });
-let collapse = ref(false);
+const collapse = ref(false);
 </script>
 <style lang="less" scoped>
 @import '../assets/styles/layout.less';

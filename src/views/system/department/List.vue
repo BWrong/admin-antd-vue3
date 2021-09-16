@@ -46,9 +46,9 @@ const columns = [
   { title: '操作', slots: { customRender: 'action' }, align: 'center', width: 300 }
 ];
 let tableData = ref<IDepartment[]>([]);
-let tableLoading = ref(false);
+const tableLoading = ref(false);
 let pagination = reactive({ ...inject<IPagination>('$pagination') });
-let searchWord = ref('');
+const searchWord = ref('');
 function getData(pageNow = 1) {
   tableLoading.value = true;
   departmentApi
@@ -72,8 +72,8 @@ const initForm: IDepartment = {
   describe: ''
 };
 const formRef = ref();
-let isShowEdit = ref(false);
-let isAdd = ref(true);
+const isShowEdit = ref(false);
+const isAdd = ref(true);
 let form = reactive<IDepartment>({ ...initForm });
 
 let rules = {
