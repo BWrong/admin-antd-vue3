@@ -44,13 +44,13 @@ import { Modal } from 'ant-design-vue';
 import { useStore } from 'vuex';
 import { logout } from '@/router';
 import LPersonalEdit from './LPersonalEdit.vue';
-const props = defineProps({
+defineProps({
   collapse: {
     type: Boolean,
     default: false
   }
 });
-const emit = defineEmits(['update:collapse']);
+defineEmits(['update:collapse']);
 let store = useStore();
 let state = reactive({
   count: 12,
@@ -64,10 +64,8 @@ function handleClick({ key }: { key: string }) {
       break;
     case 'logout':
       Modal.confirm({
-        title: '提示',
-        content: '您确定要退出吗？',
-        okText: '确认',
-        cancelText: '取消',
+        title: () => '提示',
+        content: () => '您确定要退出吗？',
         onOk: () => {
           logout();
         }

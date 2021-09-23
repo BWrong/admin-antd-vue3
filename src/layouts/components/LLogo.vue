@@ -8,7 +8,7 @@
 <script lang="ts" setup>
 import { defineProps } from 'vue';
 import config from '@/config';
-const props = defineProps({
+defineProps({
   mini: {
     type: Boolean,
     default: false

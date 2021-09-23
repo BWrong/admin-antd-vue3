@@ -9,7 +9,7 @@
 </template>
 
 <script lang="tsx" setup>
-import { createVNode, defineEmits, defineProps } from 'vue';
+import { defineEmits, defineProps } from 'vue';
 import { Modal } from 'ant-design-vue';
 const props = defineProps({
   title: {
@@ -24,13 +24,11 @@ const props = defineProps({
 const emit = defineEmits(['confirm']);
 function handleClick() {
   Modal.confirm({
-    title: '提示',
-    content: props.title ? createVNode(<span>您确定要删除【{<span class="text-primary">{props.title}</span>}】吗？</span>) : '您确定要删除该数据吗？',
-    okText: '确认',
+    title: () => '提示',
+    content: () => (props.title ? <span>您确定要删除【{<span class="text-primary">{props.title}</span>}】吗？</span> : '您确定要删除该数据吗？'),
     okButtonProps: {
-      type: 'danger'
+      danger: true
     },
-    cancelText: '取消',
     onOk: () => {
       emit('confirm');
     }

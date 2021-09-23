@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import { defineProps, defineEmits } from 'vue';
 import data from './data.json';
-const props = defineProps({
+defineProps({
   value: {
     type: String,
     default: ''

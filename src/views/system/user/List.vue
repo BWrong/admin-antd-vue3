@@ -197,10 +197,8 @@ function handleReset() {
 function handleLock(row) {
   console.log(row);
   Modal.confirm({
-    title: '提示',
-    content: createVNode(<span>您确定要锁定【{<span class="text-primary">{row.username}</span>}】用户吗？</span>),
-    okText: '确认',
-    cancelText: '取消',
+    title: () => '提示',
+    content: () => <span>您确定要锁定【{<span class="text-primary">{row.username}</span>}】用户吗？</span>,
     onOk: () => {
       message.success('操作成功');
     }
@@ -208,10 +206,8 @@ function handleLock(row) {
 }
 function handleResetPwd(row) {
   Modal.confirm({
-    title: '提示',
-    content: createVNode(<span>您确定要重置【{<span class="text-primary">{row.username}</span>}】用户的密码吗？</span>),
-    okText: '确认',
-    cancelText: '取消',
+    title: () => '提示',
+    content: () => <span>您确定要重置【{<span class="text-primary">{row.username}</span>}】用户的密码吗？</span>,
     onOk: () => {
       message.success('操作成功');
     }

@@ -147,10 +147,8 @@ function onSelectChange(selectedRowKeys) {
 // 全部已读
 function handleAllRead() {
   Modal.confirm({
-    title: '提示',
-    content: '确定把所有未读消息标记为已读吗?',
-    okText: '确认',
-    cancelText: '取消',
+    title: () => '提示',
+    content: () => '确定把所有未读消息标记为已读吗?',
     onOk: () => {
       message.success('操作成功');
       state.selectedRowKeys = [];
@@ -163,10 +161,8 @@ function handleBatchRead() {
     message.error('未选择消息');
   } else {
     Modal.confirm({
-      title: '提示',
-      content: '确定把选择项标记为已读吗?',
-      okText: '确认',
-      cancelText: '取消',
+      title: () => '提示',
+      content: () => '确定把选择项标记为已读吗?',
       onOk: () => {
         message.success('操作成功');
         state.selectedRowKeys = [];
