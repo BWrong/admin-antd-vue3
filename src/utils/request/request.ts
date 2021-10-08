@@ -4,7 +4,7 @@
  * @Last Modified by: wangwenbing
  * @Last Modified time: 2019-05-24 13:53:33
  */
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 // import Qs from 'qs';
 import message from './message';
 import appConfig from '@/config';
@@ -12,6 +12,7 @@ import { HTTP_CODE } from '@/enums/http';
 import { logout } from '@/router';
 import { getToken } from '@/utils/token';
 import { checkAndUpdateToken, removeRequest, ganerCancelToken, addRequest } from './helper';
+import { IResponseData } from 'types/interface/common';
 const { apiHost, tokenPrefix } = appConfig;
 const request = axios.create({
   timeout: 30000,
@@ -32,7 +33,7 @@ request.interceptors.request.use(
     // 处理token
     const token = getToken();
     if (!token) return config;
-    config.headers['Authorization'] = `${tokenPrefix} ${token}`;
+    config.headers!.Authorization = `${tokenPrefix} ${token}`;
     // 检查更新token
     // checkAndUpdateToken(config);
     return config;
@@ -41,7 +42,7 @@ request.interceptors.request.use(
 );
 // axios  respone拦截器，统一处理响应错误
 request.interceptors.response.use(
-  ({ config, data }) => {
+  ({ config, data }: AxiosResponse<any>) => {
     // 跳过拦截器
     if (config.isNotIntercept) {
       return Promise.resolve(data);
@@ -59,7 +60,7 @@ request.interceptors.response.use(
       return Promise.reject(msg);
     }
   },
-  (error: AxiosError) => {
+  (error: AxiosError<IResponseData>) => {
     message.destroy();
     if (axios.isCancel(error)) return Promise.reject(error);
     // 相同请求不得在短时间内重复发送

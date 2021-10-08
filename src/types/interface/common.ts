@@ -2,7 +2,7 @@
 export interface IResponseData {
   code: number;
   msg: string;
-  data: IPageData;
+  data: IPageData<any>;
 }
 // 分页接口返回数据
 export interface IPageData<T = any> {

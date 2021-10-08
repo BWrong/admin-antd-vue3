@@ -5,11 +5,11 @@
  * @Last Modified time: 2019-05-24 13:53:33
  */
 import { AxiosPromise, AxiosRequestConfig } from 'axios';
-import { IPageData } from 'types/interface/common';
+import { IPageData, IResponseData } from 'types/interface/common';
 import request from './request';
 
 interface IMethod {
-  (url: string, params?: object, config?: AxiosRequestConfig): AxiosPromise<IPageData>;
+  (url: string, params?: object, config?: AxiosRequestConfig): AxiosPromise<IPageData> | AxiosPromise<IResponseData>;
 }
 
 export default request;
