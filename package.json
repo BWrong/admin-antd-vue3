@@ -64,7 +64,8 @@
     "postcss-px-to-viewport": "^1.1.1",
     "prettier": "^2.4.1",
     "standard-version": "^9.3.2",
-    "typescript": "^4.4.4"
+    "typescript": "^4.4.4",
+    "webpack": "^4.46.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged --allow-empty"
