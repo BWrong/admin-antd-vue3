@@ -3,7 +3,7 @@
  * @Github: https://github.com/BWrong
  * @Date: 2020-04-07 10:30:49
  * @LastEditors: Bwrong
- * @LastEditTime: 2021-05-19 10:49:39
+ * @LastEditTime: 2021-11-22 15:55:54
  */
 import dayjs from '@/plugins/dayjs';
 import Utf8 from 'crypto-js/enc-utf8';
@@ -90,16 +90,18 @@ interface _ITreeData {
   idName?: string;
 }
 export function convertToTree({ data, pid = 0, children = 'children', pidName = 'parentId', idName = 'id' }: _ITreeData) {
-  let arr: any[] = [];
-  data.map((item: any) => {
-    if (item[pidName] === pid) {
-      let child = item[children] || [];
-      let temp = child.concat(convertToTree({ data, pid: item[idName], children, pidName, idName }));
-      temp.length && (item[children] = temp);
-      return arr.push(item);
+  const tree: any[] = [],
+    map: Record<string, any> = {};
+  data.forEach((item) => {
+    item[children] = map[item[idName]] = map[item[idName]] || [];
+    if (item[pidName]) {
+      map[item[pidName]] = map[item[pidName]] || [];
+      map[item[pidName]].push(item);
+    } else {
+      tree.push(item);
     }
   });
-  return arr;
+  return pid ? map[pid] : tree;
 }
 /**
  * 生成表格序号
