@@ -3,22 +3,22 @@
     <a-menu class="menu-box" :theme="theme" mode="inline" :selected-keys="selectedKeys" v-model:open-keys="localOpeneds">
       <template v-for="item in menus">
         <template v-if="!item.hide">
-          <a-sub-menu :key="item.path" v-if="item.children && item.children.length">
+          <a-sub-menu :key="item.url" v-if="item.children && item.children.length">
             <template #title>
               <icon-font :type="item.icon" v-if="item.icon" />
               <span>{{ item.title }}</span>
             </template>
             <template v-for="subItem in item.children">
-              <a-menu-item :key="subItem.path" v-if="!subItem.hide">
-                <router-link :to="subItem.path">
+              <a-menu-item :key="subItem.url" v-if="!subItem.hide">
+                <router-link :to="subItem.url">
                   <icon-font :type="subItem.icon" v-if="subItem.icon" />
                   <span>{{ subItem.title }}</span>
                 </router-link>
               </a-menu-item>
             </template>
           </a-sub-menu>
-          <a-menu-item :key="item.path" v-else>
-            <router-link :to="item.path">
+          <a-menu-item :key="item.url" v-else>
+            <router-link :to="item.url">
               <icon-font :type="item.icon" v-if="item.icon" />
               <span>{{ item.title }}</span>
             </router-link>
