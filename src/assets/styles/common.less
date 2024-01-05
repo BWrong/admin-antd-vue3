@@ -1,0 +1,29 @@
+// @import '@unocss/reset/tailwind-compat.css';
+@import 'ant-design-vue/dist/reset.css';
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+.slide-leave-active,
+.slide-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-enter-from {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.clear-float:before,
+.clear-float:after {
+  clear: both;
+  display: table;
+  width: 0;
+  height: 0;
+  content: ' ';
+}

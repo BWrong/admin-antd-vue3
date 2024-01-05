@@ -1,0 +1,61 @@
+{
+  "git": {
+    "commitMessage": "Release ${version}",
+    "tagAnnotation": "Release ${version}",
+    "requireCleanWorkingDir": false,
+    "push": false,
+    "commit": true,
+    "tag": true
+  },
+  "npm": {
+    "publish": false,
+    "ignoreVersion": false
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "infile": "CHANGELOG.md",
+      "header": "# 更新日志 🎉🎉🎉",
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          {
+            "type": "feat",
+            "section": "✨新功能"
+          },
+          {
+            "type": "fix",
+            "section": "🐛Bug修复"
+          },
+          {
+            "type": "docs",
+            "section": "📖文档变更"
+          },
+          {
+            "type": "style",
+            "section": "🎨样式调整"
+          },
+          {
+            "type": "refactor",
+            "section": "🗃️代码重构"
+          },
+          {
+            "type": "perf",
+            "section": "🚀性能优化"
+          },
+          {
+            "type": "build",
+            "section": "🔥依赖构建调整"
+          },
+          {
+            "type": "chore",
+            "section": "🚧其他"
+          }
+        ]
+      }
+    }
+  },
+  "hooks": {
+    "after:release": "npm run build",
+    "after:git:release": "echo Successfully released ${name} v${version} to ${repo.repository}"
+  }
+}

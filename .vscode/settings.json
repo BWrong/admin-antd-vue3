@@ -1,0 +1,8 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "iconify.customCollectionJsonPaths": [
+    "./.iconify.json"
+  ],
+  "iconify.annotations": true,
+  "iconify.inplace": false
+}
