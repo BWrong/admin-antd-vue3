@@ -3,7 +3,6 @@ import type { RouteRecordRaw } from 'vue-router';
 export default [
   {
     path: '/system',
-    redirect: '/system/menu',
     component: () => import(/* webpackChunkName: "layout" */ '@/layouts/DefaultLayout.vue'),
     meta: { permission: 'system' },
     children: [
