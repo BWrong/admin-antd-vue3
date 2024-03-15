@@ -36,12 +36,10 @@
 ```
 
 
-## 开发规范
-请查阅[前端开发规范](http://10.18.100.19:8000/)
 
 ## 开发工具
 - 编辑器：VSCode
-- 推荐插件：`Vue.volar`, `Vue.vscode-typescript-vue-plugin`, `antfu.unocss`,`antfu.iconify`,`dbaeumer.vscode-eslint`,`esbenp.prettier-vscode`,`stylelint.vscode-stylelint`
+- 推荐插件：`Vue.volar`, `antfu.unocss`,`antfu.iconify`,`dbaeumer.vscode-eslint`,`esbenp.prettier-vscode`,`stylelint.vscode-stylelint`
 
 如果已经安装Vetur，需要禁用或者卸载，否则会有冲突。
 
