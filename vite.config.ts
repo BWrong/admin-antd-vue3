@@ -16,6 +16,7 @@ import buildInfo from 'vite-plugin-build-info';
 import iconfont from 'vite-plugin-iconfont';
 import unoCSS from 'unocss/vite';
 import { themeToken } from './src/config/theme';
+import { resolve } from 'node:path';
 
 // 完整配置，请查阅https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv) => {
@@ -202,7 +203,10 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       preprocessorOptions: {
         less: {
           javascriptEnabled: true,
-          modifyVars: themeToken
+          modifyVars: {
+            ...themeToken,
+            hack: `true;@import "${resolve(__dirname, './src/assets/styles/_variable.less')}"`
+          }
         }
       }
     },

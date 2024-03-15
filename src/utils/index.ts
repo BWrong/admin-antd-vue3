@@ -3,7 +3,7 @@
  * @Github: https://github.com/BWrong
  * @Date: 2020-04-07 10:30:49
  * @LastEditors: Bwrong
- * @LastEditTime: 2022-11-15 18:23:13
+ * @LastEditTime: 2024-03-15 14:51:06
  */
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
@@ -22,7 +22,8 @@ export function formatSex<T extends keyof typeof SEX>(value: T) {
  * @param {*} type
  */
 export function formatTime(time: number | string | Date = new Date(), type = 'YYYY-MM-DD HH:mm:ss') {
-  return time ? dayjs(Number(time)).format(type) : '';
+  const date = new Date(time);
+  return time ? dayjs(date).format(type) : '';
 }
 
 // 转换成浮点数
