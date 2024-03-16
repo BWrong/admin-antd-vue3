@@ -10,6 +10,7 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 import autoImport from 'unplugin-auto-import/vite';
 import unpluginComponents from 'unplugin-vue-components/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+import { VueHooksPlusResolver } from '@vue-hooks-plus/resolvers'
 import { webUpdateNotice } from '@plugin-web-update-notification/vite';
 import { visualizer } from 'rollup-plugin-visualizer';
 import buildInfo from 'vite-plugin-build-info';
@@ -77,22 +78,22 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     plugins: [
       // 由于welink无法连接外网，所以开发环境禁用自动下载
       !IS_PRODUCTION &&
-        iconfont({
-          url: VITE_ICONFONT_URL,
-          distUrl: './public/iconfont/iconfont.js',
-          iconJson: './src/components/IconPicker/data.json',
-          inject: false,
-          dts: './types/iconfont.d.ts',
-          iconifyFile: './.iconify.json'
-        }),
+      iconfont({
+        url: VITE_ICONFONT_URL,
+        distUrl: './public/iconfont/iconfont.js',
+        iconJson: './src/components/IconPicker/data.json',
+        inject: false,
+        dts: './types/iconfont.d.ts',
+        iconifyFile: './.iconify.json'
+      }),
       // 网站更新提醒
       VITE_UPDATE_NOTICE &&
-        webUpdateNotice({
-          versionType: 'build_timestamp',
-          checkInterval: 0,
-          logVersion: true,
-          injectFileBase: VITE_BASE_URL
-        }),
+      webUpdateNotice({
+        versionType: 'build_timestamp',
+        checkInterval: 0,
+        logVersion: true,
+        injectFileBase: VITE_BASE_URL
+      }),
       viteMockServe({
         ignore: /^_/, // 忽略的文件
         mockPath: 'mock', // 设置mock文件目录
@@ -128,6 +129,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
         // resolvers: [AntDesignVueResolver()],
         dirs: ['src/composables', 'src/store'], // 需要自动导入的文件目录
         vueTemplate: true,
+        resolvers: [VueHooksPlusResolver()],
         eslintrc: {
           enabled: true,
           filepath: './.eslintrc-auto-import.json',
@@ -154,20 +156,20 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       buildInfo(),
       // gzip压缩，需要nginx开启对应配置，否则不生效
       VITE_BUILD_COMPRESS &&
-        viteCompression({
-          threshold: 1025, // 阈值，大于此值才会被压缩
-          algorithm: 'gzip' // 压缩算法
-        }),
+      viteCompression({
+        threshold: 1025, // 阈值，大于此值才会被压缩
+        algorithm: 'gzip' // 压缩算法
+      }),
       // 开启打包可视化分析报告,会增加打包时间，不需要可以关闭
       VITE_BUILD_REPORT &&
-        visualizer({
-          template: 'treemap',
-          open: true,
-          gzipSize: true,
-          brotliSize: true,
-          // emitFile: true,
-          sourcemap: true
-        })
+      visualizer({
+        template: 'treemap',
+        open: true,
+        gzipSize: true,
+        brotliSize: true,
+        // emitFile: true,
+        sourcemap: true
+      })
     ],
     resolve: {
       alias: {

@@ -45,13 +45,18 @@
         </p>
       </div>
       <h3>vueRequest</h3>
-      <p><a href="https://next.cn.attojs.org/" target="_blank" rel="noopener noreferrer">vueRequest</a>测试</p>
+      <p>
+        <a href="https://inhiblabcore.github.io/docs/hooks/useRequest/" target="_blank" rel="noopener noreferrer"
+          >VueHooksPlus - vueRequest</a
+        >测试
+      </p>
       <AButton :loading="loading" @click="handleRun">请求 </AButton>
       <p>测试结果</p>
       <p>data:{{ data }}</p>
       <p>err:{{ error }}</p>
       <h3>表格</h3>
       <p>组件位置：/src/components/BasisTable</p>
+      <a-button @click="handleTestPagination">修改当前页为2</a-button>
       <BasisTable show-index :columns="columns" :loading="loading" :data-source="data" :pagination="pagination">
         <template #bodyCell="{ column, record }">
           <ASpace v-if="column.dataIndex === 'action'" class="table-action">
@@ -172,6 +177,7 @@ import { bytesToSize } from '@/utils';
 import request from '@/utils/request';
 import { message } from 'ant-design-vue';
 import TestModalForm from './TestModalForm.vue';
+import { paginationConfig } from '@/config/pagination';
 const authKeys = ['home', 'system', 'system/menu', 'other'];
 const selectAuthKeys = ref(['home', 'system']);
 const appConfig = window.__APP_CONFIG__;
@@ -202,17 +208,21 @@ const columns: ColumnProps[] = [
     dataIndex: 'action'
   }
 ];
-const { loading, data, error, run, pagination, params } = usePaginationList(getMenusRequest, {
+const { loading, data, error, run, current, pagination, params } = usePagination(getMenusRequest, {
+  paginationExtConfig: paginationConfig,
   defaultParams: [
     {
       pageSize: 1
     }
   ]
 });
+
 function handleRun() {
   run(params.value[0]);
 }
-
+function handleTestPagination() {
+  current.value = 2;
+}
 function handleCancelAllRequest() {
   request.cancelAllRequest();
 }
