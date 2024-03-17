@@ -61,7 +61,7 @@
         <template #bodyCell="{ column, record }">
           <ASpace v-if="column.dataIndex === 'action'" class="table-action">
             <span class="text-primary">
-              <IconFont type="icon-edit" />
+              <IconFont type="icon-edit-square" />
             </span>
             <DeleteButton :title="record.title" @confirm="handleDelete">
               <IconFont type="icon-delete" style="color: red"></IconFont>
