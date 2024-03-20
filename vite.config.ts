@@ -76,8 +76,6 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     },
 
     plugins: [
-      // 由于welink无法连接外网，所以开发环境禁用自动下载
-      !IS_PRODUCTION &&
       iconfont({
         url: VITE_ICONFONT_URL,
         distUrl: './public/iconfont/iconfont.js',

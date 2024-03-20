@@ -19,6 +19,7 @@ export default () => {
     const openValue = ref(options?.defaultOpen ?? true);
     const instance = createApp(Dialog, {
       ...options,
+      footer: null,
       open: openValue,
       onConfirm(data: any) {
         options?.onConfirm?.(data);
