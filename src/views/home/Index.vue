@@ -241,6 +241,7 @@ const { createDialog } = useDialog();
 function handleOpenModal() {
   // 这里需要手动添加一下泛型，就可推断onConfirm中参数的类型
   createDialog<typeof TestModalForm>({
+    title: '测试弹窗1',
     width: '500px',
     component: <TestModalForm title="测试模态窗" />, // 通过attribute传递参数，自带类型推断
     // ...支持AModal的所有配置
@@ -253,6 +254,7 @@ function handleOpenModal() {
 function handleOpenModal1() {
   // 默认不显示
   const { open, close } = createDialog<typeof TestModalForm>({
+    title: '测试弹窗2',
     width: '500px',
     component: <TestModalForm title="测试模态窗" />,
     defaultOpen: false,
@@ -268,6 +270,7 @@ function handleOpenModal1() {
 function handleOpenModal2() {
   // 带插槽
   createDialog<typeof TestModalForm>({
+    title: '测试弹窗3',
     width: '500px',
     component: (
       <TestModalForm title="测试模态窗">

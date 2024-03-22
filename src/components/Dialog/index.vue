@@ -1,20 +1,20 @@
 <!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
-import type { ModalFuncProps } from 'ant-design-vue';
+// import type { ModalFuncProps } from 'ant-design-vue';
 import { getDefaultFromProps } from '@/utils';
-import { modalProps } from 'ant-design-vue/es/modal/Modal';
+import { modalProps, type ModalProps } from 'ant-design-vue/es/modal/Modal';
 import type { Component } from 'vue';
-import type { VueNode } from 'ant-design-vue/es/_util/type';
-export interface IProps extends Omit<ModalFuncProps, 'open'> {
-  title?: string | (() => VueNode) | VueNode;
-  footer?: null | string | (() => VueNode) | VueNode;
+// import type { VueNode } from 'ant-design-vue/es/_util/type';
+export interface IProps extends Omit<ModalProps, 'open'> {
+  // title?: string | (() => VueNode) | VueNode;
+  // footer?: null | string | (() => VueNode) | VueNode;
   component?: Component;
   open?: boolean | Ref<boolean>;
 }
 const props = withDefaults(defineProps<IProps>(), {
   ...getDefaultFromProps(modalProps(), {
-    title: '标题',
-    footer: undefined,
+    // title: '标题',
+    // footer: undefined,
     component: undefined,
     open: false
   })

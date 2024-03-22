@@ -26,7 +26,7 @@ interface IProps extends TableProps {
   // eslint-disable-next-line vue/require-default-prop
   rowKey?: string;
   showIndex?: boolean;
-  columns: ColumnProps[];
+  columns: ColumnProps<any>[];
   // pagination?: IPage | false;
   // bordered?: boolean;
   // defaultExpandAllRows?: boolean;

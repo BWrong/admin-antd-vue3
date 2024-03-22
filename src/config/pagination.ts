@@ -8,3 +8,10 @@ export const paginationConfig: Partial<PaginationConfig> = {
   size: 'small',
   hideOnSinglePage: true
 };
+// 传给后台分页参数名称设置
+export const defaultPaginationOptions = {
+  currentKey: 'current',
+  pageSizeKey: 'pageSize',
+  totalKey: 'total',
+  totalPageKey: 'totalPage'
+};

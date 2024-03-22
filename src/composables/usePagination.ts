@@ -6,13 +6,8 @@ import type {
   UseRequestService,
   useRequestResult
 } from 'vue-hooks-plus/lib/useRequest/types';
+import { defaultPaginationOptions } from '@/config/pagination';
 
-const defaultPaginationOptions = {
-  currentKey: 'current',
-  pageSizeKey: 'pageSize',
-  totalKey: 'total',
-  totalPageKey: 'totalPage'
-};
 const defaultPageCurrent = 1;
 const defaultPageSize = 10;
 interface PaginationType {
@@ -97,7 +92,7 @@ function usePagination<TData = any, TParams extends any[] = any[]>(
   const current = computed({
     get: () =>
       // @ts-ignore
-      params.value?.[0]?.[currentKey] ?? defaultParams[0][currentKey],
+      get(data.value!, currentKey, params.value?.[0]?.[currentKey] ?? defaultParams[0][currentKey]),
     set: (val: number) => {
       changeCurrent(val);
     }
@@ -105,7 +100,7 @@ function usePagination<TData = any, TParams extends any[] = any[]>(
   const pageSize = computed<number>({
     get: () =>
       // @ts-ignore
-      params.value?.[0]?.[pageSizeKey] ?? defaultParams[0][pageSizeKey],
+      get(data.value!, pageSizeKey, params.value?.[0]?.[pageSizeKey] ?? defaultParams[0][pageSizeKey]),
     set: (val: number) => {
       changePageSize(val);
     }

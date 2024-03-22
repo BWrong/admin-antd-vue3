@@ -18,8 +18,8 @@ export default () => {
     document.body.appendChild(container);
     const openValue = ref(options?.defaultOpen ?? true);
     const instance = createApp(Dialog, {
+      // footer: undefined,
       ...options,
-      footer: null,
       open: openValue,
       onConfirm(data: any) {
         options?.onConfirm?.(data);
