@@ -27,6 +27,8 @@ interface IProps extends TableProps {
   rowKey?: string;
   showIndex?: boolean;
   columns: ColumnProps<any>[];
+  // eslint-disable-next-line
+  'onUpdate:expandedRowKeys'?: (keys: (number | string)[]) => void;
   // pagination?: IPage | false;
   // bordered?: boolean;
   // defaultExpandAllRows?: boolean;

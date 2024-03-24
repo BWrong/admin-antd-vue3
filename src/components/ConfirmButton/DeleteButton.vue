@@ -7,9 +7,9 @@
 </template>
 
 <script lang="tsx" setup>
-import type { ButtonProps } from 'ant-design-vue';
+import type { ConfirmProps } from './index.vue';
 
-interface DeleteProps extends ButtonProps {
+interface DeleteProps extends ConfirmProps {
   title?: string;
   text?: string;
   actionTitle?: string;
