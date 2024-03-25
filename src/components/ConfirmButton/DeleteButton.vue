@@ -1,5 +1,5 @@
 <template>
-  <ConfirmButton @confirm="emit('confirm')" :title="title" :text="tipsText">
+  <ConfirmButton @confirm="emit('confirm')" :before="before" :title="title" :text="tipsText">
     <slot>
       <a-button danger size="small" v-bind="$attrs"> 删除 </a-button>
     </slot>
@@ -13,6 +13,7 @@ interface DeleteProps extends ConfirmProps {
   title?: string;
   text?: string;
   actionTitle?: string;
+  before?: () => boolean;
 }
 const {
   title = '是否确定删除已选数据？',
