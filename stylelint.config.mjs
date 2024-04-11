@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   extends: ['@vanwei/stylelint-config'],
   rules: {
     'function-no-unknown': [

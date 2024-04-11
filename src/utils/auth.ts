@@ -55,7 +55,7 @@ export function clearAuthData() {
 // 登出，清理登录信息
 export function logout() {
   clearAuthData();
-  clearStorage();
+  clearStorage(['theme']);
   router.replace('/login');
   resetRouter();
   location.reload();
