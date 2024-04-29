@@ -1,13 +1,15 @@
 <template>
   <a-layout-header class="layout-header">
     <div class="header-left">
-      <slot name="logo"></slot>
+      <slot name="logo" />
     </div>
     <div class="header-right">
       <a-dropdown>
         <div style="margin-left: 10px; cursor: pointer">
           <a-avatar size="default">
-            <template #icon><icon-font type="icon-user" /></template>
+            <template #icon>
+              <icon-font type="icon-user" />
+            </template>
           </a-avatar>
           <span style="margin-left: 10px; vertical-align: middle; color: #fff">
             {{ userInfo.username }}
@@ -32,8 +34,8 @@
         </template>
       </a-dropdown>
     </div>
-    <LPersonalEdit v-model:open="state.openPsd"></LPersonalEdit>
-    <LThemeSetting v-model:open="state.openTheme"></LThemeSetting>
+    <LPersonalEdit v-model:open="state.openPsd" />
+    <LThemeSetting v-model:open="state.openTheme" />
   </a-layout-header>
 </template>
 

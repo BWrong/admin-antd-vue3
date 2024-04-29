@@ -23,9 +23,7 @@ function initTheme() {
     temp[`--${key}`] = value;
     return temp;
   }, {});
-  cssVars({
-    variables
-  });
+  cssVars({ variables });
 }
 // 配置theme
 function setTheme(newOptions: Partial<ThemeOptions>) {

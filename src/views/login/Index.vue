@@ -35,7 +35,9 @@
           </div>
         </a-form-item>
         <a-form-item style="width: 100%">
-          <a-button class="login" :loading="state.loading" type="primary" @click.prevent="handleLogin">登 录</a-button>
+          <a-button class="login" :loading="state.loading" type="primary" @click.prevent="handleLogin">
+            登 录
+          </a-button>
         </a-form-item>
       </a-form>
     </a-card>

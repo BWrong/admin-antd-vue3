@@ -20,7 +20,6 @@ const props = withDefaults(defineProps<IProps>(), {
   })
 });
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const componentRef = ref<any>();
 const emit = defineEmits(['cancel', 'confirm']);
 const localProps = computed(() => {
@@ -46,7 +45,9 @@ function handleLoading(val = false) {
 <template>
   <AModal v-bind="localProps">
     <template #title>
-      <slot name="title">{{ title }} </slot>
+      <slot name="title">
+        {{ title }}
+      </slot>
     </template>
     <template #default>
       <slot>
@@ -56,14 +57,14 @@ function handleLoading(val = false) {
           @confirm="handleConfirm"
           @cancel="handleCancel"
           @loading="handleLoading"
-        ></component>
+        />
       </slot>
     </template>
     <template #footer>
       <slot name="footer">
         <div class="modal-footer" v-if="footer === undefined">
-          <a-button @click="handleCancel">取消</a-button>
-          <a-button type="primary" @click="handleConfirm" :loading="loading">确认</a-button>
+          <a-button @click="handleCancel"> 取消 </a-button>
+          <a-button type="primary" @click="handleConfirm" :loading="loading"> 确认 </a-button>
         </div>
         <template v-else>
           {{ footer }}

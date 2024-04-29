@@ -30,7 +30,7 @@ export interface IMenu extends IRecordBase {
   type?: number;
   hide?: boolean;
   children?: IMenu[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   [K: string]: any;
 }
 

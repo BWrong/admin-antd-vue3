@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /*
  * @Author: Bwrong
  * @Github: https://github.com/BWrong

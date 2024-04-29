@@ -26,7 +26,7 @@
             :class="{ '!rounded-[3px]': themeOptions.themeToken?.colorPrimary === item }"
             :style="{ backgroundColor: item as string }"
             @click="handleSetColor(item)"
-          ></span>
+          />
         </div>
       </a-form-item>
       <a-form-item label="紧凑模式">
@@ -67,9 +67,7 @@ const themes = ref([
 const { setTheme, themeOptions } = useTheme();
 function handleColorScheme(e: RadioChangeEvent) {
   const colorScheme = e.target.value;
-  setTheme({
-    colorScheme
-  });
+  setTheme({ colorScheme });
 }
 const colorList = ['#1890ff', '#52c41a', '#faad14', '#ff4d4f'];
 function handleSetColor(color) {
@@ -81,8 +79,6 @@ function handleSetColor(color) {
   });
 }
 function handleSetCompact(isCompact) {
-  setTheme({
-    isCompact
-  });
+  setTheme({ isCompact });
 }
 </script>

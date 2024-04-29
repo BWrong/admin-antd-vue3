@@ -26,7 +26,11 @@ interface IProps {
   width?: string;
   height?: string;
 }
-withDefaults(defineProps<IProps>(), { value: '', width: '500px', height: '500px' });
+withDefaults(defineProps<IProps>(), {
+  value: '',
+  width: '500px',
+  height: '500px'
+});
 const prefix = data.css_prefix_text;
 const icons = data.glyphs.map((item) => `${prefix}${item.font_class}`) as Iconfont[];
 const emit = defineEmits(['update:value']);

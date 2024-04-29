@@ -1,7 +1,11 @@
 <template>
   <a-sub-menu :key="antKey">
-    <template #icon v-if="item.icon"><icon-font :type="item.icon" /></template>
-    <template #title>{{ item.title }}</template>
+    <template #icon v-if="item.icon">
+      <icon-font :type="item.icon" />
+    </template>
+    <template #title>
+      {{ item.title }}
+    </template>
     <template v-for="subItem in item.children">
       <template v-if="!subItem.hide">
         <l-sub-menu
@@ -11,9 +15,11 @@
           :item="subItem"
           :ant-key="subItem.url"
           :collapse="collapse"
-        ></l-sub-menu>
+        />
         <a-menu-item v-else :key="subItem.url" @click="handleLink(subItem.url)">
-          <template #icon v-if="subItem.icon"> <icon-font :type="subItem.icon" /> </template>
+          <template #icon v-if="subItem.icon">
+            <icon-font :type="subItem.icon" />
+          </template>
           {{ subItem.title }}
         </a-menu-item>
       </template>

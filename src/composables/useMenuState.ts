@@ -23,7 +23,7 @@ export default (menus: IMenu[]) => {
  * @param options 选项
  * @returns 返回满足过滤函数的元素在树状数据中的父级链
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 export function findParentChain<T extends { children?: any[] }>(
   tree: T[],
   filter: (item: T) => boolean,

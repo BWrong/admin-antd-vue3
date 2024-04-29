@@ -2,7 +2,7 @@
   <a-layout class="layout">
     <LHeader v-model:collapse="collapse" class="layout-header-fixed">
       <template #logo>
-        <LLogo style="margin: 0 20px 0 0"></LLogo>
+        <LLogo style="margin: 0 20px 0 0" />
       </template>
     </LHeader>
     <a-layout class="layout-main">
@@ -14,14 +14,16 @@
         collapsible
         breakpoint="lg"
       >
-        <LSider v-model:collapse="collapse" :menus="menus"></LSider>
+        <LSider v-model:collapse="collapse" :menus="menus" />
       </a-layout-sider>
       <a-layout-content class="app-scroll-wrap">
         <LBreadCrumb v-model:collapse="collapse" :menus="menus" />
         <div class="app-main">
           <router-view v-slot="{ Component, route }">
             <transition mode="out-in" name="slide">
-              <div :key="route.path"><component :is="Component" /></div>
+              <div :key="route.path">
+                <component :is="Component" />
+              </div>
             </transition>
           </router-view>
         </div>

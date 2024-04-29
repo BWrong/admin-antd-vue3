@@ -1,7 +1,7 @@
 <template>
   <span class="icon-font" :style="computedStyle">
     <svg aria-hidden="true" width="1em" height="1em" focusable="false" fill="currentColor">
-      <use :xlink:href="'#' + type"></use>
+      <use :xlink:href="'#' + type" />
     </svg>
   </span>
 </template>

@@ -5,7 +5,9 @@
     </span>
     <a-breadcrumb class="breadcrumb">
       <a-breadcrumb-item v-for="item in parentChain" :key="item.url" :href="item.url">
-        <router-link :to="item.url">{{ item.title }}</router-link>
+        <router-link :to="item.url">
+          {{ item.title }}
+        </router-link>
         <template v-if="item.children?.length" #overlay>
           <a-menu>
             <template v-for="subitem in item.children" :key="subitem.url">

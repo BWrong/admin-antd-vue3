@@ -2,7 +2,7 @@
   <div class="basic-table">
     <a-table v-bind="props" :columns="computedColumns">
       <template v-for="(item, key) in slots" #[key]="data">
-        <slot :name="key" v-bind="data"></slot>
+        <slot :name="key" v-bind="data" />
       </template>
     </a-table>
   </div>
@@ -60,7 +60,7 @@ const props = withDefaults(defineProps<IProps>(), {
 function ganerTableIndex(current = 1, pageSize = 10, index = 0) {
   return (current - 1) * pageSize + index + 1;
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 const computedColumns = computed<(ColumnGroupType<any> | ColumnType<any>)[]>(() => {
   // 判断是否需要显示序号
   if (!props.showIndex) return props.columns;

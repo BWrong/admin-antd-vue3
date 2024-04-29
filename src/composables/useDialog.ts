@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Dialog, { type IProps } from '@/components/Dialog/index.vue';
 import { type Component } from 'vue';
 
@@ -12,7 +11,7 @@ interface ICreateOptions<T> extends Omit<IProps, 'component'> {
 export default () => {
   const currentInstance = getCurrentInstance();
   const appContext = currentInstance?.appContext;
-  // @ts-ignore
+  // @ts-expect-error 忽略报错
   function createDialog<T = Element, U = Awaited<ReturnType<InstanceType<T>['submit']>>>(options?: ICreateOptions<U>) {
     const container = document.createElement('div');
     document.body.appendChild(container);
@@ -62,9 +61,7 @@ export default () => {
       close
     };
   }
-  return {
-    createDialog
-  };
+  return { createDialog };
 };
 
 export interface DialogExpose<T = any> {

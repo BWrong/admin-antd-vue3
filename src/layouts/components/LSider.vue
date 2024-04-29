@@ -9,9 +9,11 @@
             :ant-key="item.url"
             :collapse="collapse"
             :item="item"
-          ></LSubMenu>
+          />
           <a-menu-item v-else :key="item.url" @click="handleLink(item.url)">
-            <template #icon v-if="item.icon"><icon-font :type="item.icon" /></template>
+            <template #icon v-if="item.icon">
+              <icon-font :type="item.icon" />
+            </template>
             {{ item.title }}
           </a-menu-item>
         </template>
@@ -30,9 +32,7 @@ interface IProps {
   collapse?: boolean;
   menus: IMenu[];
 }
-const props = withDefaults(defineProps<IProps>(), {
-  collapse: false
-});
+const props = withDefaults(defineProps<IProps>(), { collapse: false });
 const route = useRoute();
 const localOpeneds = ref<string[]>([]);
 const { matchedParentChain, activeMenu } = useMenuState(props.menus);

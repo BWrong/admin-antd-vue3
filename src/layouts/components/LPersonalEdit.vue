@@ -22,7 +22,7 @@
           auto-complete="off"
           placeholder="请输入原始密码"
           type="password"
-        ></a-input>
+        />
       </a-form-item>
       <a-form-item name="newPassword" label="新密码">
         <a-input
@@ -30,7 +30,7 @@
           auto-complete="off"
           placeholder="请输入新密码"
           type="password"
-        ></a-input>
+        />
       </a-form-item>
       <a-form-item name="reNewPassword" label="重复密码">
         <a-input
@@ -38,12 +38,14 @@
           auto-complete="off"
           placeholder="请输入重复密码"
           type="password"
-        ></a-input>
+        />
       </a-form-item>
     </a-form>
     <template #footer>
       <a-button style="margin: 10px 0" :loading="state.loading" type="primary" @click.prevent="updatePsd()">
-        <template #icon><icon-font type="icon-setting" /></template>
+        <template #icon>
+          <icon-font type="icon-setting" />
+        </template>
         提 交
       </a-button>
     </template>

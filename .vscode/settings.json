@@ -4,5 +4,7 @@
     "./.iconify.json"
   ],
   "iconify.annotations": true,
-  "iconify.inplace": false
+  "iconify.inplace": false,
+  "eslint.experimental.useFlatConfig": true,
+  "unot.switchMagic": true
 }

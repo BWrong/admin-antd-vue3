@@ -1,7 +1,7 @@
 <template>
   <div>{{ title }}</div>
-  <slot></slot>
-  <slot name="test"></slot>
+  <slot />
+  <slot name="test" />
   <AForm :rules="rules" :model="formData" ref="formRef">
     <AFormItem name="name" label="名称">
       <AInput v-model:value="formData.name" />
@@ -16,9 +16,7 @@ import type { FormInstance, FormProps } from 'ant-design-vue';
 const { title = '' } = defineProps<{
   title?: string;
 }>();
-const formData = reactive({
-  name: ''
-});
+const formData = reactive({ name: '' });
 const rules: FormProps['rules'] = {
   name: [
     {

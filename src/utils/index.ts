@@ -3,7 +3,7 @@
  * @Github: https://github.com/BWrong
  * @Date: 2020-04-07 10:30:49
  * @LastEditors: Bwrong
- * @LastEditTime: 2024-03-15 14:51:06
+ * @LastEditTime: 2024-04-26 17:52:34
  */
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
@@ -100,7 +100,6 @@ interface ITreeData<T> {
   pidName?: string;
   idName?: string;
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function convertToTree<T = any>({
   data,
   pid = 0,
@@ -159,7 +158,6 @@ export const getFileType = (() => {
  * @param content
  * @param filename
  */
-// eslint-disable-next-line no-undef
 export function downloadFile(content: BlobPart, filename: string) {
   const a = document.createElement('a');
   const blob = content instanceof Blob ? content : new Blob([content]);
@@ -188,7 +186,7 @@ export const bytesToSize = (bytes?: number | undefined) => {
  * @param value
  * @returns
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 export function arrayToObj<T extends Record<string, any>, K extends keyof T = string>(
   arrayData: T[],
   key: K,
@@ -222,12 +220,10 @@ export function checkEmptyFieldOfList<T, K extends keyof T>(data: T[], checkKeys
  * @param overrideProps
  * @returns
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 export function getDefaultFromProps<T = Record<string, any>>(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   props: Record<string, any>,
   overrideProps: T
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): T | Record<string, any> {
   const defaults = Object.entries(props).reduce((temp, [key, value]) => {
     temp[key] = value?.default;

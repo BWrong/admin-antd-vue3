@@ -7,15 +7,17 @@
       <h3>权限测试</h3>
       <div class="my-2 block">
         选择权限：<ASelect v-model:value="selectAuthKeys" mode="multiple" class="w-50">
-          <ASelectOption v-for="item in authKeys" :key="item" :value="item">{{ item }}</ASelectOption>
+          <ASelectOption v-for="item in authKeys" :key="item" :value="item">
+            {{ item }}
+          </ASelectOption>
         </ASelect>
       </div>
       <div>{{ selectAuthKeys }}</div>
       <ASpace>
         <div>指令：</div>
-        <AButton v-auth="'home'">指令：home</AButton>
-        <AButton v-auth="selectAuthKeys">指令：every模式</AButton>
-        <AButton v-auth:some="selectAuthKeys">指令：some模式</AButton>
+        <AButton v-auth="'home'"> 指令：home </AButton>
+        <AButton v-auth="selectAuthKeys"> 指令：every模式 </AButton>
+        <AButton v-auth:some="selectAuthKeys"> 指令：some模式 </AButton>
         <div>组件：</div>
         <Auth value="home">
           <a-button>组件：home</a-button>
@@ -30,13 +32,13 @@
       <h3>请求取消</h3>
       <div>
         <ASpace>
-          <AButton @click="handleRun">自动取消重复请求（快速点击测试）</AButton>
-          <AButton @click="handleCancelAllRequest">取消全部请求</AButton>
+          <AButton @click="handleRun"> 自动取消重复请求（快速点击测试） </AButton>
+          <AButton @click="handleCancelAllRequest"> 取消全部请求 </AButton>
         </ASpace>
       </div>
       <h3>文件下载</h3>
       <div>
-        <AButton @click="handleDownloadFile">文件下载</AButton>
+        <AButton @click="handleDownloadFile"> 文件下载 </AButton>
         <p>文件大小：{{ bytesToSize(progress.total) }}</p>
         <p>已下载：{{ bytesToSize(progress.loaded) }}</p>
         <p>
@@ -50,13 +52,13 @@
           >VueHooksPlus - vueRequest</a
         >测试
       </p>
-      <AButton :loading="loading" @click="handleRun">请求 </AButton>
+      <AButton :loading="loading" @click="handleRun"> 请求 </AButton>
       <p>测试结果</p>
       <p>data:{{ data }}</p>
       <p>err:{{ error }}</p>
       <h3>表格</h3>
       <p>组件位置：/src/components/BasisTable</p>
-      <a-button @click="handleTestPagination">修改当前页为2</a-button>
+      <a-button @click="handleTestPagination"> 修改当前页为2 </a-button>
       <BasisTable show-index :columns="columns" :loading="loading" :data-source="data" :pagination="pagination">
         <template #bodyCell="{ column, record }">
           <ASpace v-if="column.dataIndex === 'action'" class="table-action">
@@ -64,11 +66,11 @@
               <IconFont type="icon-edit-square" />
             </span>
             <DeleteButton :title="record.title" @confirm="handleDelete">
-              <IconFont type="icon-delete" style="color: red"></IconFont>
+              <IconFont type="icon-delete" style="color: red" />
             </DeleteButton>
           </ASpace>
           <ASpace v-if="column.dataIndex === 'icon'">
-            <IconFont :type="record.icon"></IconFont>
+            <IconFont :type="record.icon" />
           </ASpace>
           <ASpace v-if="column.dataIndex === 'type'">
             {{ record.type === 0 ? '菜单' : '操作' }}
@@ -103,19 +105,19 @@
       </a-input>
       <h3>操作确认按钮</h3>
       <p>组件位置：/src/components/ConfirmButton</p>
-      <ConfirmButton @confirm="handleDelete"></ConfirmButton>
+      <ConfirmButton @confirm="handleDelete" />
       <h3>删除按钮</h3>
       <p>组件位置：/src/components/ConfirmButton/DeleteButton</p>
       <ASpace>
-        <DeleteButton @confirm="handleDelete"></DeleteButton>
-        <DeleteButton @confirm="handleDelete" action-title="删除项一"></DeleteButton>
+        <DeleteButton @confirm="handleDelete" />
+        <DeleteButton @confirm="handleDelete" action-title="删除项一" />
       </ASpace>
       <h3>模态框函数式调用</h3>
       <p>组件位置：/src/composables/useDialog</p>
       <ASpace>
-        <AButton @click="handleOpenModal">打开（默认）</AButton>
-        <AButton @click="handleOpenModal1">打开（手动）</AButton>
-        <AButton @click="handleOpenModal2">打开（带插槽）</AButton>
+        <AButton @click="handleOpenModal"> 打开（默认） </AButton>
+        <AButton @click="handleOpenModal1"> 打开（手动） </AButton>
+        <AButton @click="handleOpenModal2"> 打开（带插槽） </AButton>
       </ASpace>
       <h3>UnoCss</h3>
       <p>
@@ -148,9 +150,9 @@
             class="m-1 inline-block h-4 w-4 cursor-pointer"
             :style="{ backgroundColor: item as string }"
             @click="handleSetTheme(item)"
-          ></span>
+          />
         </template>
-        <IconFont type="icon-bg-colors" font-size="20px" class="text-primary"></IconFont>
+        <IconFont type="icon-bg-colors" font-size="20px" class="text-primary" />
       </a-popover>
       <h3>颜色</h3>
       <p class="text-primary">主色</p>
@@ -210,11 +212,7 @@ const columns: ColumnProps[] = [
 ];
 const { loading, data, error, run, current, pagination, params } = usePagination(getMenusRequest, {
   paginationExtConfig: paginationConfig,
-  defaultParams: [
-    {
-      pageSize: 1
-    }
-  ]
+  defaultParams: [{ pageSize: 1 }]
 });
 
 function handleRun() {
@@ -282,6 +280,7 @@ function handleOpenModal2() {
     ),
     onConfirm(data) {
       console.log('拿到组件内部数据：', data);
+      console.log('122');
     }
   });
 }

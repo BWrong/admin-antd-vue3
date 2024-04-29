@@ -73,34 +73,33 @@ function usePagination<TData = any, TParams extends any[] = any[]>(
     run(...mergerParams);
   };
 
-  // changeCurrent	change current page	(current: number) => void
+  // changeCurrent change current page (current: number) => void
   const changeCurrent = (current: number) => {
     paging({ [currentKey]: current });
   };
 
-  // changePageSize	change pageSize	(pageSize: number) => void
+  // changePageSize change pageSize (pageSize: number) => void
   const changePageSize = (pageSize: number) => {
     paging({ [pageSizeKey]: pageSize });
   };
 
-  // changePagination	change current and pageSize	(current: number, pageSize: number) => void
+  // changePagination change current and pageSize (current: number, pageSize: number) => void
   const changePagination = (current: number, pageSize: number) => {
-    paging({ [currentKey]: current, [pageSizeKey]: pageSize });
+    paging({
+      [currentKey]: current,
+      [pageSizeKey]: pageSize
+    });
   };
 
   const total = computed<number>(() => get(data.value!, totalKey, 0));
   const current = computed({
-    get: () =>
-      // @ts-ignore
-      get(data.value!, currentKey, params.value?.[0]?.[currentKey] ?? defaultParams[0][currentKey]),
+    get: () => get(data.value!, currentKey, params.value?.[0]?.[currentKey] ?? defaultParams[0][currentKey]),
     set: (val: number) => {
       changeCurrent(val);
     }
   });
   const pageSize = computed<number>({
-    get: () =>
-      // @ts-ignore
-      get(data.value!, pageSizeKey, params.value?.[0]?.[pageSizeKey] ?? defaultParams[0][pageSizeKey]),
+    get: () => get(data.value!, pageSizeKey, params.value?.[0]?.[pageSizeKey] ?? defaultParams[0][pageSizeKey]),
     set: (val: number) => {
       changePageSize(val);
     }

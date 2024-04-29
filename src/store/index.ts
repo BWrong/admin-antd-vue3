@@ -5,9 +5,7 @@ interface IUserInfo {
   username: string;
 }
 export const useRootStore = defineStore('root', {
-  state: () => ({
-    userinfo: {} as IUserInfo
-  }),
+  state: () => ({ userinfo: {} as IUserInfo }),
   getters: {
     userinfoGetter(state) {
       if (state.userinfo) return state.userinfo;

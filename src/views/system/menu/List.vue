@@ -8,7 +8,7 @@
             新建
           </AButton>
 
-          <AButton type="primary" ghost @click="$router.push('/system/menu/edit')">嵌套路由测试</AButton>
+          <AButton type="primary" ghost @click="$router.push('/system/menu/edit')"> 嵌套路由测试 </AButton>
         </ASpace>
       </template>
       <basis-table :columns="columns" :data-source="state.tableData" :loading="state.tableLoading">
@@ -17,10 +17,10 @@
             {{ record.type === 0 ? '菜单' : '按钮' }}
           </a-tag>
           <a-space v-else-if="column.dataIndex === 'action'">
-            <a-button type="primary" size="small" @click="handleEdit(record)">编辑</a-button>
-            <a-button size="small" @click="handleAddChild(record)">添加子项</a-button>
-            <a-button v-if="!record.hide" ghost danger size="small" @click="handleHide(record, true)">隐藏</a-button>
-            <a-button v-else size="small" @click="handleHide(record, false)">显示</a-button>
+            <a-button type="primary" size="small" @click="handleEdit(record)"> 编辑 </a-button>
+            <a-button size="small" @click="handleAddChild(record)"> 添加子项 </a-button>
+            <a-button v-if="!record.hide" ghost danger size="small" @click="handleHide(record, true)"> 隐藏 </a-button>
+            <a-button v-else size="small" @click="handleHide(record, false)"> 显示 </a-button>
             <delete-button :title="record.name" @confirm="handleDel(record)" />
           </a-space>
         </template>
@@ -124,9 +124,7 @@ const state = reactive({
   tableLoading: false
 });
 function getData() {
-  state.tableData = getPermissionsTree({
-    pid: 0
-  });
+  state.tableData = getPermissionsTree({ pid: 0 });
 }
 getData();
 function handleDel(row) {
