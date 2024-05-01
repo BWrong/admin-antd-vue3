@@ -1,5 +1,5 @@
 import Dialog, { type IProps } from '@/components/Dialog/index.vue';
-import { type Component, type DefineComponent } from 'vue';
+import { type Component } from 'vue';
 
 interface ICreateOptions<T> extends Omit<IProps, 'component'> {
   onConfirm?: (data: T) => void;
@@ -11,9 +11,8 @@ interface ICreateOptions<T> extends Omit<IProps, 'component'> {
 export default () => {
   const currentInstance = getCurrentInstance();
   const appContext = currentInstance?.appContext;
-  // TODO: 类型推导失效了
   function createDialog<
-    T extends abstract new (...args: any) => any = DefineComponent,
+    T extends abstract new (...args: any) => any,
     U = Awaited<ReturnType<InstanceType<T>['submit']>>
   >(options?: ICreateOptions<U>) {
     const container = document.createElement('div');
@@ -66,7 +65,3 @@ export default () => {
   }
   return { createDialog };
 };
-
-export interface DialogExpose<T = any> {
-  submit?(): Promise<T>;
-}

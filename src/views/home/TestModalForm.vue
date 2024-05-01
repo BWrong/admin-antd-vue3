@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import type { DialogExpose } from '@/composables/useDialog';
 import type { FormInstance, FormProps } from 'ant-design-vue';
 
 const { title = '' } = defineProps<{
@@ -27,7 +26,7 @@ const rules: FormProps['rules'] = {
 };
 const emits = defineEmits(['cancel', 'confirm', 'loading']);
 const formRef = ref<FormInstance>();
-defineExpose<DialogExpose>({
+defineExpose({
   async submit() {
     emits('loading', true);
     return formRef.value?.validate().then(async () => {

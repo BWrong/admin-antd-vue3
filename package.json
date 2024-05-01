@@ -38,7 +38,7 @@
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "qs": "^6.12.1",
-    "vue": "^3.4.25",
+    "vue": "^3.4.26",
     "vue-hooks-plus": "^1.9.0",
     "vue-router": "^4.3.2"
   },
@@ -88,7 +88,7 @@
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-iconfont": "^1.4.0",
     "vite-plugin-mock": "^3.0.2",
-    "vue-tsc": "^2.0.14"
+    "vue-tsc": "^2.0.15"
   },
   "pnpm": {
     "peerDependencyRules": {
