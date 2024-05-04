@@ -21,6 +21,7 @@ interface ImportMetaEnv {
   VITE_ICONFONT_URL: string;
   VITE_COLOR_SCHEME: 'auto' | 'light' | 'dark';
   VITE_UPDATE_NOTICE: boolean;
+  VITE_DEVTOOLS: boolean;
 }
 interface ImportMeta {
   readonly env: ImportMetaEnv;

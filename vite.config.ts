@@ -13,6 +13,7 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 import { VueHooksPlusResolver } from '@vue-hooks-plus/resolvers'
 import { webUpdateNotice } from '@plugin-web-update-notification/vite';
 import { visualizer } from 'rollup-plugin-visualizer';
+import VueDevTools from 'vite-plugin-vue-devtools'
 import buildInfo from 'vite-plugin-build-info';
 import iconfont from 'vite-plugin-iconfont';
 import unoCSS from 'unocss/vite';
@@ -40,8 +41,10 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     VITE_OUT_DIR,
     VITE_DROP_CONSOLE = false,
     VITE_DROP_DEBUGGER = false,
-    VITE_UPDATE_NOTICE = false
+    VITE_UPDATE_NOTICE = false,
+    VITE_DEVTOOLS = false
   } = env;
+  console.log(VITE_DEVTOOLS,VITE_API_HOST);
 
   /***** 接口代理配置，有多个可以自己加 ******/
   const PROXY_CONFIG: Record<string, string | ProxyOptions> = {
@@ -76,6 +79,8 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     },
 
     plugins: [
+      // https://devtools-next.vuejs.org/
+      VITE_DEVTOOLS && VueDevTools(),
       iconfont({
         url: VITE_ICONFONT_URL,
         distUrl: './public/iconfont/iconfont.js',
