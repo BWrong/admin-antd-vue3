@@ -19,11 +19,12 @@ import iconfont from 'vite-plugin-iconfont';
 import unoCSS from 'unocss/vite';
 import { themeToken } from './src/config/theme';
 import { resolve } from 'node:path';
+import { envParse } from 'vite-plugin-env-parse'
 
 // 完整配置，请查阅https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv) => {
   const root = process.cwd(); // 项目根目录
-  const env = formatEnv(loadEnv(mode, root)) as ImportMetaEnv;
+  const env = loadEnv(mode, root) as ImportMetaEnv;
   console.log('【info】 command:', command, ', mode: ', mode);
   console.log(env);
   const IS_PRODUCTION = command === 'build';
@@ -79,6 +80,9 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     },
 
     plugins: [
+      envParse({
+        dtsPath: './types/env.d.ts'
+      }),
       // https://devtools-next.vuejs.org/
       VITE_DEVTOOLS && VueDevTools(),
       iconfont({
@@ -223,19 +227,6 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
 /********** 一些辅助函数 *********/
 function createPath(url: string, metaUrl = import.meta.url) {
   return fileURLToPath(new URL(url, metaUrl));
-}
-function formatEnv(data: Record<string, any>) {
-  Object.entries(data).map(([key, item]) => {
-    if (item === 'true') {
-      item = true;
-    } else if (item === 'false') {
-      item = false;
-    } else if (item.match(/^\d+$/g)) {
-      item = Number(item);
-    }
-    data[key] = item;
-  });
-  return data;
 }
 function formatDrop(dropDebugger: boolean, dropConsole: boolean) {
   let drop: any = [];

@@ -23,7 +23,7 @@ const router = createRouter({
 });
 router.beforeEach(async (to) => {
   // 如果不控制权，所有路由直接放行
-  if (VITE_AUTH_CHECK === 'false') return;
+  if (!VITE_AUTH_CHECK) return;
   NProgress.start();
   const token = getToken();
   // 其实路由拦截后所做跳转仅有以下几种情况：
