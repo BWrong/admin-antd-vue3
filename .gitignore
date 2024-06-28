@@ -32,3 +32,5 @@ components.d.ts
 *.njsproj
 *.sln
 *.sw?
+
+helper.json

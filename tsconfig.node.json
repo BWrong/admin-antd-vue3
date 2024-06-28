@@ -11,6 +11,8 @@
   "compilerOptions": {
     "composite": true,
     "resolveJsonModule": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "moduleResolution": "Bundler",
     "module": "ESNext",
     "types": ["node"]
   }
