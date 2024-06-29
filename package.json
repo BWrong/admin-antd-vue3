@@ -17,7 +17,7 @@
     "build": "vite build",
     "build:check": "npm run type-check && npm run build",
     "preview": "vite preview",
-    "type-check": "vue-tsc --noEmit",
+    "type-check": "vue-tsc --build --force",
     "lint": "eslint ./src --fix",
     "lint:style": "stylelint src/**/*.{vue,css,less,scss} --fix",
     "format": "prettier --write src/",
