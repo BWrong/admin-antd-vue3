@@ -12,6 +12,12 @@ const routes: RouteRecordRaw[] = [
     name: 'error',
     component: () => import('@/views/error/Index.vue'),
     meta: {}
+  },
+  {
+    // 空白页，刷新tab页时用来做中转
+    path: '/_empty',
+    name: '_empty',
+    component: () => import('@/views/error/Empty.vue')
   }
 ];
 export default routes;

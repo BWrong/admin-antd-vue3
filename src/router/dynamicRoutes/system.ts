@@ -3,14 +3,14 @@ import type { RouteRecordRaw } from 'vue-router';
 export default [
   {
     path: '/system',
-    component: () => import(/* webpackChunkName: "layout" */ '@/layouts/DefaultLayout.vue'),
+    component: () => import('@/layouts/DefaultLayout.vue'),
     meta: { permission: 'system' },
     children: [
       // 菜单管理
       {
         path: '/system/menu',
         component: () => import('@/views/system/menu/List.vue'),
-        meta: { permission: 'system/menu' }
+        meta: { permission: 'system/menu', keepAlive: true }
       },
       {
         path: '/system/menu/edit',

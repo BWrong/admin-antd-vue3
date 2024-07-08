@@ -34,7 +34,7 @@ withDefaults(defineProps<IProps>(), {
 const prefix = data.css_prefix_text;
 const icons = data.glyphs.map((item) => `${prefix}${item.font_class}`) as Iconfont[];
 const emit = defineEmits(['update:value']);
-function handleSelect(icon) {
+function handleSelect(icon: Iconfont) {
   emit('update:value', icon);
 }
 </script>

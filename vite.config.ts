@@ -19,12 +19,12 @@ import iconfont from 'vite-plugin-iconfont';
 import unoCSS from 'unocss/vite';
 import { themeToken } from './src/config/theme';
 import { resolve } from 'node:path';
-import { envParse } from 'vite-plugin-env-parse'
+import { envParse,parseLoadedEnv } from 'vite-plugin-env-parse'
 
 // 完整配置，请查阅https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv) => {
   const root = process.cwd(); // 项目根目录
-  const env = loadEnv(mode, root) as ImportMetaEnv;
+  const env = parseLoadedEnv(loadEnv(mode, root) as ImportMetaEnv);
   console.log('【info】 command:', command, ', mode: ', mode);
   console.log(env);
   const IS_PRODUCTION = command === 'build';

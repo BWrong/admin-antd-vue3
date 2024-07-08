@@ -9,8 +9,9 @@
     "types/mockServer.d.ts"
   ],
   "compilerOptions": {
-    "composite": true,
     "resolveJsonModule": true,
+    "composite": true,
+    "noEmit": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "module": "ESNext",
     "moduleResolution": "Bundler",

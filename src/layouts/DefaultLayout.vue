@@ -16,14 +16,15 @@
       >
         <LSider v-model:collapse="collapse" :menus="menus" />
       </a-layout-sider>
-      <a-layout-content class="app-scroll-wrap">
+      <a-layout-content class="app-scroll-wrap" id="app-main-scroller">
         <LBreadCrumb v-model:collapse="collapse" :menus="menus" />
+        <LTabs />
         <div class="app-main">
-          <router-view v-slot="{ Component, route }">
+          <router-view v-slot="{ Component }">
             <transition mode="out-in" name="slide">
-              <div :key="route.path">
+              <keep-alive :include="caches">
                 <component :is="Component" />
-              </div>
+              </keep-alive>
             </transition>
           </router-view>
         </div>
@@ -35,6 +36,7 @@
 import { useRouter } from 'vue-router';
 
 import LBreadCrumb from '@/layouts/components/LBreadCrumb.vue';
+import LTabs from '@/layouts/components/LTabs.vue';
 import LHeader from '@/layouts/components/LHeader.vue';
 import LLogo from '@/layouts/components/LLogo.vue';
 import LSider from '@/layouts/components/LSider.vue';
@@ -43,6 +45,9 @@ import { convertToTree } from '@/utils';
 import { getStorage } from '@bwrong/storage';
 import type { IMenu, IUser } from '@/api/auth';
 import { getPermissionsData } from '@bwrong/auth-tool';
+import useRouteCache from '@/composables/useRouteCache';
+
+const { caches } = useRouteCache();
 
 const rootStore = useRootStore();
 const { push } = useRouter();
@@ -69,18 +74,22 @@ const headerHeight = computed(() => (themeOptions.isCompact ? '56px' : '64px'));
   height: 100vh;
   background: #f0f2f5;
 }
+
 .layout-header-fixed {
   position: fixed;
   width: 100%;
 }
+
 .app-scroll-wrap {
   width: 100%;
   height: calc(100vh - v-bind(headerHeight));
   overflow-y: auto;
 }
+
 .layout-main {
   padding-top: v-bind(headerHeight);
 }
+
 .app-main {
   width: 100%;
   padding: 16px;

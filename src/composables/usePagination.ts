@@ -110,7 +110,7 @@ function usePagination<TData = any, TParams extends any[] = any[]>(
     pageSize,
     current,
     total,
-    onChange(page, pageSize) {
+    onChange(page: number, pageSize: number) {
       paginationExtConfig?.onChange?.(page, pageSize);
       changePagination?.(page || 1, pageSize);
     }

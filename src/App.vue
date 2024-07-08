@@ -1,8 +1,6 @@
 <template>
   <a-config-provider :locale="zhCN" :theme="customTheme">
-    <router-view v-slot="{ Component }">
-      <component :is="Component" />
-    </router-view>
+    <router-view></router-view>
   </a-config-provider>
 </template>
 <script lang="ts" setup>
@@ -15,4 +13,7 @@ const customTheme = computed<ThemeConfig>(() => ({
   algorithm: antAlgorithm.value
 }));
 initTheme();
+// 收集路由配置meta为keepAlive: ture的缓存
+const { collectCaches } = useRouteCache();
+collectCaches();
 </script>
