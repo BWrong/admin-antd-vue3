@@ -1,13 +1,18 @@
 import { ref, nextTick, watch } from 'vue';
 import { useRoute } from 'vue-router';
-
+// 如果需要持久化，可以存到localStorage或sessionStorage
 const caches = ref<string[]>([]);
 let collect = false;
 const cmpNames: { [index: string]: string } = {};
-
+// 路由的key值，刷新用的
+const routeKey = ref(Date.now());
+let changeFn: any = null;
 export default function useRouteCache() {
   const route = useRoute();
-
+  // 更新路由key
+  function updataRouteKey() {
+    routeKey.value = Date.now();
+  }
   // 收集当前路由相关的缓存
   function collectRouteCaches() {
     route.matched.forEach((routeMatch) => {
@@ -28,6 +33,7 @@ export default function useRouteCache() {
         removeCache(componentName);
       }
     });
+    changeFn?.();
   }
 
   // 检测路由组件名称是否重复（组件重名会缓存到不该缓存的组件，而且不容易排查问题，所以开发环境时检测重名）
@@ -94,9 +100,15 @@ export default function useRouteCache() {
     });
   }
 
+  function registerChange(fn: () => void) {
+    changeFn = fn;
+  }
   return {
     collectCaches,
     caches,
+    routeKey,
+    registerChange,
+    updataRouteKey,
     addCache,
     removeCache,
     removeCacheEntry,

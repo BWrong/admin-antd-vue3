@@ -10,14 +10,13 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/error',
     name: 'error',
-    component: () => import('@/views/error/Index.vue'),
+    component: () => import('@/views/common/Error.vue'),
     meta: {}
   },
   {
-    // 空白页，刷新tab页时用来做中转
-    path: '/_empty',
-    name: '_empty',
-    component: () => import('@/views/error/Empty.vue')
+    path: '/redirect',
+    name: 'redirect',
+    component: () => import('@/views/common/Redirect.vue')
   }
 ];
 export default routes;

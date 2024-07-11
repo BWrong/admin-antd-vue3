@@ -1,16 +1,32 @@
 <template>
   <div class="layout-tabs">
-    <a-tabs type="editable-card" v-model:activeKey="curTabKey" @edit="removeTab" size="small" hide-add>
-      <a-tab-pane v-for="(item, index) in tabs" :key="item.tabKey">
+    <a-tabs :type="tabType" :active-key="curTabKey" @edit="removeTab" @change="clickTab" size="small" hide-add>
+      <a-tab-pane v-for="item in tabs" :key="item.tabKey">
         <template #tab>
-          <div @click="clickTab(index)">
+          <div>
             {{ item.title }}
-            <IconFont type="icon-shuaxin" v-if="item.tabKey === curTabKey" @click="refreshTab(item)"></IconFont>
           </div>
         </template>
       </a-tab-pane>
+      <template #rightExtra>
+        <a-dropdown>
+          <IconFont type="icon-gengduo" :size="18" class="cursor-pointer"></IconFont>
+          <template #overlay>
+            <a-menu>
+              <!-- TODO: 刷新会丢失其他tab -->
+              <a-menu-item @click="updataRouteKey">
+                <template #icon> <IconFont type="icon-shuaxin" /> </template>
+                刷新页面
+              </a-menu-item>
+              <a-menu-item @click="closeOtherTabs">
+                <template #icon> <IconFont type="icon-close-circle" /> </template>
+                关闭其他</a-menu-item
+              >
+            </a-menu>
+          </template>
+        </a-dropdown>
+      </template>
     </a-tabs>
-    <div class="close-tabs" @click="closeOtherTabs">关闭其他</div>
   </div>
 </template>
 
@@ -25,6 +41,7 @@ import {
   type RouteLocationMatched
 } from 'vue-router';
 import useRouteCache from '@/composables/useRouteCache';
+import type { Key } from 'ant-design-vue/es/_util/type';
 // import EventBus from '@/utils/event-bus';
 
 const props = defineProps({
@@ -62,8 +79,10 @@ const route = useRoute();
 const router = useRouter();
 const tabs = ref<Tab[]>([]);
 const curTabKey = ref('');
-const { removeCacheEntry, removeCache } = useRouteCache();
-
+const { removeCacheEntry, removeCache, updataRouteKey, registerChange } = useRouteCache();
+const tabType = computed(() => {
+  return tabs.value.length < 2 ? 'card' : 'editable-card';
+});
 // 切换tab页签
 function changeCurTab() {
   // 当前路由信息
@@ -71,8 +90,8 @@ function changeCurTab() {
 
   // tab标签页路由信息：meta、componentName
   const routeMatch = matched[props.tabRouteViewDepth - 1];
-
-  const meta = routeMatch.meta;
+  if (!routeMatch) return;
+  const meta = routeMatch?.meta;
   const componentDef: any = routeMatch.components?.default;
   const componentName = componentDef?.name || componentDef?.__name;
   // 获取tab标签页信息：tabKey标签页key值；title-标签页标题；tab-存在的标签页
@@ -80,7 +99,7 @@ function changeCurTab() {
   const title = String(meta[props.tabTitleKey] || '');
   const tab = tabs.value.find((tab) => tab.tabKey === tabKey);
 
-  if (path === '/_empty') return; // '/_empty'为tab刷新用来中转页面，不需要加tab页签
+  if (['/login', '/err', '/redirect'].includes(path)) return; // 登录页、错误页、重定向页不添加tab标签页
   if (!tabKey) {
     // tabKey默认为路由的name值
     console.warn(`LayoutTabs组件：${path} 路由没有匹配的tab标签页，如有需要请配置tab标签页的key值`);
@@ -106,17 +125,18 @@ function changeCurTab() {
   tab ? Object.assign(tab, newTab) : tabs.value.push(newTab);
   curTabKey.value = tabKey;
 }
-
+registerChange(changeCurTab);
 // 点击tab
-function clickTab(index = 0) {
-  const tab = tabs.value[Number(index)];
-  if (tab.tabKey !== curTabKey.value) {
+function clickTab(key: Key) {
+  const tab = tabs.value.find((tab) => tab.tabKey === key);
+  if (tab?.tabKey && tab.tabKey !== curTabKey.value) {
+    curTabKey.value = tab.tabKey;
     gotoTab(tab);
   }
 }
 
 // 移除tab
-async function removeTab(name: string, action: string) {
+async function removeTab(name: Key | MouseEvent | KeyboardEvent, action: 'add' | 'remove') {
   if (action === 'remove') {
     // 剩下一个时不能删
     if (tabs.value.length === 1) return;
@@ -146,19 +166,6 @@ async function gotoTab(tab: Tab) {
   });
 }
 
-// 刷新tab页面
-async function refreshTab(tab: Tab) {
-  // 先跳转到空白页面，然后清除tab页缓存，接着返回到tab页【最后useRouteCache的collectCaches 方法会重新收集缓存】
-  await router.push('/_empty');
-  removeCache(tab.componentName || '');
-  router.go(-1);
-
-  // TODO: 通过layoutStore.isRenderTab 来刷新tab页面会报错，该方案不行（Vue3的bug，详见https://github.com/vuejs/core/issues/5590）
-  // layoutStore.setIsRenderTab(false)
-  // await removeCacheEntry(tab.componentName || '')
-  // layoutStore.setIsRenderTab(true)
-}
-
 // 关闭非当前页的所有tab页签
 function closeOtherTabs() {
   tabs.value
@@ -169,6 +176,8 @@ function closeOtherTabs() {
   tabs.value = tabs.value.filter((tab) => tab.tabKey === curTabKey.value);
 }
 
+// 默认执行一次切换tab
+changeCurTab();
 // 默认关闭当前tab
 // async function closeLayoutTab(tabKey: string = curTabKey.value) {
 //   const index = tabs.value.findIndex((tab) => tab.tabKey === tabKey);
@@ -192,20 +201,20 @@ function closeOtherTabs() {
 // EventBus.on('LayoutTabs:setTabTitle', (title) => {
 //   setCurTabTitle(title);
 // });
-
-watch(() => route.path, changeCurTab, {
-  immediate: true
-});
 </script>
 
 <style lang="less" scoped>
-:deep(.ant-tabs-nav) {
+.layout-tabs :deep(.ant-tabs-content-holder) {
+  display: none;
+}
+
+.layout-tabs :deep(.ant-tabs-nav) {
   margin-bottom: 0;
 }
 
 .layout-tabs {
   position: relative;
-  padding: 0 16px;
+  // padding: 0 16px;
 }
 
 .close-tabs {

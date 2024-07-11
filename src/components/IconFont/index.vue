@@ -12,8 +12,8 @@ import { computed } from 'vue';
 interface IProps {
   type: string;
   // type: Iconfont; // 如果不使用iconify，可以设置成此项，可以自动补全
-  fontSize?: string;
-  size?: string;
+  fontSize?: string | number;
+  size?: string | number;
   color?: string;
 }
 const props = withDefaults(defineProps<IProps>(), {
@@ -22,9 +22,10 @@ const props = withDefaults(defineProps<IProps>(), {
   color: ''
 });
 const computedStyle = computed(() => {
+  const fontSize = props.fontSize || props.size || '14px';
   return {
     color: props.color,
-    fontSize: props.fontSize || props.size
+    fontSize: String(fontSize).endsWith('px') ? fontSize : `${fontSize}px`
   };
 });
 </script>

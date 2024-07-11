@@ -39,6 +39,10 @@ interface ImportMetaEnv {
    * 开启 devtools
    */
   readonly VITE_DEVTOOLS: boolean
+  /**
+   * 开启多标签页
+   */
+  readonly VITE_MULTI_TAB: boolean
 }
 // interface ImportMeta {
 //   readonly env: ImportMetaEnv;

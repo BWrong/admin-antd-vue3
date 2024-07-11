@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@bwrong/auth-tool':
-        specifier: ^3.0.9
-        version: 3.0.9(@bwrong/storage@1.1.0)(vue-router@4.4.0(vue@3.4.31(typescript@5.5.3)))(vue@3.4.31(typescript@5.5.3))
+        specifier: ^3.0.11
+        version: 3.0.11(@bwrong/storage@1.1.0)(vue-router@4.4.0(vue@3.4.31(typescript@5.5.3)))(vue@3.4.31(typescript@5.5.3))
       '@bwrong/request':
         specifier: ^1.0.1
         version: 1.0.1(axios@1.7.2)
@@ -42,8 +42,8 @@ importers:
         specifier: ^2.1.7
         version: 2.1.7(typescript@5.5.3)(vue@3.4.31(typescript@5.5.3))
       qs:
-        specifier: ^6.12.2
-        version: 6.12.2
+        specifier: ^6.12.3
+        version: 6.12.3
       vue:
         specifier: ^3.4.31
         version: 3.4.31(typescript@5.5.3)
@@ -59,7 +59,7 @@ importers:
         version: 1.7.1(vite@5.3.3(@types/node@20.14.10)(less@4.2.0)(terser@5.31.0))
       '@release-it/conventional-changelog':
         specifier: ^8.0.1
-        version: 8.0.1(release-it@17.4.1(typescript@5.5.3))
+        version: 8.0.1(release-it@17.5.0(typescript@5.5.3))
       '@rushstack/eslint-patch':
         specifier: ^1.10.3
         version: 1.10.3
@@ -148,8 +148,8 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
       release-it:
-        specifier: ^17.4.1
-        version: 17.4.1(typescript@5.5.3)
+        specifier: ^17.5.0
+        version: 17.5.0(typescript@5.5.3)
       rollup-plugin-visualizer:
         specifier: ^5.12.0
         version: 5.12.0(rollup@4.17.2)
@@ -1051,8 +1051,8 @@ packages:
     resolution: {integrity: sha512-XEFXSlxiG5td2EJRe8vOmRbaXVgfcBlszKujvVmWIK/UpywWljQCfzAv3RQCGujWQ1RD4YYWEAqDXfuJiy8f5Q==}
     engines: {node: '>=6.9.0'}
 
-  '@bwrong/auth-tool@3.0.9':
-    resolution: {integrity: sha512-akAXBME+FXH9fwPXYWZ3aWWXBD8aMnXgIVZ3IdHWnDzGARG7328SygDxkBf5fltuvRFWFslvBq3P53TieZUKJA==}
+  '@bwrong/auth-tool@3.0.11':
+    resolution: {integrity: sha512-zPyufguwbWOe/VxBzheqmOWkwLaUhVciKzOyFcE4rNZpsHh71V6VJ72v4unyl4dF5I65biSyV3rV8i0jz0ghVA==}
     engines: {node: '>=16'}
     peerDependencies:
       '@bwrong/storage': '>=1.0.3'
@@ -3985,8 +3985,8 @@ packages:
     resolution: {integrity: sha512-FLpr4flz5xZTSJxSeaheeMKN/EDzMdK7b8PTOC6a5PYFKTucWbdqjgqaEyH0shFiSJrVB1+Qqi4Tk19ccU6Aug==}
     engines: {node: '>=12.20'}
 
-  qs@6.12.2:
-    resolution: {integrity: sha512-x+NLUpx9SYrcwXtX7ob1gnkSems4i/mGZX5SlYxwIau6RrUSODO89TR/XDGGpn5RPWSYIB+aSfuSlV5+CmbTBg==}
+  qs@6.12.3:
+    resolution: {integrity: sha512-AWJm14H1vVaO/iNZ4/hO+HyaTehuy9nRqVdkTqlJt0HWvBiBIEXFmb4C0DGeYo3Xes9rrEW+TxHsaigCbN5ICQ==}
     engines: {node: '>=0.6'}
 
   query-string@7.1.3:
@@ -4057,8 +4057,8 @@ packages:
     resolution: {integrity: sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==}
     engines: {node: '>= 0.10'}
 
-  release-it@17.4.1:
-    resolution: {integrity: sha512-Aa48kKx5qZRVXJ6YCnCJRg6sJiofEX7RErTLmnlFbCE7k1Kg8ayhgJovofuBhCtz3FRdsYnxBKjlh+VAMeazEA==}
+  release-it@17.5.0:
+    resolution: {integrity: sha512-+g6k/7i6AjdCozLkcybvwgYLw/RF6bcYJHf1xDLcg36GeBu8zr/geI9joLk5drubiE/UKdN694vwAeimmJWt8Q==}
     engines: {node: ^18.18.0 || ^20.9.0 || ^22.0.0}
     hasBin: true
 
@@ -5955,7 +5955,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
 
-  '@bwrong/auth-tool@3.0.9(@bwrong/storage@1.1.0)(vue-router@4.4.0(vue@3.4.31(typescript@5.5.3)))(vue@3.4.31(typescript@5.5.3))':
+  '@bwrong/auth-tool@3.0.11(@bwrong/storage@1.1.0)(vue-router@4.4.0(vue@3.4.31(typescript@5.5.3)))(vue@3.4.31(typescript@5.5.3))':
     dependencies:
       '@bwrong/storage': 1.1.0
       vue: 3.4.31(typescript@5.5.3)
@@ -6236,12 +6236,12 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
-  '@release-it/conventional-changelog@8.0.1(release-it@17.4.1(typescript@5.5.3))':
+  '@release-it/conventional-changelog@8.0.1(release-it@17.5.0(typescript@5.5.3))':
     dependencies:
       concat-stream: 2.0.0
       conventional-changelog: 5.1.0
       conventional-recommended-bump: 9.0.0
-      release-it: 17.4.1(typescript@5.5.3)
+      release-it: 17.5.0(typescript@5.5.3)
       semver: 7.6.2
 
   '@rollup/pluginutils@4.2.1':
@@ -9046,7 +9046,7 @@ snapshots:
     dependencies:
       escape-goat: 4.0.0
 
-  qs@6.12.2:
+  qs@6.12.3:
     dependencies:
       side-channel: 1.0.6
 
@@ -9130,7 +9130,7 @@ snapshots:
 
   relateurl@0.2.7: {}
 
-  release-it@17.4.1(typescript@5.5.3):
+  release-it@17.5.0(typescript@5.5.3):
     dependencies:
       '@iarna/toml': 2.2.5
       '@octokit/rest': 20.1.1
@@ -9895,7 +9895,7 @@ snapshots:
       '@vue/devtools-api': 6.6.1
       js-cookie: 3.0.5
       lodash: 4.17.21
-      qs: 6.12.2
+      qs: 6.12.3
       query-string: 7.1.3
       screenfull: 5.2.0
       vue: 3.4.31(typescript@5.5.3)

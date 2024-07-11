@@ -18,13 +18,14 @@
       </a-layout-sider>
       <a-layout-content class="app-scroll-wrap" id="app-main-scroller">
         <LBreadCrumb v-model:collapse="collapse" :menus="menus" />
-        <LTabs />
-        <div class="app-main">
-          <router-view v-slot="{ Component }">
+        <div class="app-main" :class="{ showMultiTab }">
+          <LTabs v-if="showMultiTab" />
+          <router-view v-slot="{ Component, route }">
             <transition mode="out-in" name="slide">
-              <keep-alive :include="caches">
-                <component :is="Component" />
+              <keep-alive :include="[...caches]" v-if="showMultiTab">
+                <component :is="Component" :key="route.fullPath + routeKey" />
               </keep-alive>
+              <component :is="Component" v-else :key="route.fullPath" />
             </transition>
           </router-view>
         </div>
@@ -47,7 +48,7 @@ import type { IMenu, IUser } from '@/api/auth';
 import { getPermissionsData } from '@bwrong/auth-tool';
 import useRouteCache from '@/composables/useRouteCache';
 
-const { caches } = useRouteCache();
+const { caches, routeKey } = useRouteCache();
 
 const rootStore = useRootStore();
 const { push } = useRouter();
@@ -67,8 +68,9 @@ const collapse = ref(false);
 
 const { themeOptions } = useTheme();
 const headerHeight = computed(() => (themeOptions.isCompact ? '56px' : '64px'));
+const showMultiTab = import.meta.env.VITE_MULTI_TAB ?? true;
 </script>
-<style scoped>
+<style scoped lang="less">
 .layout {
   min-width: 1200px;
   height: 100vh;
@@ -93,8 +95,12 @@ const headerHeight = computed(() => (themeOptions.isCompact ? '56px' : '64px'));
 .app-main {
   width: 100%;
   padding: 16px;
-  border-radius: 5px;
+  // border-radius: 5px;
   overflow-x: hidden;
   overflow-y: auto;
+  &.showMultiTab :deep(.page-wrap > .ant-card) {
+    border-radius: 0 0 5px 5px;
+    border-top: none;
+  }
 }
 </style>

@@ -13,6 +13,6 @@ export default {
   tokenPrefix: 'Bearer',
   // 路由相关配置
   homePage: '/home', // 登入应用默认的页面
-  whiteRoutes: ['/login', '/err'] // 路由白名单
+  whiteRoutes: ['/login', '/err', '/redirect'] // 路由白名单
   // lang: 'zh_CN'
 };

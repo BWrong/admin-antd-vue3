@@ -23,5 +23,19 @@
     "type": 0,
     "icon": "icon-menu",
     "parentId": 2
+  },
+  {
+    "id": 4,
+    "title": "案例展示",
+    "type": 0,
+    "icon": "icon-setting",
+    "parentId": 0
+  },
+  {
+    "id": 5,
+    "title": "外链页面",
+    "type": 0,
+    "icon": "icon-menu",
+    "parentId": 4
   }
 ]
