@@ -45,7 +45,6 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     VITE_UPDATE_NOTICE = false,
     VITE_DEVTOOLS = false
   } = env;
-  console.log(VITE_DEVTOOLS,VITE_API_HOST);
 
   /***** 接口代理配置，有多个可以自己加 ******/
   const PROXY_CONFIG: Record<string, string | ProxyOptions> = {
