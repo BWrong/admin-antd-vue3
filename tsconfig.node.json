@@ -5,14 +5,12 @@
     "vite.config.*",
     "package.json",
     "types/**/*.d.ts",
-    "mock/**/*",
-    "types/mockServer.d.ts"
+    "mock/**/*"
   ],
   "compilerOptions": {
     "resolveJsonModule": true,
     "composite": true,
     "noEmit": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "types": ["node"]

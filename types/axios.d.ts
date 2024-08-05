@@ -1,4 +1,4 @@
-import 'axios'
+import 'axios';
 import '@bwrong/request';
 import { AxiosRequestConfig } from 'axios';
 
@@ -10,7 +10,7 @@ declare module 'axios' {
   }
 }
 declare module '@bwrong/request' {
-  interface RequestConfig extends AxiosRequestConfig{
+  interface RequestConfig extends AxiosRequestConfig {
     // skipIntercept?: boolean;
     // skipShowTips?: boolean;
     // skipCheckAuth?: boolean;

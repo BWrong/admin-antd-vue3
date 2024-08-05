@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import {
   useRoute,
   useRouter,
@@ -54,7 +54,7 @@ const props = defineProps({
   // 默认为route.name值（不要设为route.path，因为route.path为'/detail/:id'时会造成一个路由对应多个tab页），可以自己设置 route.meta.tabKey
   getTabKey: {
     type: Function,
-    default: (routeMatch: RouteLocationMatched, route: RouteLocationNormalizedLoaded) => {
+    default: (routeMatch: RouteLocationMatched) => {
       return routeMatch.path;
     }
   },

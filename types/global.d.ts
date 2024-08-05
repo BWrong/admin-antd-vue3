@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    __APP_CONFIG__: any
+    __APP_CONFIG__: any;
   }
 }
-export {}
+export {};

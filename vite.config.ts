@@ -10,16 +10,16 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 import autoImport from 'unplugin-auto-import/vite';
 import unpluginComponents from 'unplugin-vue-components/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
-import { VueHooksPlusResolver } from '@vue-hooks-plus/resolvers'
+import { VueHooksPlusResolver } from '@vue-hooks-plus/resolvers';
 import { webUpdateNotice } from '@plugin-web-update-notification/vite';
 import { visualizer } from 'rollup-plugin-visualizer';
-import VueDevTools from 'vite-plugin-vue-devtools'
+import VueDevTools from 'vite-plugin-vue-devtools';
 import buildInfo from 'vite-plugin-build-info';
 import iconfont from 'vite-plugin-iconfont';
 import unoCSS from 'unocss/vite';
 import { themeToken } from './src/config/theme';
 import { resolve } from 'node:path';
-import { envParse,parseLoadedEnv } from 'vite-plugin-env-parse'
+import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse';
 
 // 完整配置，请查阅https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv) => {
@@ -94,12 +94,12 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       }),
       // 网站更新提醒
       VITE_UPDATE_NOTICE &&
-      webUpdateNotice({
-        versionType: 'build_timestamp',
-        checkInterval: 0,
-        logVersion: true,
-        injectFileBase: VITE_BASE_URL
-      }),
+        webUpdateNotice({
+          versionType: 'build_timestamp',
+          checkInterval: 0,
+          logVersion: true,
+          injectFileBase: VITE_BASE_URL
+        }),
       viteMockServe({
         ignore: /^_/, // 忽略的文件
         mockPath: 'mock', // 设置mock文件目录
@@ -162,20 +162,20 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       buildInfo(),
       // gzip压缩，需要nginx开启对应配置，否则不生效
       VITE_BUILD_COMPRESS &&
-      viteCompression({
-        threshold: 1025, // 阈值，大于此值才会被压缩
-        algorithm: 'gzip' // 压缩算法
-      }),
+        viteCompression({
+          threshold: 1025, // 阈值，大于此值才会被压缩
+          algorithm: 'gzip' // 压缩算法
+        }),
       // 开启打包可视化分析报告,会增加打包时间，不需要可以关闭
       VITE_BUILD_REPORT &&
-      visualizer({
-        template: 'treemap',
-        open: true,
-        gzipSize: true,
-        brotliSize: true,
-        // emitFile: true,
-        sourcemap: true
-      })
+        visualizer({
+          template: 'treemap',
+          open: true,
+          gzipSize: true,
+          brotliSize: true,
+          // emitFile: true,
+          sourcemap: true
+        })
     ],
     resolve: {
       alias: {
@@ -228,7 +228,7 @@ function createPath(url: string, metaUrl = import.meta.url) {
   return fileURLToPath(new URL(url, metaUrl));
 }
 function formatDrop(dropDebugger: boolean, dropConsole: boolean) {
-  let drop: any = [];
+  const drop: any = [];
   dropDebugger && drop.push('debugger');
   dropConsole && drop.push('console');
   return drop;

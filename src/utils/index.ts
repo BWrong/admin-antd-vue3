@@ -225,7 +225,7 @@ export function getDefaultFromProps<T = Record<string, any>>(
   props: Record<string, any>,
   overrideProps: T
 ): T | Record<string, any> {
-  const defaults = Object.entries(props).reduce((temp, [key, value]) => {
+  const defaults = Object.entries(props).reduce((temp: any, [key, value]) => {
     temp[key] = value?.default;
     return temp;
   }, {});

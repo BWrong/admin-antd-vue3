@@ -37,6 +37,7 @@ router.beforeEach(async (to) => {
   const allowRoutes = await _getAllowRoutes(dynamicRoutes);
   allowRoutes.push(noMatchRoute);
   // 未加载则动态加载
+  // TODO: 4.0移出路由方式调整了，这里需要修改
   removeRouters = allowRoutes.map((item) => router.addRoute(item));
   routerLoaded = true;
   return to.fullPath;
