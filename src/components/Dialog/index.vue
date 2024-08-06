@@ -3,7 +3,7 @@
 // import type { ModalFuncProps } from 'ant-design-vue';
 import { getDefaultFromProps } from '@/utils';
 import { modalProps, type ModalProps } from 'ant-design-vue/es/modal/Modal';
-import type { Component } from 'vue';
+import type { Component, Ref } from 'vue';
 // import type { VueNode } from 'ant-design-vue/es/_util/type';
 export interface IProps extends Omit<ModalProps, 'open'> {
   // title?: string | (() => VueNode) | VueNode;
@@ -63,8 +63,10 @@ function handleLoading(val = false) {
     <template #footer>
       <slot name="footer">
         <div class="modal-footer" v-if="footer === undefined">
-          <a-button @click="handleCancel"> 取消 </a-button>
-          <a-button type="primary" @click="handleConfirm" :loading="loading"> 确认 </a-button>
+          <a-button @click="handleCancel"> {{ localProps.cancelText || '取消' }} </a-button>
+          <a-button type="primary" @click="handleConfirm" :loading="loading">
+            {{ localProps.okText || '确认' }}
+          </a-button>
         </div>
         <template v-else>
           {{ footer }}
