@@ -31,17 +31,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import {
-  useRoute,
-  useRouter,
-  type LocationQuery,
-  type RouteParams,
-  type RouteLocationNormalizedLoaded,
-  type RouteLocationMatched
-} from 'vue-router';
-import useRouteCache from '@/composables/useRouteCache';
 import type { Key } from 'ant-design-vue/es/_util/type';
+import { ref } from 'vue';
+import { type LocationQuery, type RouteLocationMatched, type RouteParams, useRoute, useRouter } from 'vue-router';
+
+import useRouteCache from '@/composables/useRouteCache';
 // import EventBus from '@/utils/event-bus';
 
 const props = defineProps({

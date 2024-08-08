@@ -34,19 +34,19 @@
   </a-layout>
 </template>
 <script lang="ts" setup>
+import { getPermissionsData } from '@bwrong/auth-tool';
+import { getStorage } from '@bwrong/storage';
 import { useRouter } from 'vue-router';
 
+import type { IMenu, IUser } from '@/api/auth';
+import useRouteCache from '@/composables/useRouteCache';
 import LBreadCrumb from '@/layouts/components/LBreadCrumb.vue';
-import LTabs from '@/layouts/components/LTabs.vue';
 import LHeader from '@/layouts/components/LHeader.vue';
 import LLogo from '@/layouts/components/LLogo.vue';
 import LSider from '@/layouts/components/LSider.vue';
+import LTabs from '@/layouts/components/LTabs.vue';
 import { useRootStore } from '@/store';
 import { convertToTree } from '@/utils';
-import { getStorage } from '@bwrong/storage';
-import type { IMenu, IUser } from '@/api/auth';
-import { getPermissionsData } from '@bwrong/auth-tool';
-import useRouteCache from '@/composables/useRouteCache';
 
 const { caches, routeKey } = useRouteCache();
 

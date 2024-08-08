@@ -1,5 +1,6 @@
-import Dialog, { type IProps } from '@/components/Dialog/index.vue';
 import { type Component } from 'vue';
+
+import Dialog, { type IProps } from '@/components/Dialog/index.vue';
 
 interface ICreateOptions<T> extends Omit<IProps, 'component'> {
   onConfirm?: (data: T) => void;
@@ -8,7 +9,7 @@ interface ICreateOptions<T> extends Omit<IProps, 'component'> {
   defaultOpen?: boolean;
   component: Component;
 }
-export default () => {
+export default (DialogComponent: Component = Dialog) => {
   const currentInstance = getCurrentInstance();
   const appContext = currentInstance?.appContext;
   function createDialog<
@@ -18,7 +19,7 @@ export default () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
     const openValue = ref(options?.defaultOpen ?? true);
-    const instance = createApp(Dialog, {
+    const instance = createApp(DialogComponent, {
       // footer: undefined,
       ...options,
       open: openValue,

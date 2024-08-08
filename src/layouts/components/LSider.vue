@@ -25,9 +25,9 @@
 import { computed, ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 
-import LSubMenu from './LSubMenu.vue';
-
 import type { IMenu } from '@/api/auth';
+
+import LSubMenu from './LSubMenu.vue';
 interface IProps {
   collapse?: boolean;
   menus: IMenu[];

@@ -54,10 +54,10 @@
 
 <script lang="ts" setup>
 import { message } from 'ant-design-vue';
+import type { FormProps } from 'ant-design-vue/es';
 import { reactive, ref } from 'vue';
 
 import { cryptoPassword } from '@/utils';
-import type { FormProps } from 'ant-design-vue/es';
 
 interface IProps {
   open?: boolean;

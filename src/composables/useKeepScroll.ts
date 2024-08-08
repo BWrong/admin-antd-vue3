@@ -1,4 +1,4 @@
-import { onActivated, type App } from 'vue';
+import { type App, onActivated } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router';
 
 let gobalScrollBox = 'html'; // 全局滚动盒子

@@ -41,15 +41,14 @@
 
 <script lang="ts" setup>
 import { Modal } from 'ant-design-vue';
-import { computed, reactive } from 'vue';
-
-import LPersonalEdit from './LPersonalEdit.vue';
-import LThemeSetting from './LThemeSetting.vue';
-
 import type { MenuClickEventHandler } from 'ant-design-vue/lib/menu/src/interface';
+import { computed, reactive } from 'vue';
 
 import { useRootStore } from '@/store';
 import { logout } from '@/utils/auth';
+
+import LPersonalEdit from './LPersonalEdit.vue';
+import LThemeSetting from './LThemeSetting.vue';
 interface IProps {
   collapse?: boolean;
 }

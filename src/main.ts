@@ -1,14 +1,15 @@
+import { authPlugin } from '@bwrong/auth-tool';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
-import router from './router';
 
 import directives from '@/directives';
 import plugins from '@/plugins';
-import 'virtual:uno.css';
-import '@/assets/styles/common.less';
 
 import App from './App.vue';
-import { authPlugin } from '@bwrong/auth-tool';
+import router from './router';
+
+import 'virtual:uno.css';
+import '@/assets/styles/common.less';
 // import { configKeepScroll } from '@/composables/useKeepScroll'
 
 const app = createApp(App);

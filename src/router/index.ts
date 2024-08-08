@@ -1,13 +1,13 @@
 import { initAuth } from '@bwrong/auth-tool';
+import { getStorage } from '@bwrong/storage';
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
-
-import dynamicRoutes from './dynamicRoutes';
-import routes, { noMatchRoute } from './staticRoutes';
 
 import config from '@/config';
 import NProgress from '@/plugins/nprogress';
-import { getStorage } from '@bwrong/storage';
 import { getToken } from '@/utils/auth';
+
+import dynamicRoutes from './dynamicRoutes';
+import routes, { noMatchRoute } from './staticRoutes';
 // import authApi from '@/api/auth';
 let routerLoaded = false; // 动态路由是否已加载
 let removeRouters: Array<() => void> = [];

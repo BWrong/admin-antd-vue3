@@ -1,4 +1,4 @@
-import { ref, nextTick, watch } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 // 如果需要持久化，可以存到localStorage或sessionStorage
 const caches = ref<string[]>([]);

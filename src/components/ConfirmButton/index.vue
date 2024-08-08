@@ -7,7 +7,7 @@
 </template>
 
 <script lang="tsx" setup>
-import { Modal, type ButtonProps } from 'ant-design-vue';
+import { type ButtonProps, Modal } from 'ant-design-vue';
 
 export interface ConfirmProps extends ButtonProps {
   title?: string;

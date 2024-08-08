@@ -1,9 +1,10 @@
 <!-- eslint-disable vue/require-default-prop -->
 <script setup lang="ts">
 // import type { ModalFuncProps } from 'ant-design-vue';
-import { getDefaultFromProps } from '@/utils';
-import { modalProps, type ModalProps } from 'ant-design-vue/es/modal/Modal';
+import { type ModalProps, modalProps } from 'ant-design-vue/es/modal/Modal';
 import type { Component, Ref } from 'vue';
+
+import { getDefaultFromProps } from '@/utils';
 // import type { VueNode } from 'ant-design-vue/es/_util/type';
 export interface IProps extends Omit<ModalProps, 'open'> {
   // title?: string | (() => VueNode) | VueNode;

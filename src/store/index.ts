@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
 import { getStorage, setStorage } from '@bwrong/storage';
+import { defineStore } from 'pinia';
 
 interface IUserInfo {
   username: string;

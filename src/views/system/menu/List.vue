@@ -78,15 +78,14 @@
 </template>
 
 <script lang="tsx" setup>
-import { message, type FormProps } from 'ant-design-vue';
+import { getPermissionsTree } from '@bwrong/auth-tool';
+import { type FormProps, message } from 'ant-design-vue';
+import type { ColumnProps } from 'ant-design-vue/es/table';
 import { reactive, ref } from 'vue';
 
-import type { ColumnProps } from 'ant-design-vue/es/table';
-
+import type { IMenu } from '@/api/auth';
 import IconPicker from '@/components/IconPicker/index.vue';
 import { RESOURCE_TYPE } from '@/enums/menu';
-import type { IMenu } from '@/api/auth';
-import { getPermissionsTree } from '@bwrong/auth-tool';
 // 列表
 const columns: ColumnProps[] = [
   {

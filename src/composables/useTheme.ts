@@ -1,8 +1,9 @@
-import { themeToken as defaultThemeToken } from '@/config/theme';
 import { getStorage, setStorage } from '@bwrong/storage';
+import { theme } from 'ant-design-vue';
 import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context';
 import cssVars from 'css-vars-ponyfill';
-import { theme } from 'ant-design-vue';
+
+import { themeToken as defaultThemeToken } from '@/config/theme';
 export type ColorScheme = 'light' | 'dark' | 'auto';
 export type ThemeOptions = {
   colorScheme: ColorScheme;

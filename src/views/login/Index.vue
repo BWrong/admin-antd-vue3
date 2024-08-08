@@ -49,18 +49,17 @@
 </template>
 
 <script lang="ts" setup>
+import { setStorage } from '@bwrong/storage';
 import { message } from 'ant-design-vue';
+import type { FormProps } from 'ant-design-vue/es';
 import { computed, reactive, ref } from 'vue';
-import { useRoute, useRouter, type LocationQueryValue } from 'vue-router';
-
 import type { LocationQuery } from 'vue-router';
+import { type LocationQueryValue, useRoute, useRouter } from 'vue-router';
 
-import { loginRequest, getMenusRequest } from '@/api/auth';
+import { getMenusRequest, loginRequest } from '@/api/auth';
 import config from '@/config';
 import { cryptoPassword } from '@/utils';
-import { setStorage } from '@bwrong/storage';
 import { saveAuthData } from '@/utils/auth';
-import type { FormProps } from 'ant-design-vue/es';
 import { apiHost } from '@/utils/request';
 
 const rules: FormProps['rules'] = {

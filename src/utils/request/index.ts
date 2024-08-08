@@ -6,14 +6,14 @@
  * @LastEditTime: 2023-05-30 17:40:24
  */
 // import Qs from 'qs';
-import { AxiosHeaders } from 'axios';
-import { downloadFile } from '..';
-import { getToken } from '../auth';
-
 import Request, { type RequestConfig } from '@bwrong/request';
-import { handleBusinessError, handleCheckAuth, handleNetworkError, handleShowTips } from './helper';
+import { AxiosHeaders } from 'axios';
 
 import appConfig from '@/config';
+
+import { downloadFile } from '..';
+import { getToken } from '../auth';
+import { handleBusinessError, handleCheckAuth, handleNetworkError, handleShowTips } from './helper';
 const { PROD, VITE_API_HOST, VITE_API_PREFIX } = import.meta.env;
 const { tokenPrefix } = appConfig;
 //接口服务器地址

@@ -1,11 +1,12 @@
-import { useRequest } from 'vue-hooks-plus';
 import { type PaginationProps } from 'ant-design-vue';
+import { useRequest } from 'vue-hooks-plus';
 import type {
   UseRequestOptions,
   UseRequestPlugin,
-  UseRequestService,
-  useRequestResult
+  useRequestResult,
+  UseRequestService
 } from 'vue-hooks-plus/lib/useRequest/types';
+
 import { defaultPaginationOptions } from '@/config/pagination';
 
 const defaultPageCurrent = 1;

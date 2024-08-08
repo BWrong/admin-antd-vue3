@@ -10,6 +10,7 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 import autoImport from 'unplugin-auto-import/vite';
 import unpluginComponents from 'unplugin-vue-components/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+import removeConsole from 'unplugin-remove/vite';
 import { VueHooksPlusResolver } from '@vue-hooks-plus/resolvers';
 import { webUpdateNotice } from '@plugin-web-update-notification/vite';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -41,7 +42,6 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     VITE_ICONFONT_URL,
     VITE_OUT_DIR,
     VITE_DROP_CONSOLE = false,
-    VITE_DROP_DEBUGGER = false,
     VITE_UPDATE_NOTICE = false,
     VITE_DEVTOOLS = false
   } = env;
@@ -133,7 +133,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
         imports: ['vue', 'vue-router', 'pinia'],
         dts: 'types/auto-imports.d.ts',
         // resolvers: [AntDesignVueResolver()],
-        dirs: ['src/composables', 'src/store'], // 需要自动导入的文件目录
+        dirs: ['src/composables', 'src/store', 'src/components'], // 需要自动导入的文件目录
         vueTemplate: true,
         resolvers: [VueHooksPlusResolver()],
         eslintrc: {
@@ -175,7 +175,9 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           brotliSize: true,
           // emitFile: true,
           sourcemap: true
-        })
+        }),
+      // 去除console、debugger 文档：https://github.com/Talljack/unplugin-remove#readme
+      VITE_DROP_CONSOLE && removeConsole({})
     ],
     resolve: {
       alias: {
@@ -217,19 +219,10 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           }
         }
       }
-    },
-    esbuild: {
-      drop: formatDrop(VITE_DROP_DEBUGGER, VITE_DROP_CONSOLE)
     }
   };
 });
 /********** 一些辅助函数 *********/
 function createPath(url: string, metaUrl = import.meta.url) {
   return fileURLToPath(new URL(url, metaUrl));
-}
-function formatDrop(dropDebugger: boolean, dropConsole: boolean) {
-  const drop: any = [];
-  dropDebugger && drop.push('debugger');
-  dropConsole && drop.push('console');
-  return drop;
 }

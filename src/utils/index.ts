@@ -8,8 +8,8 @@
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
 
-import dayjs from '@/plugins/dayjs';
 import { SEX } from '@/enums/user';
+import dayjs from '@/plugins/dayjs';
 
 // 性别
 export function formatSex<T extends keyof typeof SEX>(value: T) {

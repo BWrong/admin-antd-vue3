@@ -1,4 +1,4 @@
-import { ref, type Ref, watch } from 'vue';
+import { type Ref, ref, watch } from 'vue';
 
 type TMaybeRef<T> = Ref<T> | T;
 export default (newTitle?: TMaybeRef<string | null | undefined>) => {

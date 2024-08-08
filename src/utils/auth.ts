@@ -1,10 +1,9 @@
+import { clearStorage } from '@bwrong/storage';
 import Cookie from 'js-cookie';
 
-import { clearStorage } from '@bwrong/storage';
-
+import type { LoginRes } from '@/api/auth';
 import config from '@/config';
 import router, { resetRouter } from '@/router';
-import type { LoginRes } from '@/api/auth';
 
 const refreshAheadTime = config.refreshAheadTime;
 const { tokenExpiresKey, refreshTokenKey, tokenKey } = config;

@@ -170,16 +170,18 @@
   </div>
 </template>
 <script lang="tsx" setup>
-import { reactive } from 'vue';
+import { message } from 'ant-design-vue';
 import type { ColumnProps } from 'ant-design-vue/es/table';
 import type { AxiosProgressEvent } from 'axios';
-import { downloadRequest } from '@/api/file';
+import { reactive } from 'vue';
+
 import { getMenusRequest } from '@/api/auth';
+import { downloadRequest } from '@/api/file';
+import { paginationConfig } from '@/config/pagination';
 import { bytesToSize } from '@/utils';
 import request from '@/utils/request';
-import { message } from 'ant-design-vue';
+
 import TestModalForm from './TestModalForm.vue';
-import { paginationConfig } from '@/config/pagination';
 const authKeys = ['home', 'system', 'system/menu', 'other'];
 const selectAuthKeys = ref(['home', 'system']);
 const appConfig = window.__APP_CONFIG__;

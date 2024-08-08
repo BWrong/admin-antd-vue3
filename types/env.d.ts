@@ -20,6 +20,10 @@ interface ImportMetaEnv {
    */
   readonly VITE_API_PREFIX: string
   /**
+   * 接口服务地址
+   */
+  readonly VITE_API_HOST: string
+  /**
    * 图标地址，一定要换成自己iconfont项目地址，https://www.iconfont.cn/，********* 切记换成自己的，不要直接用模板中的地址*******
    */
   readonly VITE_ICONFONT_URL: string
@@ -43,6 +47,22 @@ interface ImportMetaEnv {
    * 开启多标签页
    */
   readonly VITE_MULTI_TAB: boolean
+  /**
+   * 开启打包可视化分析报告,会增加打包时间，不需要可以关闭
+   */
+  readonly VITE_BUILD_REPORT: boolean
+  /**
+   * 是否在打包时开启gzip压缩
+   */
+  readonly VITE_BUILD_COMPRESS: boolean
+  /**
+   * 打包目录
+   */
+  readonly VITE_OUT_DIR: string
+  /**
+   * 是否移除console、debugger
+   */
+  readonly VITE_DROP_CONSOLE: boolean
 }
 // interface ImportMeta {
 //   readonly env: ImportMetaEnv;

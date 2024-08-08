@@ -1,13 +1,13 @@
-import { message } from 'ant-design-vue';
-import Cookie from 'js-cookie';
-
-import type { ResponseType } from '.';
 import type { RequestConfig } from '@bwrong/request';
+import { message } from 'ant-design-vue';
 import type { AxiosError } from 'axios';
+import Cookie from 'js-cookie';
 
 import { refreshTokenRequest } from '@/api/auth';
 import appConfig from '@/config';
 import { logout, saveAuthData } from '@/utils/auth';
+
+import type { ResponseType } from '.';
 
 const { tokenExpiresKey, refreshTokenKey } = appConfig;
 
@@ -52,7 +52,7 @@ export const messageAdaptor = {
 export function handleShowTips(data: ResponseType, config: RequestConfig) {
   if (config?.method?.match(/(post|delete|put)/i) && !config.skipShowTips) {
     messageAdaptor.destroy();
-    data.message && messageAdaptor.success(data.message || '操作成功');
+    if (data.message) messageAdaptor.success(data.message || '操作成功');
   }
 }
 // HTTP状态码及对应提示
@@ -87,7 +87,7 @@ export function handleNetworkError(error: AxiosError<ResponseType>) {
   const tips = error.response?.data?.msg || (status && statusMap[status]) || `请求失败: ${error}`;
   messageAdaptor.error(tips);
   // 如果status为401，说明认证信息失效，退出登录
-  error.response?.status === 401 && logout();
+  if (error.response?.status === 401) logout();
 }
 // 业务错误及提示, 根据自己业务扩展
 const errMap = {

@@ -1,6 +1,7 @@
-import type { IMenu } from '@/api/auth';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+
+import type { IMenu } from '@/api/auth';
 
 /**
  * 获取当前路由/菜单相关信息

@@ -9,9 +9,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, useSlots } from 'vue';
-import { tableProps } from 'ant-design-vue/es/table/Table';
 import type { ColumnGroupType, ColumnProps, ColumnType, TableProps } from 'ant-design-vue/es/table';
+import { tableProps } from 'ant-design-vue/es/table/Table';
+import { computed, useSlots } from 'vue';
+
 import { getDefaultFromProps } from '@/utils';
 defineOptions({
   name: 'BasisTable',
