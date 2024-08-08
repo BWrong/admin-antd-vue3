@@ -39,12 +39,16 @@ export default (DialogComponent: Component = Dialog) => {
     // 注入应用的上下文
     if (appContext) {
       instance.config.globalProperties = appContext.config.globalProperties;
-      instance.mixin({
+      const mixins: any = {
         ...appContext.mixins,
         components: appContext.components,
         directives: appContext.directives,
         provide: appContext.provides
-      });
+      };
+      // 修复多层打开弹窗，上下文丢失
+      mixins['0'] && Object.assign(mixins, mixins['0']);
+      delete mixins['0'];
+      instance.mixin(mixins);
     }
     function unmount() {
       openValue.value = false;
