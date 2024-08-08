@@ -120,7 +120,9 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
             BASE_URL: VITE_BASE_URL,
             title: VITE_TITLE,
             injectScript: `
-              <script src="${VITE_BASE_URL}config.js"></script>
+              <script>
+                ${getGlobalConfig(env)}
+              </script>
               <script src="${VITE_BASE_URL}iconfont/iconfont.js"></script>
             `
           }
@@ -225,4 +227,13 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
 /********** 一些辅助函数 *********/
 function createPath(url: string, metaUrl = import.meta.url) {
   return fileURLToPath(new URL(url, metaUrl));
+}
+function getGlobalConfig(env: Record<string, string | number | boolean>) {
+  const config: Record<string, string | number | boolean> = {};
+  for (const key in env) {
+    if (key.startsWith('VITE_GLOBAL_')) {
+      config[key] = env[key];
+    }
+  }
+  return `window.__APP_CONFIG__=${JSON.stringify(config)};`;
 }

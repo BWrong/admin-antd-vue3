@@ -1,9 +1,12 @@
 <template>
   <div class="page-wrap">
     <ACard title="首页">
-      <h3>运行时配置：</h3>
-      <div>可在打包后修改，位置：/public/config.js</div>
-      <div>{{ appConfig }}</div>
+      <h3>运行时配置</h3>
+      <div>
+        以VITE_GLOBAL开头的变量会注入到全局，方便在打包后进行修改，而不必重新打包，默认挂载到window.__APP_CONFIG__，打包后可在index.html中修改
+      </div>
+      <div>当前配置：</div>
+      <div class="b-1 b-gray b-dashed p-2">{{ appConfig }}</div>
       <h3>权限测试</h3>
       <div class="my-2 block">
         选择权限：<ASelect v-model:value="selectAuthKeys" mode="multiple" class="w-50">

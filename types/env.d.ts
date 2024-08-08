@@ -63,6 +63,10 @@ interface ImportMetaEnv {
    * 是否移除console、debugger
    */
   readonly VITE_DROP_CONSOLE: boolean
+  /**
+   * 以VITE_GLOBAL开头的变量会注入到全局，方便在打包后进行修改，而不必重新打包
+   */
+  readonly VITE_GLOBAL_EXAMPLE: string
 }
 // interface ImportMeta {
 //   readonly env: ImportMetaEnv;
