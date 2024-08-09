@@ -2,8 +2,8 @@ import { type Component } from 'vue';
 
 import Dialog, { type IProps } from '@/components/Dialog/index.vue';
 
-interface ICreateOptions<T> extends Omit<IProps, 'component'> {
-  onConfirm?: (data: T) => void;
+interface ICreateOptions<D> extends Omit<IProps, 'component' | 'onOk'> {
+  onConfirm?: (data: D) => void;
   onClosed?: () => void;
   onCancel?: () => void;
   defaultOpen?: boolean;
@@ -13,9 +13,9 @@ export default (DialogComponent: Component = Dialog) => {
   const currentInstance = getCurrentInstance();
   const appContext = currentInstance?.appContext;
   function createDialog<
-    T extends abstract new (...args: any) => any,
-    U = Awaited<ReturnType<InstanceType<T>['submit']>>
-  >(options?: ICreateOptions<U>) {
+    C extends abstract new (...args: any) => any,
+    D = Awaited<ReturnType<InstanceType<C>['submit']>>
+  >(options?: ICreateOptions<D>, withContext = true) {
     const container = document.createElement('div');
     document.body.appendChild(container);
     const openValue = ref(options?.defaultOpen ?? true);
@@ -23,7 +23,7 @@ export default (DialogComponent: Component = Dialog) => {
       // footer: undefined,
       ...options,
       open: openValue,
-      onConfirm(data: any) {
+      onConfirm(data: D) {
         options?.onConfirm?.(data);
         openValue.value = false;
       },
@@ -37,18 +37,16 @@ export default (DialogComponent: Component = Dialog) => {
       }
     });
     // 注入应用的上下文
-    if (appContext) {
+    if (withContext && appContext) {
       instance.config.globalProperties = appContext.config.globalProperties;
-      const mixins: any = {
-        ...appContext.mixins,
-        components: appContext.components,
-        directives: appContext.directives,
-        provide: appContext.provides
-      };
-      // 修复多层打开弹窗，上下文丢失
-      mixins['0'] && Object.assign(mixins, mixins['0']);
-      delete mixins['0'];
-      instance.mixin(mixins);
+      Object.entries(appContext.components).forEach(([key, component]) => instance.component(key, component));
+      Object.entries(appContext.directives).forEach(([key, directive]) => instance.directive(key, directive));
+      const provideKeys = getAllProperties(appContext.provides);
+      provideKeys.forEach((key) => instance.provide(key, appContext.provides[key]));
+      // instance.mixin(appContext.mixins);
+      // instance.config.errorHandler = appContext.config.errorHandler;
+      // instance.config.warnHandler = appContext.config.warnHandler;
+      // instance.config.performance = appContext.config.performance;
     }
     function unmount() {
       openValue.value = false;
@@ -70,3 +68,8 @@ export default (DialogComponent: Component = Dialog) => {
   }
   return { createDialog };
 };
+function getAllProperties(obj: Record<string | symbol, any>) {
+  const props = Object.getOwnPropertyNames(obj);
+  const symbols = Object.getOwnPropertySymbols(obj);
+  return [...props, ...symbols];
+}
