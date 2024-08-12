@@ -24,14 +24,17 @@ interface LoginParams {
 // 菜单
 export interface IMenu extends IRecordBase {
   title: string;
-  path: string;
+  // path: string;
   url?: string;
   icon?: Iconfont;
   type?: number;
   hide?: boolean;
   children?: IMenu[];
-
-  [K: string]: any;
+  parentId?: string;
+  permission?: string;
+  priority?: number;
+  isLink?: boolean;
+  // [K: string]: any;
 }
 
 export const loginRequest = (params: LoginParams) =>

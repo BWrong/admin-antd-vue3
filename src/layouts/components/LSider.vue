@@ -1,6 +1,6 @@
 <template>
   <div class="l-sider">
-    <a-menu v-model:open-keys="localOpeneds" class="menu-box" mode="inline" :selected-keys="selectedKeys">
+    <AMenu v-model:open-keys="localOpeneds" class="menu-box" mode="inline" :selected-keys="selectedKeys">
       <template v-for="item in menus">
         <template v-if="!item.hide">
           <LSubMenu
@@ -10,15 +10,15 @@
             :collapse="collapse"
             :item="item"
           />
-          <a-menu-item v-else :key="item.url" @click="handleLink(item.url)">
+          <LMenuItem v-else :key="item.url" :menu="item" :is-link="item.isLink">
             <template #icon v-if="item.icon">
-              <icon-font :type="item.icon" />
+              <IconFont :type="item.icon" />
             </template>
             {{ item.title }}
-          </a-menu-item>
+          </LMenuItem>
         </template>
       </template>
-    </a-menu>
+    </AMenu>
   </div>
 </template>
 <script lang="ts" setup>
@@ -27,6 +27,7 @@ import { useRoute } from 'vue-router';
 
 import type { IMenu } from '@/api/auth';
 
+import LMenuItem from './LMenuItem.vue';
 import LSubMenu from './LSubMenu.vue';
 interface IProps {
   collapse?: boolean;
@@ -40,10 +41,6 @@ const selectedKeys = computed(() => (activeMenu.value ? [activeMenu.value, route
 watchEffect(() => {
   localOpeneds.value = (props.collapse ? [] : matchedParentChain.value).map((item) => item.url);
 });
-const router = useRouter();
-const handleLink = (url?: string) => {
-  url && router.push(url);
-};
 </script>
 
 <style lang="less" scoped>

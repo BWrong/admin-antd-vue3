@@ -1,5 +1,5 @@
 import type { MockMethod } from 'vite-plugin-mock';
-import menus from './menu.json';
+import menus from './_menuData';
 export default [
   {
     url: '/api/auth/login',
@@ -27,7 +27,7 @@ export default [
           id: '12341234',
           nickName: '超级管理员',
           status: 0,
-          phone: '15528308524',
+          phone: '15528308524'
         }
       };
     }

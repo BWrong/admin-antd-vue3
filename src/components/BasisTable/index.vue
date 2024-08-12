@@ -1,10 +1,10 @@
 <template>
   <div class="basic-table">
-    <a-table v-bind="props" :columns="computedColumns">
-      <template v-for="(item, key) in slots" #[key]="data">
+    <ATable v-bind="props" :columns="computedColumns">
+      <template v-for="key in slotsKeys" #[key]="data">
         <slot :name="key" v-bind="data" />
       </template>
-    </a-table>
+    </ATable>
   </div>
 </template>
 
@@ -41,7 +41,20 @@ interface IProps extends TableProps {
   // showSorterTooltip?: boolean;
   // sticky?: boolean;
 }
+type SlotKey =
+  | 'bodyCell'
+  | 'customFilterDropdown'
+  | 'customFilterIcon'
+  | 'emptyText'
+  | 'expandedRowRender'
+  | 'expandColumnTitle'
+  | 'expandIcon'
+  | 'footer'
+  | 'headerCell'
+  | 'summary'
+  | 'title';
 const slots = useSlots();
+const slotsKeys = computed(() => Object.keys(slots) as SlotKey[]);
 const props = withDefaults(defineProps<IProps>(), {
   ...getDefaultFromProps(tableProps(), {
     rowKey: 'id',
