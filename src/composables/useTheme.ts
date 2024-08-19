@@ -12,7 +12,7 @@ export type ThemeOptions = {
 };
 // 默认主题配置
 const defaultThemeOptions: ThemeOptions = {
-  colorScheme: (import.meta.env.VITE_COLOR_SCHEME as ColorScheme) || 'auto',
+  colorScheme: (window.__APP_CONFIG__.VITE_GLOBAL_COLOR_SCHEME as ColorScheme) || 'auto',
   themeToken: defaultThemeToken || {},
   isCompact: false
 };

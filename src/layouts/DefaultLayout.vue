@@ -4,6 +4,9 @@
       <template #logo>
         <LLogo style="margin: 0 20px 0 0" />
       </template>
+      <template #nav v-if="layout === 'top'">
+        <LSider v-model:collapse="collapse" :menus="menus" />
+      </template>
     </LHeader>
     <a-layout class="layout-main">
       <a-layout-sider
@@ -13,6 +16,7 @@
         :trigger="null"
         collapsible
         breakpoint="lg"
+        v-if="layout === 'side'"
       >
         <LSider v-model:collapse="collapse" :menus="menus" />
       </a-layout-sider>
@@ -47,7 +51,7 @@ import LSider from '@/layouts/components/LSider.vue';
 import LTabs from '@/layouts/components/LTabs.vue';
 import { useRootStore } from '@/store';
 import { convertToTree } from '@/utils';
-
+const layout = window.__APP_CONFIG__.VITE_GLOBAL_LAYOUT;
 const { caches, routeKey } = useRouteCache();
 
 const rootStore = useRootStore();

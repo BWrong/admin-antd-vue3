@@ -1,6 +1,6 @@
 <template>
-  <div class="l-sider">
-    <AMenu v-model:open-keys="localOpeneds" class="menu-box" mode="inline" :selected-keys="selectedKeys">
+  <div class="l-sider" :class="mode">
+    <AMenu v-model:open-keys="localOpeneds" class="menu-box" :mode="mode" :selected-keys="selectedKeys">
       <template v-for="item in menus">
         <template v-if="!item.hide">
           <LSubMenu
@@ -33,6 +33,8 @@ interface IProps {
   collapse?: boolean;
   menus: IMenu[];
 }
+const layout = window.__APP_CONFIG__.VITE_GLOBAL_LAYOUT;
+const mode = layout === 'top' ? 'horizontal' : 'inline';
 const props = withDefaults(defineProps<IProps>(), { collapse: false });
 const route = useRoute();
 const localOpeneds = ref<string[]>([]);
@@ -48,6 +50,9 @@ watchEffect(() => {
   width: 100%;
   /* height: 100vh; */
   overflow: hidden;
+  &.horizontal {
+    padding-left: 100px;
+  }
 }
 
 .menu-box {
@@ -70,8 +75,28 @@ watchEffect(() => {
   z-index: 1;
 }
 </style>
-<style>
+<style lang="less">
 .ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title .anticon {
   line-height: 1;
+}
+.ant-menu-horizontal {
+  &.ant-menu-light {
+    background: transparent;
+    color: #eee;
+    .ant-menu-submenu-selected {
+      & > .ant-menu-submenu-title {
+        color: #ffffff;
+      }
+      &::after {
+        border-bottom-color: #fff;
+      }
+    }
+    .ant-menu-item-selected {
+      color: #ffffff;
+      &::after {
+        border-bottom-color: #fff;
+      }
+    }
+  }
 }
 </style>

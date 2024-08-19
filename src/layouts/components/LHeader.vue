@@ -2,6 +2,7 @@
   <a-layout-header class="layout-header">
     <div class="header-left">
       <slot name="logo" />
+      <slot name="nav" />
     </div>
     <div class="header-right">
       <a-dropdown>

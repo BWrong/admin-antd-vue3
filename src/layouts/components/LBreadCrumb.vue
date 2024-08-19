@@ -1,6 +1,6 @@
 <template>
   <div class="breadcrumb-bar">
-    <span class="trigger" @click="handleCollapse">
+    <span class="trigger" @click="handleCollapse" v-if="layout === 'side'">
       <icon-font :type="!collapse ? 'icon-outdent' : 'icon-indent'" />
     </span>
     <a-breadcrumb class="breadcrumb">
@@ -30,6 +30,7 @@ import { useRoute } from 'vue-router';
 
 import type { IMenu } from '@/api/auth';
 
+const layout = window.__APP_CONFIG__.VITE_GLOBAL_LAYOUT;
 interface IProps {
   collapse?: boolean;
   menus: IMenu[];
@@ -60,19 +61,18 @@ function handleCollapse() {
   width: 100%;
   height: 30px;
   align-items: center;
+  padding-left: 16px;
 }
 .trigger {
   font-size: 18px;
   cursor: pointer;
   transition: color 0.3s;
   color: #666;
-  padding: 0 10px;
+  width: 20px;
+  margin-right: 10px;
 }
 .trigger:hover {
   color: @colorPrimary;
-}
-.breadcrumb {
-  padding: 0 10px;
 }
 .home-ico {
   color: #d1e9ff;

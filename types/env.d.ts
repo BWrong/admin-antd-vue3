@@ -3,7 +3,7 @@
 interface ImportMetaEnv {
   // Auto generate by env-parse
   /**
-   * 通用配置
+   * 通用配置: 以VITE_GLOBAL开头的变量会注入到全局，方便在打包后进行修改，而不必重新打包
    * 应用名称
    */
   readonly VITE_TITLE: string
@@ -20,11 +20,12 @@ interface ImportMetaEnv {
    */
   readonly VITE_API_PREFIX: string
   /**
-   * 接口服务地址
+   * 生产环境配置
+   * 接口地址，一般为nginx接口服务反向代理的location
    */
   readonly VITE_API_HOST: string
   /**
-   * 图标地址，一定要换成自己iconfont项目地址，https://www.iconfont.cn/，********* 切记换成自己的，不要直接用模板中的地址*******
+   * 图标地址，一定要换成自己iconfont项目地址，https://www.iconfont.cn/
    */
   readonly VITE_ICONFONT_URL: string
   /**
@@ -34,7 +35,11 @@ interface ImportMetaEnv {
   /**
    * 配色方案 auto: 跟随系统，dark：深色模式 light：浅色模式
    */
-  readonly VITE_COLOR_SCHEME: string
+  readonly VITE_GLOBAL_COLOR_SCHEME: string
+  /**
+   * 布局方式，可选：side、top、mix
+   */
+  readonly VITE_GLOBAL_LAYOUT: string
   /**
    * 开启更新提示
    */
@@ -63,10 +68,6 @@ interface ImportMetaEnv {
    * 是否移除console、debugger
    */
   readonly VITE_DROP_CONSOLE: boolean
-  /**
-   * 以VITE_GLOBAL开头的变量会注入到全局，方便在打包后进行修改，而不必重新打包
-   */
-  readonly VITE_GLOBAL_EXAMPLE: string
 }
 // interface ImportMeta {
 //   readonly env: ImportMetaEnv;
