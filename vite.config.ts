@@ -14,7 +14,6 @@ import removeConsole from 'unplugin-remove/vite';
 import { VueHooksPlusResolver } from '@vue-hooks-plus/resolvers';
 import { webUpdateNotice } from '@plugin-web-update-notification/vite';
 import { visualizer } from 'rollup-plugin-visualizer';
-import VueDevTools from 'vite-plugin-vue-devtools';
 import buildInfo from 'vite-plugin-build-info';
 import iconfont from 'vite-plugin-iconfont';
 import unoCSS from 'unocss/vite';
@@ -42,8 +41,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     VITE_ICONFONT_URL,
     VITE_OUT_DIR,
     VITE_DROP_CONSOLE = false,
-    VITE_UPDATE_NOTICE = false,
-    VITE_DEVTOOLS = false
+    VITE_UPDATE_NOTICE = false
   } = env;
 
   /***** 接口代理配置，有多个可以自己加 ******/
@@ -82,8 +80,6 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       envParse({
         dtsPath: './types/env.d.ts'
       }),
-      // https://devtools-next.vuejs.org/
-      VITE_DEVTOOLS && VueDevTools(),
       iconfont({
         url: VITE_ICONFONT_URL,
         distUrl: './public/iconfont/iconfont.js',

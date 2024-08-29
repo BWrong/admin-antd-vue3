@@ -20,8 +20,7 @@ interface ImportMetaEnv {
    */
   readonly VITE_API_PREFIX: string
   /**
-   * 生产环境配置
-   * 接口地址，一般为nginx接口服务反向代理的location
+   * 接口服务地址
    */
   readonly VITE_API_HOST: string
   /**
@@ -44,10 +43,6 @@ interface ImportMetaEnv {
    * 开启更新提示
    */
   readonly VITE_UPDATE_NOTICE: boolean
-  /**
-   * 开启 devtools
-   */
-  readonly VITE_DEVTOOLS: boolean
   /**
    * 开启多标签页
    */

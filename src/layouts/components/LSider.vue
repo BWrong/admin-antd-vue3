@@ -50,6 +50,9 @@ watchEffect(() => {
   width: 100%;
   /* height: 100vh; */
   overflow: hidden;
+  &.inline {
+    display: block;
+  }
   &.horizontal {
     padding-left: 100px;
   }
