@@ -188,6 +188,7 @@ import TestModalForm from './TestModalForm.vue';
 const authKeys = ['home', 'system', 'system/menu', 'other'];
 const selectAuthKeys = ref(['home', 'system']);
 const appConfig = window.__APP_CONFIG__;
+
 const columns: ColumnProps[] = [
   {
     title: '名称',

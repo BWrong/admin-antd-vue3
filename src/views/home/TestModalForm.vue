@@ -2,7 +2,7 @@
   <div>{{ title }}</div>
   <slot />
   <slot name="test" />
-  <AForm :rules="rules" :model="formData" ref="formRef">
+  <AForm :rules="rules" :model="formData" ref="form">
     <AFormItem name="name" label="名称">
       <AInput v-model:value="formData.name" />
     </AFormItem>
@@ -11,6 +11,7 @@
 
 <script setup lang="ts">
 import type { FormInstance, FormProps } from 'ant-design-vue';
+import { useTemplateRef } from 'vue';
 
 const { title = '' } = defineProps<{
   title?: string;
@@ -25,7 +26,7 @@ const rules: FormProps['rules'] = {
   ]
 };
 const emits = defineEmits(['cancel', 'confirm', 'loading']);
-const formRef = ref<FormInstance>();
+const formRef = useTemplateRef<FormInstance>('form');
 defineExpose({
   async submit() {
     emits('loading', true);
@@ -36,6 +37,8 @@ defineExpose({
     });
   }
 });
+console.log(title);
+
 // 模拟异步
 function sleep(time: number) {
   return new Promise((resolve) => setTimeout(resolve, time));

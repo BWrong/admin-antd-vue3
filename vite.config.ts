@@ -27,7 +27,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
   const env = parseLoadedEnv(loadEnv(mode, root) as ImportMetaEnv);
   console.log('【info】 command:', command, ', mode: ', mode);
   console.log(env);
-  const IS_PRODUCTION = command === 'build';
+  // const IS_PRODUCTION = command === 'build';
   const IS_MOCK = mode === 'mock';
   // 读取环境配置
   const {
@@ -104,7 +104,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       }),
       vue({
         script: {
-          propsDestructure: true // 开启props语法糖
+          // propsDestructure: true // 开启props语法糖 3.5默认开启
         }
       }),
       createHtmlPlugin({
