@@ -10,7 +10,7 @@ export default [
   {
     name: 'app/filesAndIgores',
     files: ['**/*.{ts,mts,tsx,js,mjs,jsx,vue}'],
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**']
+    ignores: ['**/dist/**', 'public/**', '**/dist-ssr/**', '**/coverage/**']
   },
   {
     languageOptions: {
