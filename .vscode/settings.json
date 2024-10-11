@@ -1,9 +1,12 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "iconify.customCollectionJsonPaths": [
     "./.iconify.json"
   ],
   "iconify.annotations": true,
-  "iconify.inplace": false,
-  "unot.switchMagic": true
+  "iconify.inplace": false
 }

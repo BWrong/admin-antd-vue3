@@ -6,7 +6,7 @@
   </span>
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { type ButtonProps, Modal } from 'ant-design-vue';
 
 export interface ConfirmProps extends ButtonProps {

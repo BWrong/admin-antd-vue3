@@ -1,107 +1,33 @@
-import eslint from '@eslint/js';
 import unocssFlat from '@unocss/eslint-config/flat';
 import prettierConfig from '@vue/eslint-config-prettier';
+import vueTsEslintConfig from '@vue/eslint-config-typescript';
 import pluginSimpleImport from 'eslint-plugin-simple-import-sort';
 import pluginVue from 'eslint-plugin-vue';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
 
 import autoImport from './.eslintrc-auto-import.json' assert { type: 'json' };
-// import nodePlugin from "eslint-plugin-n"
 
 export default [
   {
-    files: [
-      'src/**/*.vue',
-      'src/**/*.js',
-      'src/**/*.jsx',
-      'src/**/*.cjs',
-      'src/**/*.mjs',
-      'src/**/*.ts',
-      'src/**/*.tsx',
-      'src/**/*.cts',
-      'src/**/*.mts'
-    ],
-    ignores: [
-      'vite.config.*',
-      'vue.config.*',
-      'rollup.config.*',
-      'nuxt.config.*',
-      'jest.config.*',
-      'tailwind.config.*',
-      'unocss.config.*',
-      'vitest.config.*',
-      'vetur.config.*',
-      'windi.config.*',
-      'jsconfig.*',
-      'tsconfig.*',
-      'tsdoc.*',
-      '.babelrc.*',
-      'babel.config.*',
-      '.postcssrc.*',
-      'postcss.config.*',
-      '.prettierrc.*',
-      'prettier.config.*',
-      '.stylelintrc.*',
-      'stylelint.config.*',
-      '.eslintrc.*',
-      'eslint.config.*',
-      '.cz-config.js',
-      '.browserslist*',
-      '.editorconfig',
-      '*.d.ts',
-      '.vscode/*',
-      '.git/*',
-      '.env*',
-      '*.config.*',
-      'Dockerfile',
-      '*.conf',
-      '*.yaml',
-      '*.md',
-      '*.png',
-      '*.jpg',
-      '*.gif',
-      '*.pdf',
-      '*.doc',
-      'node_modules',
-      'node_modules/*',
-      'public/*',
-      'dist/*',
-      'mock/*',
-      'docs/*',
-      'bower_components/*',
-      'vender/*',
-      'external/*',
-      'src/config/theme.ts'
-    ]
+    name: 'app/filesAndIgores',
+    files: ['**/*.{ts,mts,tsx,js,mjs,jsx,vue}'],
+    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**']
   },
   {
     languageOptions: {
       ecmaVersion: 'latest',
       globals: {
-        ...globals.browser,
         ...autoImport.globals,
         Iconfont: true,
         __APP_CONFIG__: true
       }
     }
   },
-  {
-    files: ['src/**/*.vue'],
-    languageOptions: {
-      parserOptions: {
-        parser: tseslint.parser,
-        jsx: true
-        // vueFeatures: {}
-      }
-    }
-  },
-  eslint.configs.recommended,
-  ...tseslint.configs.recommended,
   ...pluginVue.configs['flat/strongly-recommended'],
+  ...vueTsEslintConfig({
+    supportedScriptLangs: { ts: true, tsx: true }
+  }),
   {
     plugins: {
-      // 'nodePlugin':nodePlugin,
       'simple-import-sort': pluginSimpleImport
     },
     rules: {

@@ -6,7 +6,7 @@
   </ConfirmButton>
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import type { ConfirmProps } from './index.vue';
 
 interface DeleteProps extends ConfirmProps {

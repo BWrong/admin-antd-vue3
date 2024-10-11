@@ -181,15 +181,18 @@ function handleLogin() {
   position: relative;
   background: #eee;
 }
+
 @media (prefers-color-scheme: dark) {
   .login-page {
     background: #141414;
   }
 }
+
 .login-form {
   width: 360px;
   text-align: center;
 }
+
 .code {
   display: flex;
   flex-direction: row;
@@ -197,6 +200,7 @@ function handleLogin() {
   justify-content: space-between;
   align-items: center;
 }
+
 .version {
   position: absolute;
   bottom: 10px;

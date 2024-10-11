@@ -1,25 +1,27 @@
+import { resolve } from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
-import { defineConfig, loadEnv } from 'vite';
-import { type ConfigEnv, type ProxyOptions } from 'vite';
+
+import { webUpdateNotice } from '@plugin-web-update-notification/vite';
+import legacy from '@vitejs/plugin-legacy';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import legacy from '@vitejs/plugin-legacy';
-import { viteMockServe } from 'vite-plugin-mock';
-import viteCompression from 'vite-plugin-compression';
-import { createHtmlPlugin } from 'vite-plugin-html';
-import autoImport from 'unplugin-auto-import/vite';
-import unpluginComponents from 'unplugin-vue-components/vite';
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
-import removeConsole from 'unplugin-remove/vite';
 import { VueHooksPlusResolver } from '@vue-hooks-plus/resolvers';
-import { webUpdateNotice } from '@plugin-web-update-notification/vite';
 import { visualizer } from 'rollup-plugin-visualizer';
-import buildInfo from 'vite-plugin-build-info';
-import iconfont from 'vite-plugin-iconfont';
 import unoCSS from 'unocss/vite';
-import { themeToken } from './src/config/theme';
-import { resolve } from 'node:path';
+import autoImport from 'unplugin-auto-import/vite';
+import removeConsole from 'unplugin-remove/vite';
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+import unpluginComponents from 'unplugin-vue-components/vite';
+import { defineConfig, loadEnv } from 'vite';
+import { type ConfigEnv, type ProxyOptions } from 'vite';
+import buildInfo from 'vite-plugin-build-info';
+import viteCompression from 'vite-plugin-compression';
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse';
+import { createHtmlPlugin } from 'vite-plugin-html';
+import iconfont from 'vite-plugin-iconfont';
+import { viteMockServe } from 'vite-plugin-mock';
+
+import { themeToken } from './src/config/theme';
 
 // 完整配置，请查阅https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv) => {
@@ -51,7 +53,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       // secure: false,
       // ws: true,
       changeOrigin: true, // 将Origin的来源更改为目标URL
-      rewrite: (path) => path.replace(new RegExp(`^${VITE_API_PREFIX}`), '/api')
+      rewrite: path => path.replace(new RegExp(`^${VITE_API_PREFIX}`), '/api')
     }
     // 可以自行添加更多，多个代理的时候需要同步修改request：
     // 方式1：创建多个request实例；

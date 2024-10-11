@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["types/components.d.ts","types/*.d.ts","src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["types/components.d.ts", "types/*.d.ts", "src/**/*"],
   "exclude": ["dist", "node_modules", "src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
@@ -13,8 +13,7 @@
     "baseUrl": ".",
     "paths": {
       "types/*": ["types/*"],
-      "@/*": ["./src/*"],
-      "components/*": ["src/components/*"]
+      "@/*": ["./src/*"]
     }
   }
 }

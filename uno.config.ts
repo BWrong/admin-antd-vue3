@@ -1,6 +1,6 @@
-import { defineConfig, presetUno, transformerDirectives, transformerVariantGroup } from 'unocss';
 // 如果使用像素单位，可以使用该插件
 import presetRemToPx from '@unocss/preset-rem-to-px';
+import { defineConfig, presetUno, transformerDirectives, transformerVariantGroup } from 'unocss';
 // 完整配置 https://unocss.dev/
 export default defineConfig({
   safelist: [],

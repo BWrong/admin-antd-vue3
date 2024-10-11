@@ -19,7 +19,6 @@ app.use(plugins); // 注册插件
 app.use(directives); // 注册指令
 app.use(authPlugin);
 app.mount('#app');
-
 // 配置记录滚动位置的滚动容器
 // configKeepScroll('#app-main-scroller')
 

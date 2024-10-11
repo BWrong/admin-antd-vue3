@@ -84,6 +84,7 @@ import type { ColumnProps } from 'ant-design-vue/es/table';
 import { reactive, ref } from 'vue';
 
 import type { IMenu } from '@/api/auth';
+import IconFont from '@/components/IconFont/index.vue';
 import IconPicker from '@/components/IconPicker/index.vue';
 import { RESOURCE_TYPE } from '@/enums/menu';
 // 列表
@@ -103,7 +104,7 @@ const columns: ColumnProps[] = [
     dataIndex: 'icon',
     align: 'center',
     width: '200px',
-    customRender: ({ text }) => (text ? <icon-font type={text} /> : '')
+    customRender: ({ text }) => (text ? <IconFont type={text} /> : '')
   },
   {
     title: '类型',
