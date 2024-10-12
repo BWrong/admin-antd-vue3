@@ -3,6 +3,7 @@
 如果有任何问题请在仓库提交issues。
 
 ## 技术体系
+
 - 核心：TypeScript + Vue + VueRouter + Pinia
 - UI组件库：AntDesignVue
 - 构建系统：Vite
@@ -10,6 +11,7 @@
 - 依赖管理：pnpm
 
 ## 目录规划
+
 ```js
 |- docs // 文档
 |- dist // 构建成果
@@ -35,16 +37,16 @@
 |- index.html // 入口页面
 ```
 
-
-
 ## 开发工具
+
 - 编辑器：VSCode
-- 推荐插件：`Vue.volar`, `antfu.unocss`,`antfu.iconify`,`dbaeumer.vscode-eslint`,`esbenp.prettier-vscode`,`stylelint.vscode-stylelint`
+- 推荐插件：`Vue.volar`, `dbaeumer.vscode-eslint`,`esbenp.prettier-vscode`,`antfu.unocss`,`antfu.iconify`
 
 如果已经安装Vetur，需要禁用或者卸载，否则会有冲突。
 
 ## 使用说明
-``` bash
+
+```bash
 # 安装依赖
 pnpm install
 
@@ -61,10 +63,14 @@ pnpm run build
 
 ```
 
+## 更新日志
+
+[更新日志](CHANGELOG.md)
 
 ## 主要功能
 
 ### 基础功能
+
 - [x] 框架目录统一规划
 - [x] UI框架集成
 - [x] 路由管理集成
@@ -79,20 +85,25 @@ pnpm run build
 - [x] 字体图标支持
 
 ### 性能优化
+
 - [x] Gzip压缩支持
 - [x] 按需加载和依赖分包并行加载支持
 - [x] 重复请求取消支持
 
 ### 开发规范
+
 - [x] ESlint
 - [x] 开发规范文档
 - [x] Git分支策略
 - [x] API接口约定
 
 ### 布局组件
+
 - [x] 头部组件
 - [x] 导航菜单
 - [x] 面包屑
 - [x] 工作区
+
 ### 其他
+
 - [x] Git及版本信息埋点支持
