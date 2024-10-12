@@ -1,5 +1,61 @@
 # 更新日志 🎉🎉🎉
 
+## 0.3.0 (2024-10-12)
+
+### ✨新功能
+
+* 初始化 ([7dcdb99](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/7dcdb999ad944d51fa436278421c7e0f43d0f0e5))
+* 添加 devtools ([119a762](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/119a7622508102a54ea1d7ebb8ad82baac1de507))
+* 添加多标签页功能 ([cf6b587](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/cf6b587847deeed3f74cbc605b0d5d32715ad21d))
+* 添加全局变量注入功能 ([5686af4](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/5686af427f07c5920dd24c950b143fa3a3d5c118))
+* 添加tab ([a5df938](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/a5df93863cb2d0c874ed0111ab42366bf13f24b5))
+* 新增环境变量解析 ([2901000](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/290100060bec63ed2ec6210844c30ceb9a621e1d))
+* 增加布局方式 ([cdc6cfc](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/cdc6cfca3149659256bd5286180e6367d46f6dca))
+* 增加外链支持 ([ceeb5b2](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/ceeb5b25caabc11ecaee3cd956c8d177d489f132))
+
+### 🐛Bug修复
+
+* 处理图标注入问题 ([d175b3f](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/d175b3fdfe422ecd8089f8c0d33fa855f270f146))
+* 修复弹窗上下文丢失问题 ([96746e7](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/96746e7f4d4373b8cb66e212416a208808bdf708))
+* 优化弹窗类型推断 ([85ac1f1](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/85ac1f15562635bd7f3beb1ed91e3f1d5f901e68))
+* 优化弹窗hooks和组件 ([b19750a](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/b19750aa6286efcae7b0aa77623fc6d99a2a3060))
+* 优化删除按钮 ([e811054](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/e81105478c87b6b2ca3b4c17217098fde8c57f62))
+* 优化删除按钮 ([2725942](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/2725942d83e8b345528b9843bfea1e457a0b1b27))
+
+### 🔥依赖构建调整
+
+* 🎨 修改构建配置 ([3d65403](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/3d6540316d7b3387594f69dfaa65e21aa3e629dd))
+* 调整工程配置 ([036f6ad](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/036f6ad08372167b3a9cb9387528e2f2d913dea2))
+* 更新eslint配置 ([6d08cef](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/6d08cef249a6622d507322d9ba04c67b180db426))
+* 去掉调试工具 ([63b0346](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/63b0346d674aaa2f8a33d946309ac276d2142c82))
+* 升级 eslintV9 及配置 ([7d26e66](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/7d26e6651b20e7fb95526e31906b43fe251dc3c9))
+* 升级依赖 ([25f8d9b](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/25f8d9b4bdc7e074058abe6785a854284c03c0db))
+* 升级依赖 ([78380d0](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/78380d0b89d58015afa2499aa01a3f79163d22b0))
+* 升级依赖 ([63d6e44](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/63d6e4406f719a809c7da8a5ce802980dfb30f6d))
+* 升级依赖 ([d78b976](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/d78b976ec27ecc6a7d0842242817bc0f85a77080))
+* 升级依赖 ([df333ff](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/df333ffc6e3ffc9510830541fbc760ce278902c5))
+* 升级依赖 ([3deffbe](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/3deffbefd2a136222b2b1c01024865138fd401f5))
+* 升级依赖包版本 ([c33ed54](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/c33ed54ed2c4575a565d44eaa7f70db962e785dc))
+* 依赖更新 ([6741805](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/6741805b426a0dd875a998594879c98c91a2326e))
+* 依赖升级 ([c5b0ba6](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/c5b0ba69dfcf9767671268b0f7329bcd58ce3df0))
+
+### 🚧其他
+
+* 调整lint配置 ([fff3f2a](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/fff3f2a720ed1e3455c1679864a3df8b196918e9))
+* 更新依赖 ([b35e50c](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/b35e50cc2744816ad54add08675b432f599a56f1))
+* 更新eslint配置 ([9da8040](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/9da8040f80e6d7d27627c17591584831b885594c))
+* 更新eslint配置 ([25c039f](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/25c039fdd94dfa7dd85a69ebeb0edd5530f88066))
+* 升级依赖 ([466790b](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/466790b3328e3359796c06d0c4887f47d58e9b7b))
+* 升级依赖 ([ba646f2](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/ba646f24448141c3ee307108f742d645841ddace))
+* 升级依赖 ([0457dc8](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/0457dc8a4f2bed2e77ce593eede735e0da887683))
+* 升级依赖 ([a943a80](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/a943a80caf0d481605f84790cab750fc15a2ab71))
+* 修复组件提示丢失问题 ([a081c9e](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/a081c9e8166c66d2d85388e01c7afc61aa952c83))
+* 依赖升级 ([7430739](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/7430739dcf1a933aa895cfaa55e14042d746136f))
+* 优化弹窗上下文 ([d6d4f61](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/d6d4f61996e58265152d12063250dd652db804cb))
+* 优化配置 ([f91fb2c](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/f91fb2c5554d6e34310d0568fafa9521dc23df54))
+* 优化请求hooks ([f9ec2ba](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/f9ec2baa21d8899ad1dde4789a82e2459f338b29))
+* 主题修改 ([c6f5ace](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/c6f5ace041cad362c246da0eae2866e2820780b2))
+
 ## [0.2.0](http://10.18.101.198:30088/zdww/template-vue3-pc/compare/v0.1.3...v0.2.0) (2023-11-13)
 
 
