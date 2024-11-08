@@ -8,11 +8,10 @@
 
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "allowJs": true, // 允许编译js
-    "noImplicitAny": false, // 无隐含的any
+    // "noImplicitAny": false, // 无隐含的any
     "resolveJsonModule": true, // 解析json模块
     "baseUrl": ".",
     "paths": {
-      "types/*": ["types/*"],
       "@/*": ["./src/*"]
     }
   }
