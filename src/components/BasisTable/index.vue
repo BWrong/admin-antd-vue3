@@ -11,7 +11,7 @@
 <script lang="ts" setup>
 import type { ColumnGroupType, ColumnProps, ColumnType, TableProps } from 'ant-design-vue/es/table';
 import { tableProps } from 'ant-design-vue/es/table/Table';
-import { computed, useSlots } from 'vue';
+import { computed, type SetupContext, useSlots } from 'vue';
 
 import { getDefaultFromProps } from '@/utils';
 defineOptions({
@@ -53,7 +53,7 @@ type SlotKey =
   | 'headerCell'
   | 'summary'
   | 'title';
-const slots = useSlots();
+const slots: SetupContext['slots'] = useSlots();
 const slotsKeys = computed(() => Object.keys(slots) as SlotKey[]);
 const props = withDefaults(defineProps<IProps>(), {
   ...getDefaultFromProps(tableProps(), {
