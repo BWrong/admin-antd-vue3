@@ -1,5 +1,26 @@
 # 更新日志 🎉🎉🎉
 
+## [0.3.1](https://code.srdcloud.cn:29418/zion-governance/template-vue3/compare/0.3.0...0.3.1) (2025-01-06)
+
+### 🐛Bug修复
+
+* 修复类型错误 ([6f56951](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/6f56951078a31fb801d710946d23443adb7b4713))
+
+### 📖文档变更
+
+* readme添加changelog链接 ([2ad2930](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/2ad2930fdfb58b903c9592367e798e2f24e9c283))
+
+### 🔥依赖构建调整
+
+* 升级依赖 ([e8fc5a2](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/e8fc5a2c513ff95adf5aa3b51c538861ef3a98cb))
+* 升级依赖 ([0291f66](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/0291f66a813f2330e5d26009ca763a831ee77891))
+* 依赖升级 ([0fdf3dc](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/0fdf3dce2329bbc78f6fb01d667a90c1fd4dd3ed))
+* 依赖升级 ([32b98b0](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/32b98b00862dc0bbd9c9da7c608d918237701cf8))
+
+### 🚧其他
+
+* 🎨 升级依赖 ([77cfb24](https://code.srdcloud.cn:29418/zion-governance/template-vue3/commit/77cfb24c703ffa903c8e9bc995cb43f9d8a2272a))
+
 ## 0.3.0 (2024-10-12)
 
 ### ✨新功能
