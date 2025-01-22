@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["types/components.d.ts", "types/*.d.ts", "src/**/*"],
+  "include": ["types/components.d.ts", "types/*.d.ts", "src/**/*", "src/**/*.vue"],
   "exclude": ["dist", "node_modules", "src/**/__tests__/*"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
@@ -8,7 +8,7 @@
     // "allowJs": true, // 允许编译js
     // "noImplicitAny": false, // 无隐含的any
     "resolveJsonModule": true, // 解析json模块
-    "baseUrl": ".",
+    // "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }

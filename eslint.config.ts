@@ -1,12 +1,15 @@
 import unocssFlat from '@unocss/eslint-config/flat';
-import prettierConfig from '@vue/eslint-config-prettier';
-import vueTsEslintConfig from '@vue/eslint-config-typescript';
+import prettierConfig from '@vue/eslint-config-prettier/skip-formatting';
+import { configureVueProject, defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
 import pluginSimpleImport from 'eslint-plugin-simple-import-sort';
 import pluginVue from 'eslint-plugin-vue';
 
 import autoImport from './.eslintrc-auto-import.json' assert { type: 'json' };
 
-export default [
+configureVueProject({
+  scriptLangs: ['ts', 'tsx']
+});
+export default defineConfigWithVueTs(
   {
     name: 'app/filesAndIgores',
     files: ['**/*.{ts,mts,tsx,js,mjs,jsx,vue}'],
@@ -22,10 +25,8 @@ export default [
       }
     }
   },
-  ...pluginVue.configs['flat/strongly-recommended'],
-  ...vueTsEslintConfig({
-    supportedScriptLangs: { ts: true, tsx: true }
-  }),
+  vueTsConfigs.recommendedTypeChecked,
+  pluginVue.configs['flat/strongly-recommended'],
   {
     plugins: {
       'simple-import-sort': pluginSimpleImport
@@ -42,4 +43,4 @@ export default [
   },
   unocssFlat,
   prettierConfig
-];
+);
