@@ -10,14 +10,8 @@
     </LHeader>
     <a-layout class="layout-main">
       <a-layout-sider
-        v-model:collapsed="collapse"
-        :collapsed-width="50"
-        theme="light"
-        :trigger="null"
-        collapsible
-        breakpoint="lg"
-        v-if="layout === 'side'"
-      >
+v-model:collapsed="collapse" :collapsed-width="50" theme="light" :trigger="null" collapsible
+        breakpoint="lg" v-if="layout === 'side'">
         <LSider v-model:collapse="collapse" :menus="menus" />
       </a-layout-sider>
       <a-layout-content class="app-scroll-wrap" id="app-main-scroller">
@@ -55,12 +49,12 @@ const layout = window.__APP_CONFIG__.VITE_GLOBAL_LAYOUT;
 const { caches, routeKey } = useRouteCache();
 
 const rootStore = useRootStore();
-const { push } = useRouter();
+const router = useRouter();
 const userInfo = getStorage<IUser>('userinfo');
 if (userInfo) {
   rootStore.setUserinfo(userInfo);
 } else {
-  push('/login');
+  router.push('/login');
 }
 let menus: IMenu[] = getPermissionsData() || [];
 menus = menus.filter((item) => item.type === 0);
@@ -102,6 +96,7 @@ const showMultiTab = import.meta.env.VITE_MULTI_TAB ?? true;
   // border-radius: 5px;
   overflow-x: hidden;
   overflow-y: auto;
+
   &.showMultiTab :deep(.page-wrap > .ant-card) {
     border-radius: 0 0 5px 5px;
     border-top: none;

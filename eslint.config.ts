@@ -36,9 +36,17 @@ export default defineConfigWithVueTs(
       'simple-import-sort/exports': 'warn',
       '@typescript-eslint/no-explicit-any': 1,
       '@typescript-eslint/no-unused-expressions': 0,
+      '@typescript-eslint/no-floating-promises': 0,
       'vue/no-setup-props-destructure': 0,
       'vue/no-dupe-keys': 0,
-      'vue/multi-word-component-names': 0
+      'vue/multi-word-component-names': 0,
+      'vue/first-attribute-linebreak': [
+        'warn',
+        {
+          singleline: 'ignore',
+          multiline: 'below'
+        }
+      ]
     }
   },
   unocssFlat,

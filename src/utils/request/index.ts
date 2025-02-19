@@ -71,7 +71,7 @@ const request = new Request<ResponseType>({
       }
       // 处理业务错误
       handleBusinessError(data);
-      return Promise.reject(data);
+      return Promise.reject(data as unknown as Error);
     },
     responseInterceptorCatch(error) {
       // 处理网络错误

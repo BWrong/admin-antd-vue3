@@ -2,13 +2,13 @@ import { initAuth } from '@bwrong/auth-tool';
 import { getStorage } from '@bwrong/storage';
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 
+// import { getMenusRequest } from '@/api/auth';
 import config from '@/config';
 import NProgress from '@/plugins/nprogress';
 import { getToken } from '@/utils/auth';
 
 import dynamicRoutes from './dynamicRoutes';
 import routes, { noMatchRoute } from './staticRoutes';
-// import authApi from '@/api/auth';
 let routerLoaded = false; // 动态路由是否已加载
 let removeRouters: Array<() => void> = [];
 const VITE_AUTH_CHECK = import.meta.env.VITE_AUTH_CHECK;
@@ -52,11 +52,12 @@ router.afterEach((to) => {
 
 // 获取路由
 async function _getAllowRoutes(dynamicRoutes: RouteRecordRaw[]) {
-  // 如果需要刷新更新菜单数据，可以去掉登录时获取，在这获取菜单数据
-  // const menus = await authApi.getMenus().then((res: any) =>  {
+  // 如果需要刷新页面更新菜单数据，可以去掉登录时获取，在这获取菜单数据
+  // const menus = await getMenusRequest().then((res: any) => {
   //   setStorage('userinfo', res.detail);
   //   return res.menus;
   // });
+  await Promise.resolve();
   const menus = getStorage<Record<string, unknown>[]>('rawMenu') || [];
   return _ganerRoutesAndMenus(dynamicRoutes, menus);
 }

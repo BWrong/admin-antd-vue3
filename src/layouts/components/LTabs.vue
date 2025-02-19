@@ -15,13 +15,16 @@
             <a-menu>
               <!-- TODO: 刷新会丢失其他tab -->
               <a-menu-item @click="updataRouteKey">
-                <template #icon> <IconFont type="icon-shuaxin" /> </template>
+                <template #icon>
+                  <IconFont type="icon-shuaxin" />
+                </template>
                 刷新页面
               </a-menu-item>
               <a-menu-item @click="closeOtherTabs">
-                <template #icon> <IconFont type="icon-close-circle" /> </template>
-                关闭其他</a-menu-item
-              >
+                <template #icon>
+                  <IconFont type="icon-close-circle" />
+                </template>
+                关闭其他</a-menu-item>
             </a-menu>
           </template>
         </a-dropdown>
@@ -85,12 +88,12 @@ function changeCurTab() {
   // tab标签页路由信息：meta、componentName
   const routeMatch = matched[props.tabRouteViewDepth - 1];
   if (!routeMatch) return;
-  const meta = routeMatch?.meta;
+  const meta = routeMatch?.meta as Record<string, string>;
   const componentDef: any = routeMatch.components?.default;
   const componentName = componentDef?.name || componentDef?.__name;
   // 获取tab标签页信息：tabKey标签页key值；title-标签页标题；tab-存在的标签页
   const tabKey = props.getTabKey(routeMatch, route);
-  const title = String(meta[props.tabTitleKey] || '');
+  const title = meta[props.tabTitleKey] || '';
   const tab = tabs.value.find((tab) => tab.tabKey === tabKey);
 
   if (['/login', '/err', '/redirect'].includes(path)) return; // 登录页、错误页、重定向页不添加tab标签页
@@ -144,7 +147,7 @@ async function removeTab(name: Key | MouseEvent | KeyboardEvent, action: 'add' |
     // 当移除的是当前tab，则自动切换到最后一个tab（根据项目设置）
     if (tab.tabKey === curTabKey.value) {
       const lastTab = tabs.value[tabs.value.length - 1];
-      lastTab && gotoTab(lastTab);
+      lastTab && await gotoTab(lastTab);
     }
     // 同时移除tab缓存
     removeCache(tab.componentName || '');

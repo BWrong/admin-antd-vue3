@@ -38,7 +38,7 @@ export function toFixed(val: number | string, dig = 2) {
  */
 export function getQuery(url: string) {
   if (url.indexOf('?') === -1) return {};
-  const query = {};
+  const query = {} as { [key: string]: string };
   const str = url.split('?')[1];
   const strs = str.split('&');
   for (let i = 0; i < strs.length; i++) {
@@ -172,7 +172,7 @@ export function downloadFile(content: BlobPart, filename: string) {
  * @param bytes
  * @returns
  */
-export const bytesToSize = (bytes?: number | undefined) => {
+export const bytesToSize = (bytes?: number) => {
   if (!bytes) return '0 B';
   const k = 1024,
     sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
@@ -203,7 +203,7 @@ export function arrayToObj<T extends Record<string, any>, K extends keyof T = st
  * @returns
  */
 export function getRootPath(url: string) {
-  return '' + url.match(/^\/?[^/#?]+/);
+  return url.match(/^\/?[^/#?]+/)?.toString();
 }
 /**
  * 检查列表中的字段是否为非空

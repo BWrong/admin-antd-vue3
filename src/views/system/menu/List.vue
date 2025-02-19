@@ -27,7 +27,8 @@
       </basis-table>
     </a-card>
     <!-- 新增编辑 -->
-    <a-modal v-model:open="isShowEdit" :title="isAdd ? '新建' : '编辑'" :keyboard="false" :mask-closable="false"
+    <a-modal
+v-model:open="isShowEdit" :title="isAdd ? '新建' : '编辑'" :keyboard="false" :mask-closable="false"
       :after-close="handleClose" @ok="handleOk">
       <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
         <a-form-item has-feedback label="类型" name="type">
@@ -40,7 +41,7 @@
         <a-form-item has-feedback label="父级目录" name="parentId">
           <a-input v-model:value="form.parentId" />
         </a-form-item>
-        <a-form-item has-feedback :label="`${RESOURCE_TYPE[String(form.type)]}名称`" name="title">
+        <a-form-item has-feedback :label="`${RESOURCE_TYPE[form.type!]}名称`" name="title">
           <a-input v-model:value="form.title" />
         </a-form-item>
         <a-form-item has-feedback label="权限标识" name="permission">
@@ -121,11 +122,11 @@ function getData() {
   state.tableData = getPermissionsTree({ pid: 0 });
 }
 getData();
-function handleDel(row) {
+function handleDel(row: IMenu) {
   console.log(row);
   message.success('操作成功');
 }
-function handleHide(row: IMenu, status) {
+function handleHide(row: IMenu, status: boolean) {
   console.log(row, status);
   row.hide = status;
   message.success('操作成功');

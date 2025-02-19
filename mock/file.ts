@@ -1,5 +1,5 @@
-import type { MockMethod } from 'vite-plugin-mock';
 import fs from 'fs'; // 注意：生产环境不可用
+import type { MockMethod } from 'vite-plugin-mock';
 export default [
   {
     url: '/api/file/download',

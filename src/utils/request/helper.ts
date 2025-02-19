@@ -39,9 +39,13 @@ export function handleCheckAuth(config: RequestConfig) {
 }
 // 信息提示适配器，使用不同的UI组件库，配置有差异
 export const messageAdaptor = {
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   destroy: message.destroy,
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   error: message.error,
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   success: message.success,
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   warn: message.warning
 };
 /**
@@ -83,14 +87,14 @@ const statusMap = {
  */
 export function handleNetworkError(error: AxiosError<ResponseType>) {
   messageAdaptor.destroy();
-  const status = error.response?.status;
-  const tips = error.response?.data?.msg || (status && statusMap[status]) || `请求失败: ${error}`;
+  const status = error.response?.status as keyof typeof statusMap;
+  const tips = error.response?.data?.msg || (status && statusMap[status]) || `请求失败: ${error.response?.data?.msg}`;
   messageAdaptor.error(tips);
   // 如果status为401，说明认证信息失效，退出登录
   if (error.response?.status === 401) logout();
 }
 // 业务错误及提示, 根据自己业务扩展
-const errMap = {
+const errMap: Record<number, string> = {
   10031: '登录失效，需要重新登录', // token 失效
   10032: '您太久没登录，请重新登录~', // token 过期
   10033: '账户未绑定角色，请联系管理员绑定角色',

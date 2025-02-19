@@ -27,7 +27,7 @@ export interface IMenu extends IRecordBase {
   // path: string;
   url?: string;
   icon?: Iconfont;
-  type?: number;
+  type?: 0 | 1;
   hide?: boolean;
   children?: IMenu[];
   parentId?: string;
@@ -47,4 +47,4 @@ export const refreshTokenRequest = (params: object) =>
     skipCheckAuth: true,
     skipShowTips: true
   });
-export const getMenusRequest = (params?) => get<IMenu[]>('/auth/menus', params);
+export const getMenusRequest = () => get<IMenu[]>('/auth/menus');
