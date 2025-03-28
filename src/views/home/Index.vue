@@ -51,9 +51,8 @@
       </div>
       <h3>vueRequest</h3>
       <p>
-        <a href="https://inhiblabcore.github.io/docs/hooks/useRequest/" target="_blank" rel="noopener noreferrer"
-          >VueHooksPlus - vueRequest</a
-        >测试
+        <a href="https://inhiblabcore.github.io/docs/hooks/useRequest/" target="_blank"
+          rel="noopener noreferrer">VueHooksPlus - vueRequest</a>测试
       </p>
       <AButton :loading="loading" @click="handleRun"> 请求 </AButton>
       <p>测试结果</p>
@@ -82,10 +81,9 @@
       </BasisTable>
       <h3>图标</h3>
       <p>组件位置：/src/components/IconFont</p>
-      使用<a href="https://www.iconfont.cn/" class="text-link" target="_blank">iconfont</a>图标，<strong
-        >请将<span class="text-primary">ENV</span>文件中的<span class="text-primary">VITE_ICONFONT_URL</span
-        >变量设置为自己iconfont项目对应的地址</strong
-      >。当然，如果你不喜欢这种使用方式，可以试试
+      使用<a href="https://www.iconfont.cn/" class="text-link" target="_blank">iconfont</a>图标，<strong>请将<span
+          class="text-primary">ENV</span>文件中的<span
+          class="text-primary">VITE_ICONFONT_URL</span>变量设置为自己iconfont项目对应的地址</strong>。当然，如果你不喜欢这种使用方式，可以试试
       <a href="https://unocss.dev/presets/icons" target="_blank" rel="noopener noreferrer">unocss Icons</a>或者其他方式
       <p class="text-6 text-primary">
         <IconFont type="icon-pic-right" :style="{ color: 'blue' }" />
@@ -124,20 +122,16 @@
       </ASpace>
       <h3>UnoCss</h3>
       <p>
-        默认可以使用<a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">tailwindcss</a
-        >语法,建议安装对应编辑器插件<a
-          href="https://marketplace.visualstudio.com/items?itemName=antfu.unocss"
-          target="_blank"
-          rel="noopener noreferrer"
-          >unocss</a
-        >以获得更好的体验。
+        默认可以使用<a href="https://tailwindcss.com/" target="_blank"
+          rel="noopener noreferrer">tailwindcss</a>语法,建议安装对应编辑器插件<a
+          href="https://marketplace.visualstudio.com/items?itemName=antfu.unocss" target="_blank"
+          rel="noopener noreferrer">unocss</a>以获得更好的体验。
       </p>
       <p>
         默认所有单位使用rem，如果需要使用px，可以安装<a href="https://unocss.dev/presets/rem-to-px">rem-to-px插件</a>
       </p>
       <div
-        class="m-1 inline-block h-30 max-w-lg bg-primary p-5 text-center text-white duration-1000 hover:(rounded-10 bg-green text-red)"
-      >
+        class="m-1 inline-block h-30 max-w-lg bg-primary p-5 text-center text-white duration-1000 hover:(rounded-10 bg-green text-red)">
         这是使用unocss默认预设写出的样式，class如下：
         <div>
           m-1 inline-block h-30 max-w-lg bg-primary p-5 text-center text-white duration-1000 hover:(rounded-10 bg-green
@@ -147,13 +141,8 @@
       <h3>主题设置</h3>
       <a-popover trigger="hover">
         <template #content>
-          <span
-            v-for="item in colorList"
-            :key="item"
-            class="m-1 inline-block h-4 w-4 cursor-pointer"
-            :style="{ backgroundColor: item as string }"
-            @click="handleSetTheme(item)"
-          />
+          <span v-for="item in colorList" :key="item" class="m-1 inline-block h-4 w-4 cursor-pointer"
+            :style="{ backgroundColor: item as string }" @click="handleSetTheme(item)" />
         </template>
         <IconFont type="icon-bg-colors" font-size="20px" class="text-primary" />
       </a-popover>
