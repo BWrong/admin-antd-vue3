@@ -22,7 +22,6 @@
   |- assets  // 静态资源
   |- components // 全局组件
   |- config // 全局配置
-  |- directives // 全局指令
   |- enums // 枚举值
   |- composables // 全局组合函数/hooks，用于抽离公用逻辑
   |- layouts // 布局组件

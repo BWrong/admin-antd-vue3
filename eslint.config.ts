@@ -1,6 +1,7 @@
 import unocssFlat from '@unocss/eslint-config/flat';
-import prettierConfig from '@vue/eslint-config-prettier/skip-formatting';
+import skipFormatting from '@vue/eslint-config-prettier/skip-formatting';
 import { configureVueProject, defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
+import { globalIgnores } from 'eslint/config';
 import pluginSimpleImport from 'eslint-plugin-simple-import-sort';
 import pluginVue from 'eslint-plugin-vue';
 
@@ -11,10 +12,10 @@ configureVueProject({
 });
 export default defineConfigWithVueTs(
   {
-    name: 'app/filesAndIgores',
-    files: ['**/*.{ts,mts,tsx,js,mjs,jsx,vue}'],
-    ignores: ['**/dist/**', 'public/**', '**/dist-ssr/**', '**/coverage/**']
+    name: 'app/files-to-lint',
+    files: ['**/*.{ts,mts,tsx,js,mjs,jsx,vue}']
   },
+  globalIgnores(['**/dist/**', 'public/**', '**/dist-ssr/**', '**/coverage/**']),
   {
     languageOptions: {
       ecmaVersion: 'latest',
@@ -25,8 +26,8 @@ export default defineConfigWithVueTs(
       }
     }
   },
-  vueTsConfigs.recommendedTypeChecked,
   pluginVue.configs['flat/strongly-recommended'],
+  vueTsConfigs.recommended,
   {
     plugins: {
       'simple-import-sort': pluginSimpleImport
@@ -50,5 +51,5 @@ export default defineConfigWithVueTs(
     }
   },
   unocssFlat,
-  prettierConfig
+  skipFormatting
 );
