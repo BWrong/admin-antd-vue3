@@ -118,7 +118,7 @@ export function convertToTree<T = any>({
       tree.push(item);
     }
   });
-  return pid ? map[pid] : tree;
+  return pid && map[pid] ? map[pid] : tree;
 }
 
 /**
