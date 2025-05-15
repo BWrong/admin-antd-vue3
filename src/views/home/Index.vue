@@ -9,7 +9,7 @@
       <div class="b-1 b-gray b-dashed p-2">{{ appConfig }}</div>
       <h3>权限测试</h3>
       <div class="my-2 block">
-        选择权限：<ASelect v-model:value="selectAuthKeys" mode="multiple" class="w-50">
+        选择权限：<ASelect v-model:value="selectAuthKeys" mode="multiple" class="w-100">
           <ASelectOption v-for="item in authKeys" :key="item" :value="item">
             {{ item }}
           </ASelectOption>
@@ -17,11 +17,6 @@
       </div>
       <div>{{ selectAuthKeys }}</div>
       <ASpace>
-        <div>指令：</div>
-        <AButton v-auth="'home'"> 指令：home </AButton>
-        <AButton v-auth="selectAuthKeys"> 指令：every模式 </AButton>
-        <AButton v-auth:some="selectAuthKeys"> 指令：some模式 </AButton>
-        <div>组件：</div>
         <Auth value="home">
           <a-button>组件：home</a-button>
         </Auth>
@@ -49,7 +44,7 @@
           <AProgress style="width: 400px" :percent="progress.progress" />
         </p>
       </div>
-      <h3>vueRequest</h3>
+      <h3>VueHooksPlus - vueRequest</h3>
       <p>
         <a href="https://inhiblabcore.github.io/docs/hooks/useRequest/" target="_blank"
           rel="noopener noreferrer">VueHooksPlus - vueRequest</a>测试
@@ -61,8 +56,12 @@
       <h3>表格</h3>
       <p>组件位置：/src/components/BasisTable</p>
       <a-button @click="handleTestPagination"> 修改当前页为2 </a-button>
-      <BasisTable show-index :columns="columns" :loading="loading" :data-source="data" :pagination="pagination">
+      <BasisTable show-index :columns="columns" :loading="loading" :data-source="data?.list || []"
+        :pagination="pagination">
         <template #bodyCell="{ column, record }">
+          <div v-if="column.dataIndex === 'image'">
+            <img :src="record.image" class="h-10 w-10 rounded-full">
+          </div>
           <ASpace v-if="column.dataIndex === 'action'" class="table-action">
             <span class="text-primary">
               <IconFont type="icon-edit-square" />
@@ -167,9 +166,8 @@ import type { ColumnProps } from 'ant-design-vue/es/table';
 import type { AxiosProgressEvent } from 'axios';
 import { reactive } from 'vue';
 
-import { getMenusRequest } from '@/api/auth';
+import { testApi } from '@/api/auth';
 import { downloadRequest } from '@/api/file';
-import { paginationConfig } from '@/config/pagination';
 import { bytesToSize } from '@/utils';
 import request from '@/utils/request';
 
@@ -181,23 +179,19 @@ const appConfig = window.__APP_CONFIG__;
 const columns: ColumnProps[] = [
   {
     title: '名称',
-    dataIndex: 'title'
+    dataIndex: 'name'
   },
   {
-    title: '图标',
-    dataIndex: 'icon'
+    title: '分类',
+    dataIndex: 'category'
   },
   {
-    title: '权限码',
-    dataIndex: 'permission'
+    title: '价格',
+    dataIndex: 'price'
   },
   {
-    title: '地址',
-    dataIndex: 'url'
-  },
-  {
-    title: '类型',
-    dataIndex: 'type'
+    title: '图片',
+    dataIndex: 'image'
   },
   {
     title: '操作',
@@ -205,16 +199,16 @@ const columns: ColumnProps[] = [
     dataIndex: 'action'
   }
 ];
-const { loading, data, error, run, current, pagination, params } = usePagination(getMenusRequest, {
-  paginationExtConfig: paginationConfig,
-  defaultParams: [{ pageSize: 1 }]
+const { loading, data, error, run, pagination, params } = usePagination(testApi, {
+  defaultParams: [{ pageSize: 10, current: 1 }]
 });
 
 function handleRun() {
-  run(params.value[0]);
+  params.value[0] && run(params.value[0]);
 }
 function handleTestPagination() {
-  current.value = 2;
+  pagination.current = 2;
+  // pagination.onChange(2)
 }
 function handleCancelAllRequest() {
   request.cancelAllRequest();

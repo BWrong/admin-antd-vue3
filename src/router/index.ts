@@ -1,14 +1,21 @@
+import { BProgress } from '@bprogress/core';
 import { initAuth } from '@bwrong/auth-tool';
 import { getStorage } from '@bwrong/storage';
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 
 // import { getMenusRequest } from '@/api/auth';
 import config from '@/config';
-import NProgress from '@/plugins/nprogress';
 import { getToken } from '@/utils/auth';
 
 import dynamicRoutes from './dynamicRoutes';
 import routes, { noMatchRoute } from './staticRoutes';
+
+import '@bprogress/core/css';
+
+// 配置BProgress组件的选项
+BProgress.configure({
+  showSpinner: false
+});
 let routerLoaded = false; // 动态路由是否已加载
 let removeRouters: Array<() => void> = [];
 const VITE_AUTH_CHECK = import.meta.env.VITE_AUTH_CHECK;
@@ -24,7 +31,7 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   // 如果不控制权，所有路由直接放行
   if (!VITE_AUTH_CHECK) return;
-  NProgress.start();
+  BProgress.start();
   const token = getToken();
   // 其实路由拦截后所做跳转仅有以下几种情况：
   // 1.已登录时跳转到登录页（非登出的情况）需要重定向到根路径
@@ -45,7 +52,7 @@ router.beforeEach(async (to) => {
 
 // 路由后置守卫
 router.afterEach((to) => {
-  NProgress.done();
+  BProgress.done();
   // 设置页面标题
   useTitle(to.meta?.title ? `${to.meta.title} - ${config.appTitle}` : `${config.appTitle}`);
 });

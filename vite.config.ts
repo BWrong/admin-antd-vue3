@@ -2,24 +2,22 @@ import { resolve } from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 
 import { webUpdateNotice } from '@plugin-web-update-notification/vite';
-import legacy from '@vitejs/plugin-legacy';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { VueHooksPlusResolver } from '@vue-hooks-plus/resolvers';
 import { visualizer } from 'rollup-plugin-visualizer';
 import unoCSS from 'unocss/vite';
 import autoImport from 'unplugin-auto-import/vite';
-import removeConsole from 'unplugin-remove/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 import unpluginComponents from 'unplugin-vue-components/vite';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, ESBuildOptions, loadEnv } from 'vite';
 import { type ConfigEnv, type ProxyOptions } from 'vite';
 import buildInfo from 'vite-plugin-build-info';
-import viteCompression from 'vite-plugin-compression';
+import { compression } from 'vite-plugin-compression2';
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import iconfont from 'vite-plugin-iconfont';
-import { viteMockServe } from 'vite-plugin-mock';
+import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server';
 
 import { themeToken } from './src/config/theme';
 
@@ -29,7 +27,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
   const env = parseLoadedEnv(loadEnv(mode, root) as ImportMetaEnv);
   console.log('【info】 command:', command, ', mode: ', mode);
   console.log(env);
-  // const IS_PRODUCTION = command === 'build';
+  const IS_PRODUCTION = command === 'build';
   const IS_MOCK = mode === 'mock';
   // 读取环境配置
   const {
@@ -48,12 +46,12 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
 
   /***** 接口代理配置，有多个可以自己加 ******/
   const PROXY_CONFIG: Record<string, string | ProxyOptions> = {
-    [VITE_API_PREFIX]: {
+    [`^${VITE_API_PREFIX}`]: {
       target: VITE_API_HOST,
       // secure: false,
       // ws: true,
       changeOrigin: true, // 将Origin的来源更改为目标URL
-      rewrite: path => path.replace(new RegExp(`^${VITE_API_PREFIX}`), '/api')
+      rewrite: (path) => path.replace(new RegExp(`^${VITE_API_PREFIX}`), '/api')
     }
     // 可以自行添加更多，多个代理的时候需要同步修改request：
     // 方式1：创建多个request实例；
@@ -75,7 +73,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       port: VITE_PORT || 8080,
       open: true,
       // cors: false, // 跨域
-      proxy: IS_MOCK ? {} : PROXY_CONFIG
+      proxy: PROXY_CONFIG
     },
 
     plugins: [
@@ -98,17 +96,9 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           logVersion: true,
           injectFileBase: VITE_BASE_URL
         }),
-      viteMockServe({
-        ignore: /^_/, // 忽略的文件
-        mockPath: 'mock', // 设置mock文件目录
-        watchFiles: true, // 修改更新
-        enable: IS_MOCK
-      }),
-      vue({
-        script: {
-          // propsDestructure: true // 开启props语法糖 3.5默认开启
-        }
-      }),
+      IS_MOCK && mockDevServerPlugin(),
+      vue(),
+      vueJsx(),
       createHtmlPlugin({
         minify: true,
         entry: '/src/main.ts',
@@ -126,8 +116,6 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           }
         }
       }),
-      // 支持jsx
-      vueJsx(),
       // 自动导入组件 https://github.com/antfu/unplugin-auto-import
       autoImport({
         imports: ['vue', 'vue-router', 'pinia'],
@@ -156,16 +144,10 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       }),
       // https://unocss.dev/integrations/vite
       unoCSS(),
-      // 兼容浏览器设置，默认读取browserslistrc配置
-      legacy(),
       // 注入打包和git信息，方便做版本追踪
       buildInfo(),
       // gzip压缩，需要nginx开启对应配置，否则不生效
-      VITE_BUILD_COMPRESS &&
-        viteCompression({
-          threshold: 1025, // 阈值，大于此值才会被压缩
-          algorithm: 'gzip' // 压缩算法
-        }),
+      VITE_BUILD_COMPRESS && compression(),
       // 开启打包可视化分析报告,会增加打包时间，不需要可以关闭
       VITE_BUILD_REPORT &&
         visualizer({
@@ -175,9 +157,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           brotliSize: true,
           // emitFile: true,
           sourcemap: true
-        }),
-      // 去除console、debugger 文档：https://github.com/Talljack/unplugin-remove#readme
-      VITE_DROP_CONSOLE && removeConsole({})
+        })
     ],
     resolve: {
       alias: {
@@ -205,6 +185,10 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           }
         }
       }
+    },
+    esbuild: {
+      // 移出console.log和debugger调试信息，减少生产环境的js文件体积
+      drop: IS_PRODUCTION && VITE_DROP_CONSOLE ? (['console', 'debugger'] as ESBuildOptions['drop']) : []
     },
     css: {
       // transformer:'lightningcss',

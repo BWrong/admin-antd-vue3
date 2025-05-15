@@ -1,5 +1,5 @@
 import { get, post } from '../utils/request';
-import type { IRecordBase } from './types';
+import type { IPageResponse, IRecordBase } from './types';
 
 export interface IUser {
   username: string;
@@ -48,3 +48,12 @@ export const refreshTokenRequest = (params: object) =>
     skipShowTips: true
   });
 export const getMenusRequest = () => get<IMenu[]>('/auth/menus');
+type TestData = {
+  id: string;
+  name: string;
+  price: string;
+  category: string;
+  image: string;
+};
+export const testApi = (params: { current: number; pageSize: number }) =>
+  get<IPageResponse<TestData>>('/auth/test', params);

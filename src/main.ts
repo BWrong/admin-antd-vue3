@@ -2,6 +2,8 @@ import { authPlugin } from '@bwrong/auth-tool';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 
+// import { configKeepScroll } from '@/composables/useKeepScroll'
+import { setPaginationConfig } from '@/composables/usePagination';
 import plugins from '@/plugins';
 
 import App from './App.vue';
@@ -9,8 +11,16 @@ import router from './router';
 
 import 'virtual:uno.css';
 import '@/assets/styles/common.less';
-// import { configKeepScroll } from '@/composables/useKeepScroll'
-
+setPaginationConfig({
+  paginationExtConfig: {
+    showSizeChanger: false,
+    showQuickJumper: true,
+    showTotal: (total: number) => `共 ${total} 条`,
+    defaultPageSize: 10,
+    size: 'small',
+    hideOnSinglePage: true
+  }
+});
 const app = createApp(App);
 app.use(createPinia());
 app.use(router);

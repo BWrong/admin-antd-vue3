@@ -12,6 +12,10 @@ interface ImportMetaEnv {
    */
   readonly VITE_BASE_URL: string
   /**
+   * 打包目录
+   */
+  readonly VITE_OUT_DIR: string
+  /**
    * 运行端口
    */
   readonly VITE_PORT: number
@@ -20,7 +24,7 @@ interface ImportMetaEnv {
    */
   readonly VITE_API_PREFIX: string
   /**
-   * 接口服务地址
+   * 开发环境配置
    */
   readonly VITE_API_HOST: string
   /**
@@ -55,10 +59,6 @@ interface ImportMetaEnv {
    * 是否在打包时开启gzip压缩
    */
   readonly VITE_BUILD_COMPRESS: boolean
-  /**
-   * 打包目录
-   */
-  readonly VITE_OUT_DIR: string
   /**
    * 是否移除console、debugger
    */
