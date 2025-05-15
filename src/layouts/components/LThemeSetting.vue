@@ -1,12 +1,6 @@
 <template>
-  <a-modal
-    title="主题设置"
-    :open="props.open"
-    :keyboard="false"
-    :mask-closable="false"
-    @cancel="handleCancel"
-    :footer="false"
-  >
+  <a-modal title="主题设置" :open="props.open" :keyboard="false" :mask-closable="false" @cancel="handleCancel"
+    :footer="false">
     <a-form ref="formRef" class="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
       <a-form-item label="配色方案">
         <a-radio-group @change="handleColorScheme" :value="themeOptions.colorScheme" size="small">
@@ -19,14 +13,9 @@
       </a-form-item>
       <a-form-item label="主题色调">
         <div class="flex items-center">
-          <span
-            v-for="item in colorList"
-            :key="item"
-            class="m-1 inline-block h-4 w-4 cursor-pointer rounded-full"
+          <span v-for="item in colorList" :key="item" class="m-1 inline-block h-4 w-4 cursor-pointer rounded-full"
             :class="{ '!rounded-[3px]': themeOptions.themeToken?.colorPrimary === item }"
-            :style="{ backgroundColor: item as string }"
-            @click="handleSetColor(item)"
-          />
+            :style="{ backgroundColor: item as string }" @click="handleSetColor(item)" />
         </div>
       </a-form-item>
       <a-form-item label="紧凑模式">
@@ -37,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { RadioChangeEvent } from 'ant-design-vue';
+import type { RadioChangeEvent, SwitchProps } from 'ant-design-vue';
 
 interface IProps {
   open?: boolean;
@@ -70,7 +59,7 @@ function handleColorScheme(e: RadioChangeEvent) {
   setTheme({ colorScheme });
 }
 const colorList = ['#1890ff', '#52c41a', '#faad14', '#ff4d4f'];
-function handleSetColor(color) {
+function handleSetColor(color: string) {
   setTheme({
     themeToken: {
       ...themeOptions.themeToken,
@@ -78,7 +67,7 @@ function handleSetColor(color) {
     }
   });
 }
-function handleSetCompact(isCompact) {
-  setTheme({ isCompact });
+function handleSetCompact(isCompact: SwitchProps['checked']) {
+  setTheme({ isCompact: !!isCompact });
 }
 </script>

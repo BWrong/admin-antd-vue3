@@ -16,7 +16,14 @@
         </ASelect>
       </div>
       <div>{{ selectAuthKeys }}</div>
-      <ASpace>
+      <div class="m-2 flex items-center gap-2">
+        <div>指令：</div>
+        <AButton v-auth="'home'"> 指令：home </AButton>
+        <AButton v-auth="selectAuthKeys"> 指令：every模式 </AButton>
+        <AButton v-auth:some="selectAuthKeys"> 指令：some模式 </AButton>
+      </div>
+      <div class="m-2 flex items-center gap-2">
+        <div>组件：</div>
         <Auth value="home">
           <a-button>组件：home</a-button>
         </Auth>
@@ -26,7 +33,7 @@
         <Auth :value="selectAuthKeys" model="some">
           <a-button>组件：some模式</a-button>
         </Auth>
-      </ASpace>
+      </div>
       <h3>请求取消</h3>
       <div>
         <ASpace>

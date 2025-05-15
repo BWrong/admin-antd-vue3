@@ -108,7 +108,7 @@ export default defineMock([
   {
     url: '/api/auth/test',
     method: 'GET',
-    delay: 3000,
+    delay: 500,
     body: ({ query }: any) => {
       const size = Number(query.pageSize || 10);
       const total = size * 10;

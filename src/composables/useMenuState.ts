@@ -31,7 +31,7 @@ export function findParentChain<T extends { children?: any[] }>(
   options?: {
     parentChain?: T[];
   }
-) {
+): T[] {
   const parentChain = options?.parentChain || [];
 
   if (!tree) return [];

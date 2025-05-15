@@ -20,10 +20,13 @@ const defaultThemeOptions: ThemeOptions = {
 const cacheThemeData = getStorage<ThemeOptions>('theme') || defaultThemeOptions;
 const themeOptions = reactive(cacheThemeData);
 function initTheme() {
-  const variables = Object.entries(themeOptions.themeToken || {}).reduce((temp, [key, value]) => {
-    temp[`--${key}`] = value;
-    return temp;
-  }, {});
+  const variables = Object.entries(themeOptions.themeToken || {}).reduce(
+    (temp, [key, value]) => {
+      temp[`--${key}`] = value as string;
+      return temp;
+    },
+    {} as Record<string, string>
+  );
   cssVars({ variables });
 }
 // 配置theme

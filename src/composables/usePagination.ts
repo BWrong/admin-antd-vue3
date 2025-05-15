@@ -44,7 +44,6 @@ function usePagination<TData = any, TParams extends any[] = any[]>(
   options: PaginationOptions<TData, TParams, any> = {},
   plugins: UseRequestPlugin<TData, TParams>[] = []
 ): PaginationResult<TData, TParams> {
-  console.log(defaultPaginationConfig);
   // 处理分页入参
   const { paginationExtConfig = {}, defaultParams = [], ...restOptions } = options;
   const paginationConfig = {
