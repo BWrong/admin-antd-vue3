@@ -3,8 +3,9 @@
     :footer="false">
     <a-form ref="formRef" class="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
       <a-form-item label="配色方案">
-        <a-radio-group @change="handleColorScheme" :value="themeOptions.colorScheme" size="small">
-          <a-radio-button :value="item.name" :key="item.name" v-for="item in themes">
+        <a-radio-group :value="themeOptions.colorScheme" size="small">
+          <a-radio-button :value="item.name" :key="item.name" v-for="item in themes"
+            @click="e => handleColorScheme(e, item.name as ColorScheme)">
             <a-tooltip :title="item.title">
               <IconFont :type="item.icon" />
             </a-tooltip>
@@ -54,9 +55,41 @@ const themes = ref([
   }
 ]);
 const { setTheme, themeOptions } = useTheme();
-function handleColorScheme(e: RadioChangeEvent) {
-  const colorScheme = e.target.value;
-  setTheme({ colorScheme });
+function handleColorScheme(e: MouseEvent, colorScheme: ColorScheme) {
+  // 获取到 transition API 实例
+  const transition = document.startViewTransition(() => {
+    document.documentElement.classList.toggle('dark')
+  })
+  // 在 transition.ready 的 Promise 完成后，执行自定义动画
+  transition.ready.then(() => {
+    // 由于我们要从鼠标点击的位置开始做动画，所以我们需要先获取到鼠标的位置
+    const { clientX, clientY } = e
+    // 计算半径，以鼠标点击的位置为圆心，到四个角的距离中最大的那个作为半径
+    const radius = Math.hypot(
+      Math.max(clientX, innerWidth - clientX),
+      Math.max(clientY, innerHeight - clientY)
+    )
+    const clipPath = [
+      `circle(0% at ${clientX}px ${clientY}px)`,
+      `circle(${radius}px at ${clientX}px ${clientY}px)`
+    ]
+    const isDark = document.documentElement.classList.contains('dark')
+    // 自定义动画
+    document.documentElement.animate(
+      {
+        // 如果要切换到暗色主题，我们在过渡的时候从半径 100% 的圆开始，到 0% 的圆结束
+        clipPath: isDark ? clipPath.reverse() : clipPath
+      },
+      {
+        duration: 500,
+        // 如果要切换到暗色主题，我们应该裁剪 view-transition-old(root) 的内容
+        pseudoElement: isDark
+          ? '::view-transition-old(root)'
+          : '::view-transition-new(root)'
+      }
+    )
+    setTheme({ colorScheme });
+  })
 }
 const colorList = ['#1890ff', '#52c41a', '#faad14', '#ff4d4f'];
 function handleSetColor(color: string) {
