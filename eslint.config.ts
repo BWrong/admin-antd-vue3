@@ -2,7 +2,7 @@ import unocssFlat from '@unocss/eslint-config/flat';
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting';
 import { configureVueProject, defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
 import { globalIgnores } from 'eslint/config';
-import pluginSimpleImport from 'eslint-plugin-simple-import-sort';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import pluginVue from 'eslint-plugin-vue';
 
 import autoImport from './.eslintrc-auto-import.json' assert { type: 'json' };
@@ -28,9 +28,10 @@ export default defineConfigWithVueTs(
   },
   pluginVue.configs['flat/strongly-recommended'],
   vueTsConfigs.recommended,
+  unocssFlat,
   {
     plugins: {
-      'simple-import-sort': pluginSimpleImport
+      'simple-import-sort': simpleImportSort
     },
     rules: {
       'simple-import-sort/imports': ['warn', { groups: [['^node:'], ['^@?\\w'], ['^'], ['^\\.'], ['^\\u0000']] }],
@@ -45,11 +46,10 @@ export default defineConfigWithVueTs(
         'warn',
         {
           singleline: 'ignore',
-          multiline: 'below'
+          multiline: 'ignore'
         }
       ]
     }
   },
-  unocssFlat,
   skipFormatting
 );
