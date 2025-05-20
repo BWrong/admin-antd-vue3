@@ -51,5 +51,12 @@ export default defineConfigWithVueTs(
       ]
     }
   },
+  // 某些文件对import自动排序会有问题，所以关闭
+  {
+    files: ['**/main.ts'],
+    rules: {
+      'simple-import-sort/imports': 'off'
+    }
+  },
   skipFormatting
 );
