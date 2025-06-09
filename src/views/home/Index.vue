@@ -232,6 +232,7 @@ function handleDelete() {
   message.success('删除成功');
 }
 const { createDialog } = useDialog();
+// 默认打开弹窗，并传递参数给组件，支持vue3的props类型推断
 function handleOpenModal() {
   // 这里需要手动添加一下泛型，就可推断onConfirm中参数的类型
   createDialog<typeof TestModalForm>({
@@ -283,6 +284,7 @@ function handleOpenModal2() {
 const iconSelect = ref<Iconfont | undefined>();
 const colorList = ['#1890ff', '#52c41a', '#faad14', '#ff4d4f'];
 const { setTheme, themeOptions } = useTheme();
+// 设置主题颜色
 function handleSetTheme(color: string) {
   setTheme({
     themeToken: {
