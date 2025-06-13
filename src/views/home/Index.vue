@@ -235,10 +235,9 @@ const { createDialog } = useDialog();
 // 默认打开弹窗，并传递参数给组件，支持vue3的props类型推断
 function handleOpenModal() {
   // 这里需要手动添加一下泛型，就可推断onConfirm中参数的类型
-  createDialog<typeof TestModalForm>({
+  createDialog<typeof TestModalForm>(<TestModalForm title="测试模态窗" />, {
     title: '测试弹窗1',
     width: '500px',
-    component: <TestModalForm title="测试模态窗" />, // 通过attribute传递参数，自带类型推断
     // ...支持AModal的所有配置
     onConfirm(data) {
       // 可以拿到内部数据，在表单类弹窗中很有用
@@ -248,10 +247,9 @@ function handleOpenModal() {
 }
 function handleOpenModal1() {
   // 默认不显示
-  const { open, close } = createDialog<typeof TestModalForm>({
+  const { open, close } = createDialog<typeof TestModalForm>(<TestModalForm title="测试模态窗" />, {
     title: '测试弹窗2',
     width: '500px',
-    component: <TestModalForm title="测试模态窗" />,
     defaultOpen: false,
     onConfirm(data) {
       console.log('拿到组件内部数据：', data);
@@ -264,17 +262,14 @@ function handleOpenModal1() {
 }
 function handleOpenModal2() {
   // 带插槽
-  createDialog<typeof TestModalForm>({
+  createDialog<typeof TestModalForm>(<TestModalForm title="测试模态窗">
+    {{
+      default: () => <div>默认插槽</div>,
+      test: () => <div>test插槽</div>
+    }}
+  </TestModalForm>, {
     title: '测试弹窗3',
     width: '500px',
-    component: (
-      <TestModalForm title="测试模态窗">
-        {{
-          default: () => <div>默认插槽</div>,
-          test: () => <div>test插槽</div>
-        }}
-      </TestModalForm>
-    ),
     onConfirm(data) {
       console.log('拿到组件内部数据：', data);
       console.log('122');

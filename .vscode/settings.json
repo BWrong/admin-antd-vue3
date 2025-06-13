@@ -4,9 +4,7 @@
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "iconify.customCollectionJsonPaths": [
-    "./.iconify.json"
-  ],
+  "iconify.customCollectionJsonPaths": ["./.iconify.json"],
   "iconify.annotations": true,
   "iconify.inplace": false
 }

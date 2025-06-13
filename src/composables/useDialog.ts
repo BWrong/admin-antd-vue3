@@ -1,4 +1,4 @@
-import { type Component } from 'vue';
+import { type Component, type VNode } from 'vue';
 
 import Dialog, { type IProps } from '@/components/Dialog/index.vue';
 
@@ -7,7 +7,6 @@ interface ICreateOptions<D> extends Omit<IProps, 'component' | 'onOk'> {
   onClosed?: () => void;
   onCancel?: () => void;
   defaultOpen?: boolean;
-  component: Component;
 }
 export default (DialogComponent: Component = Dialog) => {
   const currentInstance = getCurrentInstance();
@@ -15,13 +14,14 @@ export default (DialogComponent: Component = Dialog) => {
   function createDialog<
     C extends abstract new (...args: any) => any,
     D = Awaited<ReturnType<InstanceType<C>['submit']>>
-  >(options?: ICreateOptions<D>, withContext = true) {
+  >(component: VNode, options?: ICreateOptions<D>, withContext = true) {
     const container = document.createElement('div');
     document.body.appendChild(container);
     const openValue = ref(options?.defaultOpen ?? true);
     const instance = createApp(DialogComponent, {
       // footer: undefined,
       ...options,
+      component,
       open: openValue,
       onConfirm(data: D) {
         options?.onConfirm?.(data);
