@@ -17,6 +17,16 @@ const routes: RouteRecordRaw[] = [
     path: '/redirect',
     name: 'redirect',
     component: () => import('@/views/common/Redirect.vue')
+  },
+
+  {
+    path: '/xingcheng',
+    component: () => import('@/views/xingcheng/index.vue')
+  },
+
+  {
+    path: '/cursor',
+    component: () => import('@/views/cursor/index.vue')
   }
 ];
 export default routes;
