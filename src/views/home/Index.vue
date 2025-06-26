@@ -245,17 +245,32 @@ function handleOpenModal() {
     }
   });
 }
+/**
+ * 处理打开模态框1的逻辑。
+ * 打开模态框并在3秒后自动关闭。
+ */
 function handleOpenModal1() {
   // 默认不显示
+  // 创建测试模态框实例
   const { open, close } = createDialog<typeof TestModalForm>(<TestModalForm title="测试模态窗" />, {
+    // 设置模态框标题
     title: '测试弹窗2',
+    // 设置模态框宽度
     width: '500px',
+    // 默认不打开模态框
     defaultOpen: false,
+    /**
+     * 当用户确认模态框时触发的回调函数。
+     * @param {any} data - 从模态框组件内部传递出来的数据。
+     */
     onConfirm(data) {
+      // 打印从组件内部获取的数据
       console.log('拿到组件内部数据：', data);
     }
   });
+  // 打开模态框
   open();
+  // 设置定时器，3秒后关闭模态框
   setTimeout(() => {
     close();
   }, 3000);
@@ -279,6 +294,7 @@ function handleOpenModal2() {
 const iconSelect = ref<Iconfont | undefined>();
 const colorList = ['#1890ff', '#52c41a', '#faad14', '#ff4d4f'];
 const { setTheme, themeOptions } = useTheme();
+
 // 设置主题颜色
 function handleSetTheme(color: string) {
   setTheme({

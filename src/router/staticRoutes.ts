@@ -21,7 +21,11 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: '/xingcheng',
-    component: () => import('@/views/xingcheng/index.vue')
+    component: () => import('@/views/index.vue')
+  },
+  {
+    path: '/mastergo',
+    component: () => import('@/views/mastergo/index.vue')
   },
 
   {
