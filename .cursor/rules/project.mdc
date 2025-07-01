@@ -1,0 +1,74 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# 项目基础说明
+
+- 本项目基于 Vue 3 + TypeScript + Ant Design Vue + Pinia + Vite + UnoCSS 搭建。
+- 采用组合式 API（`<script setup lang="ts">`）进行开发。
+- 状态管理使用 Pinia，模块化组织。
+- 路由使用 Vue Router，采用权限动态路由配置。
+- 接口请求统一封装在 [src/utils/request/index.ts](mdc:src/utils/request/index.ts) 中，使用 Axios。
+- 表格、表单页面基于 Ant Design Vue 封装通用组件，提高复用性。
+- 使用 UnoCSS 作为原子化 CSS 框架，配置文件为 [uno.config.ts](mdc:uno.config.ts)。
+
+# 技术栈详情
+
+## 核心依赖
+- **Vue 3.5.17**: 前端框架，使用组合式 API
+- **TypeScript**: 类型安全的 JavaScript 超集
+- **Ant Design Vue 4.2.6**: UI 组件库
+- **Pinia**: 状态管理
+- **Vue Router**: 路由管理
+- **UnoCSS**: 原子化 CSS 框架
+- **Vite**: 构建工具
+
+## 工具库
+- **@bwrong/auth-tool**: 权限管理工具
+- **@bwrong/request**: 请求封装工具
+- **@bwrong/storage**: 存储工具
+- **dayjs**: 日期处理
+- **vue-hooks-plus**: Vue 3 hooks 库
+
+# 组件和文件命名规范
+
+- 组件文件名使用 `PascalCase` 格式，例如：`UserTable.vue`, `LoginForm.vue`
+- 公共组件放置在 [src/components/](mdc:src/components) 下，业务组件可放在 `src/views/模块/components/` 中
+- 文件夹名和非组件 `.ts/.less` 文件使用 `kebab-case` 格式，例如：`user-api.ts`, `login-form.less`
+- 页面文件命名使用`PascalCase` 格式，例如：`UserList.vue`, `RoleEdit/index.vue`
+
+# 样式和 CSS 使用约定
+
+- **优先使用原子类：** 使用 UnoCSS 提供的原子类进行布局和样式，例如常见的 flex 布局（`flex justify-center items-center` 等）。样式语义明确，便于维护。
+- **常用组合提取为全局快捷方式：** 对于**频繁使用**的原子类组合，应在 [uno.config.ts](mdc:uno.config.ts) 中通过 `shortcuts` 定义全局组合类。例如：将 `flex justify-center items-center` 定义为 `flex-center`，这样可以在整个项目中复用。组合类命名应简洁且语义化，反映布局或功能意图。
+- **非常用组合使用局部类：** 对于特定组件中使用但不常见的、超过3个的原子类组合，应该在组件内使用局部CSS类（使用`<style scoped>`块），避免过多的全局组合污染全局命名空间。
+- **避免重复代码：** 不论是通过全局`shortcuts`还是局部CSS类，都应避免在多个地方重复编写相同的原子类列表，保持代码 DRY（Don't Repeat Yourself）原则。
+- **样式优先级：** 优先考虑 UnoCSS 解决方案（原子类或组合类），其次才是传统 CSS。当需要使用传统 CSS 时，遵循 BEM 命名规范，即 `block__element--modifier` 格式。
+
+# 导入顺序规范（保持统一结构）
+
+1. Vue 相关 API（如 `ref`, `computed`, `onMounted`）
+2. 第三方库（如 `ant-design-vue`, `axios`），第三方库都在 [package.json](mdc:package.json) 中列出。
+3. 工具函数（如 `@/utils/*`）
+4. 状态管理（如 `@/store/*`）
+5. 项目内部组件、模块（如 `@/components`, `@/views`）
+6. 样式文件
+
+# 开发注意事项
+
+- 使用 TypeScript，避免使用 `any`；
+- 组件职责单一，保持结构清晰，合理拆分组件；
+- 所有组件必须使用组合式 API；
+- 适当添加注释，提升 AI 理解；
+- 优先使用已安装的依赖和封装的组件，避免重复造轮子；
+- 遵循单一职责原则，一个文件一个功能；
+- 及时清理废弃代码和文件，保持代码整洁。
+
+# 代码质量要求
+
+- 所有代码必须通过 ESLint 检查
+- 使用 Prettier 进行代码格式化
+- 提交前会自动执行 lint-staged 检查
+- 遵循项目的 TypeScript 配置规范
+

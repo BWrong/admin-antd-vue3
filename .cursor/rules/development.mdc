@@ -1,0 +1,340 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# 开发规范与流程
+
+## 开发环境要求
+
+### 必需工具
+- **Node.js**: >= 20.0.0
+- **pnpm**: >= 10.0.0（包管理器）
+- **Git**: 版本控制
+- **VSCode**: 推荐编辑器（配合相关插件）
+
+### 推荐 VSCode 插件
+- Vue Language Features (Volar)
+- TypeScript Vue Plugin (Volar)
+- UnoCSS
+- ESLint
+- Prettier
+- Auto Rename Tag
+- Bracket Pair Colorizer
+
+## 开发流程
+
+### 1. 项目启动
+```bash
+# 安装依赖
+pnpm install
+
+# 启动开发服务器
+pnpm dev
+
+# 启动 Mock 模式
+pnpm serve:mock
+
+# 构建项目
+pnpm build
+
+# 类型检查
+pnpm type-check
+
+# 代码检查和修复
+pnpm lint
+
+# 代码格式化
+pnpm format
+```
+
+### 2. 开发分支管理
+- **main**: 主分支，生产环境代码
+- **develop**: 开发分支，集成测试
+- **feature/xxx**: 功能分支
+- **fix/xxx**: 修复分支
+- **hotfix/xxx**: 紧急修复分支
+
+### 3. 提交规范
+使用 Conventional Commits 规范：
+
+```bash
+# 功能开发
+git commit -m "feat: 添加用户管理功能"
+
+# Bug 修复
+git commit -m "fix: 修复登录页面样式问题"
+
+# 文档更新
+git commit -m "docs: 更新 API 文档"
+
+# 样式修改
+git commit -m "style: 调整按钮样式"
+
+# 重构代码
+git commit -m "refactor: 重构用户服务"
+
+# 性能优化
+git commit -m "perf: 优化表格渲染性能"
+
+# 测试相关
+git commit -m "test: 添加用户组件单元测试"
+
+# 构建相关
+git commit -m "build: 更新构建配置"
+```
+
+## 代码质量要求
+
+### 1. TypeScript 规范
+- 严格模式开启
+- 避免使用 `any` 类型
+- 为所有函数参数和返回值定义类型
+- 使用接口定义对象结构
+- 合理使用泛型
+
+```typescript
+// ✅ 正确示例
+interface UserInfo {
+  id: number
+  name: string
+  email: string
+  avatar?: string
+}
+
+const getUser = async (id: number): Promise<UserInfo> => {
+  const response = await api.get(`/users/${id}`)
+  return response.data
+}
+
+// ❌ 错误示例
+const getUser = async (id: any): Promise<any> => {
+  const response = await api.get(`/users/${id}`)
+  return response.data
+}
+```
+
+### 2. Vue 组件规范
+- 使用 `<script setup lang="ts">` 语法
+- Props 和 Emits 必须有类型定义
+- 合理使用 `ref` 和 `reactive`
+- 组件名使用 PascalCase
+
+```vue
+<!-- ✅ 正确示例 -->
+<template>
+  <div class="user-card p-4 bg-white rounded-lg shadow">
+    <h3 class="text-lg font-semibold">{{ user.name }}</h3>
+    <p class="text-gray-600">{{ user.email }}</p>
+    <button @click="handleEdit" class="btn-primary mt-2">
+      编辑
+    </button>
+  </div>
+</template>
+
+<script setup lang="ts">
+interface Props {
+  user: UserInfo
+}
+
+interface Emits {
+  (e: 'edit', user: UserInfo): void
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
+
+const handleEdit = () => {
+  emit('edit', props.user)
+}
+</script>
+```
+
+### 3. 样式规范
+- 优先使用 UnoCSS 原子类
+- 避免内联样式
+- 使用语义化的类名
+- 保持样式的一致性
+
+### 4. API 调用规范
+- 统一使用封装的 request 方法
+- 正确处理异步操作
+- 统一错误处理
+- 合理使用 loading 状态
+
+## 文件组织规范
+
+### 1. 目录结构
+```
+src/
+├── api/              # API 接口
+├── assets/           # 静态资源
+├── components/       # 公共组件
+├── composables/      # 组合函数
+├── config/           # 配置文件
+├── enums/            # 枚举定义
+├── layouts/          # 布局组件
+├── plugins/          # 插件配置
+├── router/           # 路由配置
+├── store/            # 状态管理
+├── utils/            # 工具函数
+└── views/            # 页面组件
+```
+
+### 2. 文件命名
+- 组件文件：`PascalCase.vue`
+- 工具文件：`kebab-case.ts`
+- 页面文件：`PascalCase.vue` 或 `index.vue`
+- 类型文件：`kebab-case.d.ts`
+
+### 3. 导入路径
+使用 `@/` 别名引用 src 目录：
+
+```typescript
+// ✅ 正确
+import { request } from '@/utils/request'
+import UserCard from '@/components/UserCard.vue'
+
+// ❌ 错误
+import { request } from '../../../utils/request'
+import UserCard from '../components/UserCard.vue'
+```
+
+## 性能优化
+
+### 1. 组件优化
+- 合理使用 `v-memo`
+- 避免不必要的响应式数据
+- 使用 `shallowRef` 和 `shallowReactive`
+- 组件懒加载
+
+```typescript
+// 路由懒加载
+const UserList = () => import('@/views/user/List.vue')
+
+// 组件懒加载
+const LazyComponent = defineAsyncComponent(() => import('./LazyComponent.vue'))
+```
+
+### 2. 请求优化
+- 使用请求缓存
+- 合理使用 `useRequest` hooks
+- 避免重复请求
+- 实现请求防抖
+
+### 3. 构建优化
+- 代码分割
+- 资源压缩
+- 图片优化
+- CDN 使用
+
+## 测试规范
+
+### 1. 单元测试
+- 组件测试
+- 工具函数测试
+- API 测试
+
+### 2. 集成测试
+- 页面功能测试
+- 用户交互测试
+
+### 3. E2E 测试
+- 关键业务流程测试
+- 跨浏览器测试
+
+## 错误处理
+
+### 1. 全局错误处理
+```typescript
+// 在 main.ts 中设置全局错误处理
+app.config.errorHandler = (err, vm, info) => {
+  console.error('全局错误:', err, info)
+  // 发送错误到监控服务
+}
+```
+
+### 2. 组件错误处理
+```vue
+<script setup lang="ts">
+import { onErrorCaptured } from 'vue'
+
+onErrorCaptured((err, target, errorInfo) => {
+  console.error('组件错误:', err, errorInfo)
+  return false // 阻止错误继续传播
+})
+</script>
+```
+
+### 3. 请求错误处理
+- 统一在请求拦截器中处理
+- 提供友好的错误提示
+- 记录错误日志
+
+## 安全规范
+
+### 1. 数据验证
+- 前端输入验证
+- 后端数据验证
+- XSS 防护
+
+### 2. 权限控制
+- 路由权限验证
+- 组件权限控制
+- API 权限验证
+
+### 3. 敏感信息
+- 不在前端存储敏感信息
+- 使用 HTTPS
+- 合理设置 Cookie
+
+## 部署规范
+
+### 1. 环境配置
+- 开发环境
+- 测试环境
+- 生产环境
+
+### 2. 构建配置
+- 环境变量配置
+- 构建优化
+- 资源压缩
+
+### 3. 部署流程
+- 自动化部署
+- 版本管理
+- 回滚机制
+
+## 文档规范
+
+### 1. 代码注释
+- 函数注释
+- 复杂逻辑注释
+- 类型注释
+
+### 2. README 文档
+- 项目介绍
+- 安装说明
+- 使用指南
+
+### 3. API 文档
+- 接口说明
+- 参数定义
+- 响应格式
+
+## 团队协作
+
+### 1. Code Review
+- 代码审查流程
+- 审查要点
+- 反馈机制
+
+### 2. 知识分享
+- 技术分享
+- 最佳实践
+- 问题总结
+
+### 3. 规范维护
+- 规范更新
+- 工具升级
+- 培训支持

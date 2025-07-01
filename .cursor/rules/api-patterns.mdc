@@ -1,0 +1,364 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# API 接口开发规则
+
+## API 架构概述
+
+项目使用统一的 HTTP 请求封装，所有接口调用都通过 [src/utils/request/index.ts](mdc:src/utils/request/index.ts) 进行。
+
+## 目录结构
+
+- **[src/api/](mdc:src/api)**: API 接口定义目录
+- **[src/api/types.ts](mdc:src/api/types.ts)**: 通用类型定义
+- **[src/api/auth.ts](mdc:src/api/auth.ts)**: 认证相关接口
+- **[src/api/file.ts](mdc:src/api/file.ts)**: 文件操作接口
+
+## API 开发规范
+
+### 1. 接口文件结构
+```typescript
+// src/api/module.ts
+import request from '@/utils/request'
+import type { ApiResponse, ModuleData } from './types'
+
+// 接口函数定义
+export const getModuleList = (params?: any): Promise<ApiResponse<ModuleData[]>> => {
+  return request.get('/api/module/list', { params })
+}
+
+export const createModule = (data: ModuleData): Promise<ApiResponse<ModuleData>> => {
+  return request.post('/api/module', data)
+}
+
+export const updateModule = (id: number, data: Partial<ModuleData>): Promise<ApiResponse<ModuleData>> => {
+  return request.put(`/api/module/${id}`, data)
+}
+
+export const deleteModule = (id: number): Promise<ApiResponse<null>> => {
+  return request.delete(`/api/module/${id}`)
+}
+```
+
+### 2. 类型定义规范
+```typescript
+// src/api/types.ts
+
+// 通用响应结构
+export interface ApiResponse<T = any> {
+  code: number
+  message: string
+  data: T
+  success: boolean
+}
+
+// 分页响应结构
+export interface PageResponse<T = any> {
+  list: T[]
+  total: number
+  pageNum: number
+  pageSize: number
+}
+
+// 分页请求参数
+export interface PageParams {
+  pageNum?: number
+  pageSize?: number
+  [key: string]: any
+}
+
+// 业务数据类型
+export interface UserInfo {
+  id: number
+  username: string
+  email: string
+  avatar?: string
+  roles: string[]
+  permissions: string[]
+}
+
+export interface MenuInfo {
+  id: number
+  name: string
+  path: string
+  icon?: string
+  children?: MenuInfo[]
+}
+```
+
+### 3. 请求方法规范
+
+#### GET 请求
+```typescript
+// 获取列表
+export const getUserList = (params?: PageParams): Promise<ApiResponse<PageResponse<UserInfo>>> => {
+  return request.get('/api/users', { params })
+}
+
+// 获取详情
+export const getUserDetail = (id: number): Promise<ApiResponse<UserInfo>> => {
+  return request.get(`/api/users/${id}`)
+}
+```
+
+#### POST 请求
+```typescript
+// 创建数据
+export const createUser = (data: Omit<UserInfo, 'id'>): Promise<ApiResponse<UserInfo>> => {
+  return request.post('/api/users', data)
+}
+
+// 登录
+export const login = (data: { username: string; password: string }): Promise<ApiResponse<{ token: string; userInfo: UserInfo }>> => {
+  return request.post('/api/auth/login', data)
+}
+```
+
+#### PUT/PATCH 请求
+```typescript
+// 更新数据
+export const updateUser = (id: number, data: Partial<UserInfo>): Promise<ApiResponse<UserInfo>> => {
+  return request.put(`/api/users/${id}`, data)
+}
+```
+
+#### DELETE 请求
+```typescript
+// 删除数据
+export const deleteUser = (id: number): Promise<ApiResponse<null>> => {
+  return request.delete(`/api/users/${id}`)
+}
+
+// 批量删除
+export const batchDeleteUsers = (ids: number[]): Promise<ApiResponse<null>> => {
+  return request.delete('/api/users/batch', { data: { ids } })
+}
+```
+
+## 请求封装使用
+
+### 1. 基础配置
+请求封装位于 [src/utils/request/index.ts](mdc:src/utils/request/index.ts)，包含：
+- 请求拦截器：添加认证 token
+- 响应拦截器：统一错误处理
+- 超时设置
+- 基础 URL 配置
+
+### 2. 错误处理
+```typescript
+// 在组件中使用
+const handleGetUsers = async () => {
+  try {
+    loading.value = true
+    const res = await getUserList(params)
+    if (res.success) {
+      userList.value = res.data.list
+      total.value = res.data.total
+    }
+  } catch (error) {
+    // 错误已在请求拦截器中统一处理
+    console.error('获取用户列表失败:', error)
+  } finally {
+    loading.value = false
+  }
+}
+```
+
+### 3. 加载状态管理
+```typescript
+// 使用 vue-hooks-plus 的 useRequest
+import { useRequest } from 'vue-hooks-plus'
+
+const { data: userList, loading, run: getUserList } = useRequest(
+  () => getUserList(params),
+  {
+    manual: true,
+    onSuccess: (data) => {
+      console.log('获取成功:', data)
+    },
+    onError: (error) => {
+      console.error('获取失败:', error)
+    }
+  }
+)
+```
+
+## Mock 数据规范
+
+### 1. Mock 文件结构
+```typescript
+// mock/module.mock.ts
+import type { MockMethod } from 'vite-plugin-mock-dev-server'
+
+export default [
+  {
+    url: '/api/module/list',
+    method: 'get',
+    response: ({ query }) => {
+      const { pageNum = 1, pageSize = 10 } = query
+      return {
+        code: 200,
+        success: true,
+        message: '获取成功',
+        data: {
+          list: [],
+          total: 0,
+          pageNum: Number(pageNum),
+          pageSize: Number(pageSize)
+        }
+      }
+    }
+  }
+] as MockMethod[]
+```
+
+### 2. 使用 Faker 生成测试数据
+```typescript
+import { faker } from '@faker-js/faker'
+
+// 生成用户数据
+const generateUser = () => ({
+  id: faker.number.int(),
+  username: faker.internet.userName(),
+  email: faker.internet.email(),
+  avatar: faker.image.avatar(),
+  roles: [faker.helpers.arrayElement(['admin', 'user', 'editor'])],
+  permissions: faker.helpers.arrayElements(['read', 'write', 'delete'])
+})
+```
+
+## 组件中的 API 使用模式
+
+### 1. 列表页面模式
+```vue
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { getUserList, deleteUser } from '@/api/user'
+import type { UserInfo, PageParams } from '@/api/types'
+
+// 状态管理
+const loading = ref(false)
+const userList = ref<UserInfo[]>([])
+const total = ref(0)
+const params = reactive<PageParams>({
+  pageNum: 1,
+  pageSize: 10
+})
+
+// 获取列表
+const getList = async () => {
+  try {
+    loading.value = true
+    const res = await getUserList(params)
+    if (res.success) {
+      userList.value = res.data.list
+      total.value = res.data.total
+    }
+  } catch (error) {
+    console.error('获取列表失败:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+// 删除操作
+const handleDelete = async (id: number) => {
+  try {
+    const res = await deleteUser(id)
+    if (res.success) {
+      message.success('删除成功')
+      getList() // 重新获取列表
+    }
+  } catch (error) {
+    console.error('删除失败:', error)
+  }
+}
+
+onMounted(() => {
+  getList()
+})
+</script>
+```
+
+### 2. 表单页面模式
+```vue
+<script setup lang="ts">
+import { ref, reactive } from 'vue'
+import { createUser, updateUser, getUserDetail } from '@/api/user'
+import type { UserInfo } from '@/api/types'
+
+const props = defineProps<{
+  id?: number
+}>()
+
+const loading = ref(false)
+const formData = reactive<Partial<UserInfo>>({
+  username: '',
+  email: ''
+})
+
+// 获取详情（编辑模式）
+const getDetail = async () => {
+  if (!props.id) return
+
+  try {
+    const res = await getUserDetail(props.id)
+    if (res.success) {
+      Object.assign(formData, res.data)
+    }
+  } catch (error) {
+    console.error('获取详情失败:', error)
+  }
+}
+
+// 保存数据
+const handleSave = async () => {
+  try {
+    loading.value = true
+    const res = props.id
+      ? await updateUser(props.id, formData)
+      : await createUser(formData as Omit<UserInfo, 'id'>)
+
+    if (res.success) {
+      message.success('保存成功')
+      // 返回列表或其他操作
+    }
+  } catch (error) {
+    console.error('保存失败:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  getDetail()
+})
+</script>
+```
+
+## 最佳实践
+
+### 1. 接口命名规范
+- 获取列表：`getXxxList`
+- 获取详情：`getXxxDetail`
+- 创建：`createXxx`
+- 更新：`updateXxx`
+- 删除：`deleteXxx`
+- 批量操作：`batchXxx`
+
+### 2. 类型安全
+- 所有接口都要有明确的类型定义
+- 使用 TypeScript 的类型推导
+- 避免使用 `any` 类型
+
+### 3. 错误处理
+- 统一在请求拦截器中处理
+- 组件中只处理业务逻辑相关的错误
+- 提供友好的错误提示
+
+### 4. 缓存策略
+- 对于不经常变化的数据使用缓存
+- 使用 `vue-hooks-plus` 的缓存功能
+- 合理设置缓存时间

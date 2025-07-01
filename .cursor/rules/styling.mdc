@@ -1,0 +1,339 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# 样式开发规则
+
+## 样式架构概述
+
+项目使用 UnoCSS 作为原子化 CSS 框架，配合 Ant Design Vue 组件库，提供现代化的样式解决方案。
+
+## 核心配置文件
+
+- **[uno.config.ts](mdc:uno.config.ts)**: UnoCSS 主配置文件
+- **[src/assets/styles/](mdc:src/assets/styles)**: 全局样式目录
+  - **[_variable.less](mdc:src/assets/styles/_variable.less)**: Less 变量定义
+  - **[common.less](mdc:src/assets/styles/common.less)**: 通用样式
+  - **[rewrite.less](mdc:src/assets/styles/rewrite.less)**: 样式重写
+
+## 样式优先级规范
+
+### 1. 优先级顺序
+1. **UnoCSS 原子类** - 首选方案
+2. **UnoCSS shortcuts** - 常用组合类
+3. **Ant Design Vue 组件样式** - 组件库默认样式
+4. **局部 scoped 样式** - 组件特定样式
+5. **全局样式** - 最后考虑
+
+### 2. 选择原则
+- 简单样式：使用原子类
+- 重复组合：定义 shortcuts
+- 复杂布局：使用局部样式
+- 全局规范：使用全局样式
+
+## UnoCSS 使用规范
+
+### 1. 常用原子类模式
+
+#### 布局类
+```html
+<!-- Flexbox 布局 -->
+<div class="flex items-center justify-between">
+<div class="flex flex-col items-start">
+<div class="flex flex-wrap gap-4">
+
+<!-- Grid 布局 -->
+<div class="grid grid-cols-3 gap-4">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+
+<!-- 定位 -->
+<div class="relative">
+<div class="absolute top-0 right-0">
+<div class="fixed inset-0 z-50">
+```
+
+#### 尺寸类
+```html
+<!-- 宽高 -->
+<div class="w-full h-screen">
+<div class="w-64 h-32">
+<div class="min-h-0 max-w-sm">
+
+<!-- 内外边距 -->
+<div class="p-4 m-2">
+<div class="px-6 py-3">
+<div class="mt-4 mb-2 ml-auto mr-0">
+```
+
+#### 颜色类
+```html
+<!-- 文字颜色 -->
+<span class="text-gray-600 text-blue-500">
+<span class="text-red-500 hover:text-red-600">
+
+<!-- 背景颜色 -->
+<div class="bg-white bg-gray-50">
+<div class="bg-blue-500 hover:bg-blue-600">
+
+<!-- 边框颜色 -->
+<div class="border border-gray-200">
+<div class="border-2 border-blue-500">
+```
+
+#### 字体类
+```html
+<!-- 字体大小 -->
+<span class="text-sm text-base text-lg text-xl">
+
+<!-- 字体粗细 -->
+<span class="font-normal font-medium font-semibold font-bold">
+
+<!-- 文字对齐 -->
+<div class="text-left text-center text-right">
+```
+
+### 2. Shortcuts 定义规范
+
+在 [uno.config.ts](mdc:uno.config.ts) 中定义常用组合：
+
+```typescript
+// uno.config.ts
+export default defineConfig({
+  shortcuts: {
+    // 布局相关
+    'flex-center': 'flex items-center justify-center',
+    'flex-between': 'flex items-center justify-between',
+    'flex-start': 'flex items-center justify-start',
+    'flex-col-center': 'flex flex-col items-center justify-center',
+
+    // 按钮样式
+    'btn-primary': 'px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors',
+    'btn-secondary': 'px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors',
+    'btn-outline': 'px-4 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-50 transition-colors',
+
+    // 卡片样式
+    'card': 'bg-white rounded-lg shadow-sm border border-gray-200',
+    'card-hover': 'bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow',
+
+    // 输入框样式
+    'input-base': 'px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500',
+
+    // 文字样式
+    'text-title': 'text-lg font-semibold text-gray-900',
+    'text-subtitle': 'text-base font-medium text-gray-700',
+    'text-body': 'text-sm text-gray-600',
+    'text-caption': 'text-xs text-gray-500',
+
+    // 状态样式
+    'status-success': 'text-green-600 bg-green-50 border-green-200',
+    'status-warning': 'text-yellow-600 bg-yellow-50 border-yellow-200',
+    'status-error': 'text-red-600 bg-red-50 border-red-200',
+    'status-info': 'text-blue-600 bg-blue-50 border-blue-200',
+  }
+})
+```
+
+### 3. 响应式设计
+
+```html
+<!-- 响应式布局 -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+<!-- 响应式文字 -->
+<h1 class="text-2xl md:text-3xl lg:text-4xl">
+
+<!-- 响应式间距 -->
+<div class="p-4 md:p-6 lg:p-8">
+
+<!-- 响应式显示/隐藏 -->
+<div class="block md:hidden">移动端显示</div>
+<div class="hidden md:block">桌面端显示</div>
+```
+
+## 组件样式规范
+
+### 1. 组件样式结构
+```vue
+<template>
+  <div class="component-wrapper">
+    <!-- 优先使用 UnoCSS 原子类 -->
+    <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow">
+      <span class="text-lg font-medium">{{ title }}</span>
+      <button class="btn-primary">操作</button>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+// 组件逻辑
+</script>
+
+<style scoped>
+/* 只在必要时使用局部样式 */
+.component-wrapper {
+  /* 复杂样式或 UnoCSS 无法表达的样式 */
+}
+</style>
+```
+
+### 2. 样式命名规范
+
+#### BEM 命名法（用于局部样式）
+```css
+/* Block */
+.user-card {
+  /* 块级样式 */
+}
+
+/* Element */
+.user-card__avatar {
+  /* 元素样式 */
+}
+
+.user-card__name {
+  /* 元素样式 */
+}
+
+/* Modifier */
+.user-card--active {
+  /* 修饰符样式 */
+}
+
+.user-card__avatar--large {
+  /* 修饰符样式 */
+}
+```
+
+#### CSS 变量使用
+```vue
+<style scoped>
+.component {
+  --primary-color: theme('colors.blue.500');
+  --border-radius: theme('borderRadius.lg');
+
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+}
+</style>
+```
+
+## Ant Design Vue 样式定制
+
+### 1. 主题定制
+```typescript
+// vite.config.ts 或相关配置文件
+export default {
+  css: {
+    preprocessorOptions: {
+      less: {
+        modifyVars: {
+          'primary-color': '#1890ff',
+          'link-color': '#1890ff',
+          'border-radius-base': '6px',
+        },
+        javascriptEnabled: true,
+      },
+    },
+  },
+}
+```
+
+### 2. 组件样式覆盖
+```vue
+<template>
+  <a-button class="custom-button">按钮</a-button>
+</template>
+
+<style scoped>
+/* 使用深度选择器覆盖组件样式 */
+.custom-button :deep(.ant-btn) {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 或使用 UnoCSS 覆盖 */
+.custom-button {
+  @apply rounded-lg shadow-sm;
+}
+</style>
+```
+
+## 动画和过渡
+
+### 1. UnoCSS 动画类
+```html
+<!-- 过渡效果 -->
+<div class="transition-all duration-300 ease-in-out">
+<div class="transition-colors hover:bg-blue-500">
+<div class="transition-transform hover:scale-105">
+
+<!-- 动画效果 -->
+<div class="animate-spin">
+<div class="animate-pulse">
+<div class="animate-bounce">
+```
+
+### 2. 自定义动画
+```css
+/* 在全局样式或组件样式中定义 */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+```
+
+## 暗色主题支持
+
+### 1. 暗色模式类
+```html
+<!-- 支持暗色模式的样式 -->
+<div class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+<div class="border-gray-200 dark:border-gray-700">
+```
+
+### 2. 主题切换
+```typescript
+// 在 composables 中管理主题
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+```
+
+## 性能优化
+
+### 1. 样式优化原则
+- 避免深层嵌套选择器
+- 减少重复样式定义
+- 使用 CSS 变量提高复用性
+- 合理使用 UnoCSS 的 JIT 模式
+
+### 2. 样式分割
+```typescript
+// 按需加载样式
+import 'ant-design-vue/es/button/style/css'
+import 'ant-design-vue/es/table/style/css'
+```
+
+## 最佳实践
+
+### 1. 开发建议
+- 优先使用 UnoCSS 原子类
+- 定义常用的 shortcuts 组合
+- 保持样式的一致性
+- 使用语义化的类名
+
+### 2. 代码审查要点
+- 检查是否有重复的样式定义
+- 确认是否正确使用了 UnoCSS 类
+- 验证响应式设计的实现
+- 检查样式的浏览器兼容性
+
+### 3. 调试技巧
+- 使用浏览器开发者工具查看生成的 CSS
+- 利用 UnoCSS 的开发工具进行调试
+- 检查样式的优先级和层叠关系
+
