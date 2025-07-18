@@ -22,10 +22,13 @@ const VITE_AUTH_CHECK = import.meta.env.VITE_AUTH_CHECK;
 // 创建路由
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  scrollBehavior: () => ({
-    top: 0,
-    left: 0
-  }),
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0, left: 0, behavior: 'smooth' };
+    }
+  },
   routes
 });
 router.beforeEach(async (to) => {
