@@ -21,8 +21,13 @@ export function setPaginationConfig(config: Partial<typeof defaultPaginationConf
   Object.assign(defaultPaginationConfig, config);
 }
 // 分页请求配置
-export type PaginationOptions<TShallow extends boolean, TData> = UseAsyncStateOptions<TShallow, TData> & {
+export type PaginationOptions<TShallow extends boolean, TData, TParams extends any[] = any[]> = UseAsyncStateOptions<
+  TShallow,
+  TData
+> & {
   paginationExtConfig?: Partial<PaginationExtConfig>;
+  initialState?: TData;
+  defaultParams?: TParams;
 };
 // 分页请求结果
 export interface PaginationResult<TData, TParams extends any[], TShallow extends boolean>
@@ -32,11 +37,12 @@ export interface PaginationResult<TData, TParams extends any[], TShallow extends
 
 function usePagination<TData = any, TParams extends any[] = any[], TShallow extends boolean = true>(
   service: Promise<TData> | ((...args: TParams) => Promise<TData>),
-  initialState: TData = {} as TData,
   options?: PaginationOptions<TShallow, TData>
 ): PaginationResult<TData, TParams, TShallow> {
   // 处理分页入参
   const paginationExtConfig = options?.paginationExtConfig || {};
+  const initialState = options?.initialState || {};
+  const defaultParams = options?.defaultParams || [];
   const paginationConfig = {
     ...defaultPaginationConfig,
     paginationExtConfig: {
@@ -46,17 +52,24 @@ function usePagination<TData = any, TParams extends any[] = any[], TShallow exte
   };
   const { currentKey, pageSizeKey, totalKey, totalPageKey } = paginationConfig;
   console.log(1111, service);
+  const action = (params, ...args: TParams) => {
+    console.log(2222, params, args);
 
-  const { state, execute, ...rest } = useAsyncState<TData, TParams, TShallow>(service, initialState, options);
+    return service(
+      {
+        ...params
+      },
+      ...args
+    );
+  };
+  const { state, execute, executeImmediate, ...rest } = useAsyncState<TData, TParams, TShallow>(
+    action,
+    initialState,
+    options
+  );
 
   const paging = (paginationParams: Record<string, number>) => {
-    const [oldPaginationParams, ...restParams] = (params.value as TParams[]) || [];
-    const newPaginationParams = {
-      ...oldPaginationParams,
-      ...paginationParams
-    };
-    const mergerParams = [newPaginationParams, ...restParams] as any;
-    execute(...mergerParams);
+    executeImmediate({ ...paginationParams });
   };
 
   // changeCurrent change current page (current: number) => void
