@@ -4,14 +4,12 @@ import { fileURLToPath, URL } from 'node:url';
 import { webUpdateNotice } from '@plugin-web-update-notification/vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import { VueHooksPlusResolver } from '@vue-hooks-plus/resolvers';
 import { visualizer } from 'rollup-plugin-visualizer';
 import unoCSS from 'unocss/vite';
 import autoImport from 'unplugin-auto-import/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 import unpluginComponents from 'unplugin-vue-components/vite';
-import { defineConfig, ESBuildOptions, loadEnv } from 'vite';
-import { type ConfigEnv, type ProxyOptions } from 'vite';
+import { type ConfigEnv, defineConfig, ESBuildOptions, loadEnv, type ProxyOptions } from 'vite';
 import buildInfo from 'vite-plugin-build-info';
 import { compression } from 'vite-plugin-compression2';
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse';
@@ -75,28 +73,17 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       // cors: false, // 跨域
       proxy: PROXY_CONFIG
     },
-
+    preview: {
+      open: true,
+      proxy: PROXY_CONFIG
+    },
+    resolve: {
+      alias: {
+        // 别名
+        '@': createPath('./src')
+      }
+    },
     plugins: [
-      envParse({
-        dtsPath: './types/env.d.ts'
-      }),
-      iconfont({
-        url: VITE_ICONFONT_URL,
-        distUrl: './public/iconfont/iconfont.js',
-        iconJson: './src/components/IconPicker/data.json',
-        inject: false,
-        dts: './types/iconfont.d.ts',
-        iconifyFile: './.iconify.json'
-      }),
-      // 网站更新提醒
-      VITE_UPDATE_NOTICE &&
-        webUpdateNotice({
-          versionType: 'build_timestamp',
-          checkInterval: 0,
-          logVersion: true,
-          injectFileBase: VITE_BASE_URL
-        }),
-      IS_MOCK && mockDevServerPlugin(),
       vue(),
       vueJsx(),
       createHtmlPlugin({
@@ -118,12 +105,12 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       }),
       // 自动导入组件 https://github.com/antfu/unplugin-auto-import
       autoImport({
-        imports: ['vue', 'vue-router', 'pinia'],
+        imports: ['vue', 'vue-router', 'pinia', '@vueuse/core'],
         dts: 'types/auto-imports.d.ts',
         // resolvers: [AntDesignVueResolver()],
         dirs: ['src/composables', 'src/store', 'src/components'], // 需要自动导入的文件目录
         vueTemplate: true,
-        resolvers: [VueHooksPlusResolver()],
+        resolvers: [],
         eslintrc: {
           enabled: true,
           filepath: './.eslintrc-auto-import.json',
@@ -146,6 +133,26 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       unoCSS(),
       // 注入打包和git信息，方便做版本追踪
       buildInfo(),
+      envParse({
+        dtsPath: './types/env.d.ts'
+      }),
+      iconfont({
+        url: VITE_ICONFONT_URL,
+        distUrl: './public/iconfont/iconfont.js',
+        iconJson: './src/components/IconPicker/data.json',
+        inject: false,
+        dts: './types/iconfont.d.ts',
+        iconifyFile: './.iconify.json'
+      }),
+      // 网站更新提醒
+      VITE_UPDATE_NOTICE &&
+        webUpdateNotice({
+          versionType: 'build_timestamp',
+          checkInterval: 0,
+          logVersion: true,
+          injectFileBase: VITE_BASE_URL
+        }),
+      IS_MOCK && mockDevServerPlugin(),
       // gzip压缩，需要nginx开启对应配置，否则不生效
       VITE_BUILD_COMPRESS && compression(),
       // 开启打包可视化分析报告,会增加打包时间，不需要可以关闭
@@ -159,16 +166,6 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           sourcemap: true
         })
     ],
-    resolve: {
-      alias: {
-        // 别名
-        '@': createPath('./src')
-      }
-    },
-    preview: {
-      open: true,
-      proxy: PROXY_CONFIG
-    },
     build: {
       // 生产配置
       outDir: VITE_OUT_DIR, // 输出目录

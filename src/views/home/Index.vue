@@ -34,13 +34,6 @@
           <a-button>组件：some模式</a-button>
         </Auth>
       </div>
-      <h3>请求取消</h3>
-      <div>
-        <ASpace>
-          <AButton @click="handleRun"> 自动取消重复请求（快速点击测试） </AButton>
-          <AButton @click="handleCancelAllRequest"> 取消全部请求 </AButton>
-        </ASpace>
-      </div>
       <h3>文件下载</h3>
       <div>
         <AButton @click="handleDownloadFile"> 文件下载 </AButton>
@@ -51,19 +44,26 @@
           <AProgress style="width: 400px" :percent="progress.progress" />
         </p>
       </div>
-      <h3>VueHooksPlus - vueRequest</h3>
+      <h3>请求取消</h3>
+      <div>
+        <ASpace>
+          <AButton @click="handleRun"> 自动取消重复请求（快速点击测试） </AButton>
+          <AButton @click="handleCancelAllRequest"> 取消全部请求 </AButton>
+        </ASpace>
+      </div>
+      <h3>VueUse - useAsyncState</h3>
       <p>
-        <a href="https://inhiblabcore.github.io/docs/hooks/useRequest/" target="_blank"
-          rel="noopener noreferrer">VueHooksPlus - vueRequest</a>测试
+        <a href="https://vueuse.org/core/useAsyncState/" target="_blank" rel="noopener noreferrer">VueUse -
+          useAsyncState</a>测试
       </p>
-      <AButton :loading="loading" @click="handleRun"> 请求 </AButton>
+      <AButton :loading="isLoading" @click="handleRun"> 请求 </AButton>
       <p>测试结果</p>
-      <p>data:{{ data }}</p>
+      <p>data:{{ state }}</p>
       <p>err:{{ error }}</p>
       <h3>表格</h3>
       <p>组件位置：/src/components/BasisTable</p>
       <a-button @click="handleTestPagination"> 修改当前页为2 </a-button>
-      <BasisTable show-index :columns="columns" :loading="loading" :data-source="data?.list || []"
+      <BasisTable show-index :columns="columns" :loading="isLoading" :data-source="state?.list || []"
         :pagination="pagination">
         <template #bodyCell="{ column, record }">
           <div v-if="column.dataIndex === 'image'">
@@ -206,12 +206,10 @@ const columns: ColumnProps[] = [
     dataIndex: 'action'
   }
 ];
-const { loading, data, error, run, pagination, params } = usePagination(testApi, {
-  defaultParams: [{ pageSize: 10, current: 1 }]
-});
+const { isLoading, state, execute, error, pagination } = usePagination(testApi);
 
 function handleRun() {
-  params.value[0] && run(params.value[0]);
+  state.value && execute(state.value);
 }
 function handleTestPagination() {
   pagination.current = 2;

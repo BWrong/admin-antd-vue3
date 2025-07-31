@@ -1,20 +1,13 @@
-import { useRequest } from 'vue-hooks-plus';
-import type {
-  UseRequestOptions,
-  UseRequestPlugin,
-  useRequestResult,
-  UseRequestService
-} from 'vue-hooks-plus/lib/useRequest/types';
+import { useAsyncState, type UseAsyncStateOptions, type UseAsyncStateReturn } from '@vueuse/core';
 // 默认分页配置
 const defaultPaginationConfig = {
-  defaultPageCurrent: 1,
-  defaultPageSize: 10,
   currentKey: 'current',
   pageSizeKey: 'pageSize',
   totalKey: 'total',
   totalPageKey: 'totalPage',
   paginationExtConfig: {} as Partial<PaginationExtConfig>
 };
+// 分页扩展配置
 type PaginationExtConfig = {
   pageSize: number;
   current: number;
@@ -27,25 +20,23 @@ type PaginationExtConfig = {
 export function setPaginationConfig(config: Partial<typeof defaultPaginationConfig>) {
   Object.assign(defaultPaginationConfig, config);
 }
-
-export type PaginationOptions<TData, TParams extends unknown[], TPlugin> = UseRequestOptions<
-  TData,
-  TParams,
-  TPlugin
-> & {
+// 分页请求配置
+export type PaginationOptions<TShallow extends boolean, TData> = UseAsyncStateOptions<TShallow, TData> & {
   paginationExtConfig?: Partial<PaginationExtConfig>;
 };
-export interface PaginationResult<TData, TParams extends unknown[]> extends useRequestResult<TData, TParams> {
+// 分页请求结果
+export interface PaginationResult<TData, TParams extends any[], TShallow extends boolean>
+  extends UseAsyncStateReturn<TData, TParams, TShallow> {
   pagination: PaginationExtConfig;
 }
 
-function usePagination<TData = any, TParams extends any[] = any[]>(
-  service: UseRequestService<TData, TParams>,
-  options: PaginationOptions<TData, TParams, any> = {},
-  plugins: UseRequestPlugin<TData, TParams>[] = []
-): PaginationResult<TData, TParams> {
+function usePagination<TData = any, TParams extends any[] = any[], TShallow extends boolean = true>(
+  service: Promise<TData> | ((...args: TParams) => Promise<TData>),
+  initialState: TData = {} as TData,
+  options?: PaginationOptions<TShallow, TData>
+): PaginationResult<TData, TParams, TShallow> {
   // 处理分页入参
-  const { paginationExtConfig = {}, defaultParams = [], ...restOptions } = options;
+  const paginationExtConfig = options?.paginationExtConfig || {};
   const paginationConfig = {
     ...defaultPaginationConfig,
     paginationExtConfig: {
@@ -53,23 +44,10 @@ function usePagination<TData = any, TParams extends any[] = any[]>(
       ...paginationExtConfig
     }
   };
-  const { currentKey, pageSizeKey, totalKey, totalPageKey, defaultPageCurrent, defaultPageSize } = paginationConfig;
-  // 处理默认参数
-  if (defaultParams[0]) {
-    defaultParams[0][currentKey] = defaultParams[0][currentKey] || defaultPageCurrent;
-    defaultParams[0][pageSizeKey] = defaultParams[0][pageSizeKey] || defaultPageSize;
-  } else {
-    defaultParams[0] = {
-      [currentKey]: defaultPageCurrent,
-      [pageSizeKey]: defaultPageSize
-    };
-  }
-  const finallyOptions = {
-    ...(restOptions || {}),
-    defaultParams: defaultParams as TParams
-  };
+  const { currentKey, pageSizeKey, totalKey, totalPageKey } = paginationConfig;
+  console.log(1111, service);
 
-  const { data, params, run, ...rest } = useRequest<TData, TParams>(service, finallyOptions, plugins);
+  const { state, execute, ...rest } = useAsyncState<TData, TParams, TShallow>(service, initialState, options);
 
   const paging = (paginationParams: Record<string, number>) => {
     const [oldPaginationParams, ...restParams] = (params.value as TParams[]) || [];
@@ -78,7 +56,7 @@ function usePagination<TData = any, TParams extends any[] = any[]>(
       ...paginationParams
     };
     const mergerParams = [newPaginationParams, ...restParams] as any;
-    run(...mergerParams);
+    execute(...mergerParams);
   };
 
   // changeCurrent change current page (current: number) => void
@@ -99,20 +77,20 @@ function usePagination<TData = any, TParams extends any[] = any[]>(
     });
   };
 
-  const total = computed<number>(() => get(data.value!, totalKey, 0));
+  const total = computed<number>(() => get(state.value!, totalKey, 0));
   const current = computed({
-    get: () => get(data.value!, currentKey, params.value?.[0]?.[currentKey] ?? defaultParams[0][currentKey]),
+    get: () => get(state.value!, currentKey, 1),
     set: (val: number) => {
       changeCurrent(val);
     }
   });
   const pageSize = computed<number>({
-    get: () => get(data.value!, pageSizeKey, params.value?.[0]?.[pageSizeKey] ?? defaultParams[0][pageSizeKey]),
+    get: () => get(state.value!, pageSizeKey, 10),
     set: (val: number) => {
       changePageSize(val);
     }
   });
-  const totalPage = computed<number>(() => get(data.value!, totalPageKey, Math.ceil(total.value / pageSize.value)));
+  const totalPage = computed<number>(() => get(state.value!, totalPageKey, Math.ceil(total.value / pageSize.value)));
   const pagination = reactive({
     ...paginationConfig.paginationExtConfig,
     pageSize,
@@ -125,9 +103,8 @@ function usePagination<TData = any, TParams extends any[] = any[]>(
     }
   });
   return {
-    data,
-    params,
-    run,
+    state,
+    execute,
     pagination,
     ...rest
   };

@@ -3,6 +3,7 @@ description:
 globs:
 alwaysApply: false
 ---
+
 # 项目基础说明
 
 - 本项目基于 Vue 3 + TypeScript + Ant Design Vue + Pinia + Vite + UnoCSS 搭建。
@@ -16,6 +17,7 @@ alwaysApply: false
 # 技术栈详情
 
 ## 核心依赖
+
 - **Vue 3.5.17**: 前端框架，使用组合式 API
 - **TypeScript**: 类型安全的 JavaScript 超集
 - **Ant Design Vue 4.2.6**: UI 组件库
@@ -25,11 +27,12 @@ alwaysApply: false
 - **Vite**: 构建工具
 
 ## 工具库
+
 - **@bwrong/auth-tool**: 权限管理工具
 - **@bwrong/request**: 请求封装工具
 - **@bwrong/storage**: 存储工具
 - **dayjs**: 日期处理
-- **vue-hooks-plus**: Vue 3 hooks 库
+- **@vueuse/core**: Vue 3 hooks 库
 
 # 组件和文件命名规范
 
@@ -71,4 +74,3 @@ alwaysApply: false
 - 使用 Prettier 进行代码格式化
 - 提交前会自动执行 lint-staged 检查
 - 遵循项目的 TypeScript 配置规范
-
