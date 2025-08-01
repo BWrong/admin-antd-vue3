@@ -1,7 +1,7 @@
 // createApp必须放在最前面，别问我为什么，我被坑过
-import { createApp } from 'vue';
 import { authPlugin } from '@bwrong/auth-tool';
 import { createPinia } from 'pinia';
+import { createApp } from 'vue';
 
 // import { configKeepScroll } from '@/composables/useKeepScroll'
 import { setPaginationConfig } from '@/composables/usePagination';
@@ -10,8 +10,8 @@ import plugins from '@/plugins';
 import App from './App.vue';
 import router from './router';
 
-import 'virtual:uno.css';
 import '@/assets/styles/common.less';
+import 'virtual:uno.css';
 setPaginationConfig({
   paginationExtConfig: {
     showSizeChanger: false,

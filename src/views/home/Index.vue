@@ -206,12 +206,15 @@ const columns: ColumnProps[] = [
     dataIndex: 'action'
   }
 ];
-const { isLoading, state, executeImmediate, error, pagination } = usePagination(testApi, {
-  defaultParams: [{ pageSize: 10, current: 1 }]
+const { isLoading, state, refresh, error, pagination } = usePagination(testApi, {
+  defaultParams: [{ pageSize: 10, current: 1 }],
+  paginationExtConfig: {
+    showSizeChanger: true,
+  }
 });
 
 function handleRun() {
-  state.value && executeImmediate();
+  state.value && refresh();
 }
 function handleTestPagination() {
   pagination.current = 2;

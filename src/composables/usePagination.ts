@@ -1,6 +1,8 @@
 import { useAsyncState, type UseAsyncStateOptions, type UseAsyncStateReturn } from '@vueuse/core';
 // 默认分页配置
 const defaultPaginationConfig = {
+  defaultPageCurrent: 1,
+  defaultPageSize: 10,
   currentKey: 'current',
   pageSizeKey: 'pageSize',
   totalKey: 'total',
@@ -33,16 +35,20 @@ export type PaginationOptions<TShallow extends boolean, TData, TParams extends a
 export interface PaginationResult<TData, TParams extends any[], TShallow extends boolean>
   extends UseAsyncStateReturn<TData, TParams, TShallow> {
   pagination: PaginationExtConfig;
+  refresh: () => void;
 }
 
 function usePagination<TData = any, TParams extends any[] = any[], TShallow extends boolean = true>(
-  service: Promise<TData> | ((...args: TParams) => Promise<TData>),
-  options?: PaginationOptions<TShallow, TData>
+  service: (...args: TParams) => Promise<TData>,
+  options: PaginationOptions<TShallow, TData, TParams> = {}
 ): PaginationResult<TData, TParams, TShallow> {
   // 处理分页入参
-  const paginationExtConfig = options?.paginationExtConfig || {};
-  const initialState = options?.initialState || {};
-  const defaultParams = options?.defaultParams || [];
+  const {
+    paginationExtConfig = {},
+    defaultParams = [] as unknown as TParams,
+    initialState = {} as TData,
+    ...restOptions
+  } = options;
   const paginationConfig = {
     ...defaultPaginationConfig,
     paginationExtConfig: {
@@ -50,26 +56,44 @@ function usePagination<TData = any, TParams extends any[] = any[], TShallow exte
       ...paginationExtConfig
     }
   };
-  const { currentKey, pageSizeKey, totalKey, totalPageKey } = paginationConfig;
-  console.log(1111, service);
-  const action = (params, ...args: TParams) => {
-    console.log(2222, params, args);
+  const { currentKey, pageSizeKey, totalKey, totalPageKey, defaultPageCurrent, defaultPageSize } = paginationConfig;
 
-    return service(
-      {
-        ...params
-      },
-      ...args
-    );
+  // 处理默认参数
+  if (defaultParams[0]) {
+    defaultParams[0][currentKey] = defaultParams[0][currentKey] || defaultPageCurrent;
+    defaultParams[0][pageSizeKey] = defaultParams[0][pageSizeKey] || defaultPageSize;
+  } else {
+    defaultParams[0] = {
+      [currentKey]: defaultPageCurrent,
+      [pageSizeKey]: defaultPageSize
+    };
+  }
+  const finallyOptions = {
+    ...(restOptions || {}),
+    defaultParams: defaultParams as TParams
   };
-  const { state, execute, executeImmediate, ...rest } = useAsyncState<TData, TParams, TShallow>(
+  const action = (...args: TParams) => {
+    const [firstParams] = args;
+    args[0] = {
+      ...defaultParams[0],
+      ...firstParams
+    };
+    return service(...args);
+  };
+  const { state, executeImmediate, ...rest } = useAsyncState<TData, TParams, TShallow>(
     action,
     initialState,
-    options
+    finallyOptions
   );
 
   const paging = (paginationParams: Record<string, number>) => {
-    executeImmediate({ ...paginationParams });
+    const [oldPaginationParams, ...restParams] = defaultParams || [];
+    const newPaginationParams = {
+      ...oldPaginationParams,
+      ...paginationParams
+    };
+    const mergerParams = [newPaginationParams, ...restParams] as any;
+    executeImmediate(...mergerParams);
   };
 
   // changeCurrent change current page (current: number) => void
@@ -115,9 +139,13 @@ function usePagination<TData = any, TParams extends any[] = any[], TShallow exte
       changePagination?.(page || 1, pageSize);
     }
   });
+  const refresh = () => {
+    executeImmediate(...defaultParams);
+  };
   return {
     state,
-    execute,
+    executeImmediate,
+    refresh,
     pagination,
     ...rest
   };
