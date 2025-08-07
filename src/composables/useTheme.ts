@@ -1,7 +1,6 @@
 import { getStorage, setStorage } from '@bwrong/storage';
 import { theme } from 'ant-design-vue';
 import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context';
-import cssVars from 'css-vars-ponyfill';
 
 import { themeToken as defaultThemeToken } from '@/config/theme';
 export type ColorScheme = 'light' | 'dark' | 'auto';
@@ -19,15 +18,12 @@ const defaultThemeOptions: ThemeOptions = {
 // 从缓存读取配置
 const cacheThemeData = getStorage<ThemeOptions>('theme') || defaultThemeOptions;
 const themeOptions = reactive(cacheThemeData);
+const htmlElement = document.documentElement;
 function initTheme() {
-  const variables = Object.entries(themeOptions.themeToken || {}).reduce(
-    (temp, [key, value]) => {
-      temp[`--${key}`] = value as string;
-      return temp;
-    },
-    {} as Record<string, string>
-  );
-  cssVars({ variables });
+  Object.entries(themeOptions.themeToken || {}).map(([key, value]) => {
+    const colorVar = useCssVar(`--${key}`, htmlElement);
+    colorVar.value = value as string;
+  });
 }
 // 配置theme
 function setTheme(newOptions: Partial<ThemeOptions>) {
