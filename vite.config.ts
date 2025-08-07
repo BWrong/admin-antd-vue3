@@ -145,13 +145,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
         iconifyFile: './.iconify.json'
       }),
       // 网站更新提醒
-      VITE_UPDATE_NOTICE &&
-        webUpdateNotice({
-          versionType: 'build_timestamp',
-          checkInterval: 0,
-          logVersion: true,
-          injectFileBase: VITE_BASE_URL
-        }),
+      VITE_UPDATE_NOTICE && webUpdateNotice(),
       IS_MOCK && mockDevServerPlugin(),
       // gzip压缩，需要nginx开启对应配置，否则不生效
       VITE_BUILD_COMPRESS && compression(),
