@@ -6,5 +6,6 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "iconify.customCollectionJsonPaths": ["./.iconify.json"],
   "iconify.annotations": true,
-  "iconify.inplace": false
+  "iconify.inplace": false,
+  "CodeFree.index": true
 }
