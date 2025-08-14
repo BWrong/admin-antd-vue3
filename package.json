@@ -79,7 +79,7 @@
     "vite-plugin-env-parse": "^1.0.15",
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-iconfont": "^1.5.3",
-    "vite-plugin-mock-dev-server": "^1.9.2",
+    "vite-plugin-mock-dev-server": "^1.9.3",
     "vue-tsc": "^3.0.5"
   },
   "pnpm": {
