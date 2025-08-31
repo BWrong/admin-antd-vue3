@@ -2,14 +2,8 @@
   <div class="login-page">
     <a-card class="login-form">
       <h3>{{ appTitle }}</h3>
-      <a-form
-        ref="formRef"
-        :model="state.loginInfo"
-        :rules="rules"
-        class="form"
-        :wrapper-col="{ span: 24 }"
-        @keydown.enter="handleLogin"
-      >
+      <a-form ref="formRef" :model="state.loginInfo" :rules="rules" class="form" :wrapper-col="{ span: 24 }"
+        @keydown.enter="handleLogin">
         <a-form-item name="username">
           <a-input v-model:value="state.loginInfo.username" placeholder="账号" type="text">
             <template #prefix>
@@ -53,8 +47,7 @@ import { setStorage } from '@bwrong/storage';
 import { message } from 'ant-design-vue';
 import type { FormProps } from 'ant-design-vue/es';
 import { computed, reactive, ref } from 'vue';
-import type { LocationQuery } from 'vue-router';
-import { type LocationQueryValue, useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import { getMenusRequest, loginRequest } from '@/api/auth';
 import config from '@/config';
@@ -114,17 +107,7 @@ function changeCode() {
   const str = new Date().getTime();
   state.codeSrc = `${apiHost}/code/` + str;
 }
-function getOtherQuery(query: LocationQuery) {
-  return Object.keys(query).reduce(
-    (acc, cur) => {
-      if (cur !== 'redirect') {
-        acc[cur] = query[cur];
-      }
-      return acc;
-    },
-    {} as Record<string, LocationQueryValue | LocationQueryValue[]>
-  );
-}
+
 // 储存菜单及用户信息
 async function getMenuList() {
   await getMenusRequest().then((res) => {
@@ -150,10 +133,7 @@ function handleLogin() {
           setStorage('userinfo', res);
           saveAuthData(res);
           await getMenuList();
-          router.replace({
-            path: redirect.value,
-            query: getOtherQuery(route.query)
-          });
+          router.replace(redirect.value);
           state.loading = false;
         })
         .catch((err) => {
