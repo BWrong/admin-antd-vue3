@@ -37,18 +37,18 @@
     "js-cookie": "^3.0.5",
     "pinia": "^3.0.3",
     "qs": "^6.14.0",
-    "vue": "^3.5.21",
+    "vue": "^3.5.22",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.36.0",
+    "@eslint/js": "^9.37.0",
     "@faker-js/faker": "^10.0.0",
     "@plugin-web-update-notification/vite": "^2.0.2",
     "@release-it/conventional-changelog": "^10.0.1",
     "@tsconfig/node-lts": "18.12.2",
     "@types/crypto-js": "^4.2.2",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^24.5.2",
+    "@types/node": "^24.7.0",
     "@unocss/eslint-config": "^66.5.2",
     "@unocss/preset-rem-to-px": "^66.5.2",
     "@unocss/reset": "^66.5.2",
@@ -58,29 +58,29 @@
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.36.0",
+    "eslint": "^9.37.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-vue": "^10.5.0",
-    "less": "^4.4.1",
-    "lint-staged": "^16.2.0",
+    "less": "^4.4.2",
+    "lint-staged": "^16.2.3",
     "postcss": "^8.5.6",
     "postcss-px-to-viewport": "^1.1.1",
     "prettier": "^3.6.2",
     "release-it": "^19.0.5",
-    "rollup-plugin-visualizer": "^6.0.3",
+    "rollup-plugin-visualizer": "^6.0.4",
     "simple-git-hooks": "^2.13.1",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
     "unocss": "^66.5.2",
     "unplugin-auto-import": "^20.2.0",
     "unplugin-vue-components": "^29.1.0",
-    "vite": "^7.1.7",
+    "vite": "^7.1.9",
     "vite-plugin-build-info": "^0.1.2",
     "vite-plugin-compression2": "^2.2.1",
     "vite-plugin-env-parse": "^1.0.15",
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-iconfont": "^1.5.3",
     "vite-plugin-mock-dev-server": "^2.0.1",
-    "vue-tsc": "^3.0.8"
+    "vue-tsc": "^3.1.1"
   },
   "pnpm": {
     "peerDependencyRules": {
@@ -114,5 +114,5 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@10.17.1"
+  "packageManager": "pnpm@10.18.1"
 }
