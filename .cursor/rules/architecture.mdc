@@ -1,8 +1,8 @@
 ---
-description:
-globs:
+description: 项目架构规范
 alwaysApply: false
 ---
+
 # 项目架构规则
 
 ## 目录结构说明
@@ -34,31 +34,37 @@ alwaysApply: false
 ## 关键文件说明
 
 ### 入口文件
+
 - **[src/main.ts](mdc:src/main.ts)**: 应用入口文件
 - **[src/App.vue](mdc:src/App.vue)**: 根组件
 
 ### 配置文件
+
 - **[vite.config.ts](mdc:vite.config.ts)**: Vite 构建配置
 - **[uno.config.ts](mdc:uno.config.ts)**: UnoCSS 配置
 - **[tsconfig.json](mdc:tsconfig.json)**: TypeScript 配置
 - **[eslint.config.ts](mdc:eslint.config.ts)**: ESLint 配置
 
 ### 工具配置
+
 - **[src/utils/request/index.ts](mdc:src/utils/request/index.ts)**: HTTP 请求封装
 - **[src/utils/auth.ts](mdc:src/utils/auth.ts)**: 权限管理工具
 
 ## 组件分类规范
 
 ### 公共组件 ([src/components/](mdc:src/components))
+
 - 与业务无关的通用组件
 - 必须包含 README.md 使用文档
 - 示例：`BasisTable`, `Dialog`, `IconFont`, `IconPicker`
 
 ### 布局组件 ([src/layouts/](mdc:src/layouts))
+
 - 页面布局相关组件
 - 包含头部、侧边栏、面包屑等布局元素
 
 ### 页面组件 ([src/views/](mdc:src/views))
+
 - 具体业务页面
 - 按业务模块分组：`home`, `login`, `system`
 - 页面内部组件可放在对应页面目录下的 `components` 子目录
@@ -66,16 +72,19 @@ alwaysApply: false
 ## 路由架构
 
 ### 静态路由 ([src/router/staticRoutes.ts](mdc:src/router/staticRoutes.ts))
+
 - 不需要权限的基础路由
 - 如登录页、404页等
 
 ### 动态路由 ([src/router/dynamicRoutes/](mdc:src/router/dynamicRoutes))
+
 - 需要权限控制的业务路由
 - 按模块划分：`system.ts`, `iframe.ts`
 
 ## 状态管理架构
 
 使用 Pinia 进行状态管理，采用模块化组织：
+
 - 每个业务模块对应一个 store
 - store 文件放在 [src/store/](mdc:src/store) 目录下
 - 使用组合式 API 风格编写 store
@@ -93,4 +102,3 @@ alwaysApply: false
 - 全局样式在 [src/assets/styles/](mdc:src/assets/styles) 目录
 - 组件样式优先使用 UnoCSS 类名
 - 复杂样式使用 `<style scoped>` 局部样式
-

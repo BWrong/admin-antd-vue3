@@ -1,23 +1,26 @@
 ---
-description:
-globs:
+description: 组件开发规范
 alwaysApply: false
 ---
+
 # 组件开发规则
 
 ## 组件开发原则
 
 ### 1. 单一职责原则
+
 - 每个组件只负责一个功能
 - 组件功能明确，职责清晰
 - 避免在单个组件中堆叠过多功能
 
 ### 2. 组件复用性
+
 - 公共组件与业务解耦
 - 通过 props 和 slots 提供灵活性
 - 避免硬编码业务逻辑
 
 ### 3. 组件可维护性
+
 - 代码结构清晰，易于理解
 - 适当的注释和文档
 - 遵循项目编码规范
@@ -27,6 +30,7 @@ alwaysApply: false
 ### 公共组件 ([src/components/](mdc:src/components))
 
 #### 现有公共组件
+
 - **[BasisTable](mdc:src/components/BasisTable)**: 基础表格组件
 - **[ConfirmButton](mdc:src/components/ConfirmButton)**: 确认按钮组件
 - **[Dialog](mdc:src/components/Dialog)**: 对话框组件
@@ -34,6 +38,7 @@ alwaysApply: false
 - **[IconPicker](mdc:src/components/IconPicker)**: 图标选择器组件
 
 #### 公共组件开发规范
+
 1. **必须包含使用文档**: 每个组件目录下必须有 `README.md` 或 `Readme.md` 文件
 2. **组件命名**: 使用 PascalCase 格式，如 `UserTable.vue`
 3. **目录结构**:
@@ -47,6 +52,7 @@ alwaysApply: false
 ### 布局组件 ([src/layouts/](mdc:src/layouts))
 
 #### 现有布局组件
+
 - **[DefaultLayout.vue](mdc:src/layouts/DefaultLayout.vue)**: 默认布局
 - **[LBreadCrumb.vue](mdc:src/layouts/components/LBreadCrumb.vue)**: 面包屑
 - **[LHeader.vue](mdc:src/layouts/components/LHeader.vue)**: 头部
@@ -56,6 +62,7 @@ alwaysApply: false
 ## 组件开发规范
 
 ### 1. 组件结构
+
 ```vue
 <template>
   <!-- 模板内容 -->
@@ -79,60 +86,64 @@ alwaysApply: false
 ```
 
 ### 2. Props 定义
+
 ```typescript
 interface Props {
   // 使用明确的类型定义
-  title: string
-  visible?: boolean
-  data?: Array<any>
+  title: string;
+  visible?: boolean;
+  data?: Array<any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   visible: false,
   data: () => []
-})
+});
 ```
 
 ### 3. Emits 定义
+
 ```typescript
 interface Emits {
-  (e: 'update:visible', value: boolean): void
-  (e: 'confirm', data: any): void
+  (e: 'update:visible', value: boolean): void;
+  (e: 'confirm', data: any): void;
 }
 
-const emit = defineEmits<Emits>()
+const emit = defineEmits<Emits>();
 ```
 
 ### 4. 组件暴露
+
 ```typescript
 // 暴露组件方法和属性
 defineExpose({
   reset,
   validate
-})
+});
 ```
 
 ## 样式规范
 
 ### 1. 优先级
+
 1. UnoCSS 原子类
 2. UnoCSS shortcuts（在 [uno.config.ts](mdc:uno.config.ts) 中定义）
 3. 组件局部样式
 
 ### 2. 常用样式模式
+
 ```vue
 <template>
   <!-- 使用 UnoCSS 原子类 -->
   <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow">
     <span class="text-lg font-medium">标题</span>
-    <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-      按钮
-    </button>
+    <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">按钮</button>
   </div>
 </template>
 ```
 
 ### 3. 响应式设计
+
 ```vue
 <template>
   <!-- 响应式布局 -->
@@ -145,45 +156,53 @@ defineExpose({
 ## 组件通信规范
 
 ### 1. 父子组件通信
+
 - 父传子：使用 props
 - 子传父：使用 emits
 - 双向绑定：使用 v-model
 
 ### 2. 跨组件通信
+
 - 使用 Pinia 状态管理
 - 使用 provide/inject
 - 使用事件总线（谨慎使用）
 
 ### 3. 组件状态管理
+
 ```typescript
 // 本地状态
-const loading = ref(false)
+const loading = ref(false);
 const formData = reactive({
   name: '',
   email: ''
-})
+});
 
 // 计算属性
 const isValid = computed(() => {
-  return formData.name && formData.email
-})
+  return formData.name && formData.email;
+});
 
 // 监听器
-watch(() => props.visible, (newVal) => {
-  if (newVal) {
-    // 处理逻辑
+watch(
+  () => props.visible,
+  (newVal) => {
+    if (newVal) {
+      // 处理逻辑
+    }
   }
-})
+);
 ```
 
 ## 组件测试建议
 
 ### 1. 组件功能测试
+
 - 测试组件的基本渲染
 - 测试 props 传递
 - 测试事件触发
 
 ### 2. 用户交互测试
+
 - 测试点击事件
 - 测试表单输入
 - 测试键盘操作
@@ -202,36 +221,43 @@ watch(() => props.visible, (newVal) => {
 4. **注意事项**: 使用时的注意点
 
 ### 文档模板
+
 ```markdown
 # ComponentName
 
 ## 描述
+
 组件的功能描述
 
 ## 使用示例
+
 \`\`\`vue
 <template>
-  <ComponentName :prop="value" @event="handler" />
+<ComponentName :prop="value" @event="handler" />
 </template>
 \`\`\`
 
 ## API
 
 ### Props
-| 参数 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| prop | string | '' | 参数说明 |
+
+| 参数 | 类型   | 默认值 | 说明     |
+| ---- | ------ | ------ | -------- |
+| prop | string | ''     | 参数说明 |
 
 ### Events
-| 事件名 | 参数 | 说明 |
-|--------|------|------|
-| event | value | 事件说明 |
+
+| 事件名 | 参数  | 说明     |
+| ------ | ----- | -------- |
+| event  | value | 事件说明 |
 
 ### Slots
-| 名称 | 说明 |
-|------|------|
+
+| 名称    | 说明     |
+| ------- | -------- |
 | default | 默认插槽 |
 
 ## 注意事项
-使用时的注意点
 
+使用时的注意点
+```
