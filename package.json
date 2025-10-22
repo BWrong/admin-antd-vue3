@@ -48,7 +48,7 @@
     "@tsconfig/node-lts": "18.12.2",
     "@types/crypto-js": "^4.2.2",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^24.8.1",
+    "@types/node": "^24.9.1",
     "@unocss/eslint-config": "^66.5.4",
     "@unocss/preset-rem-to-px": "^66.5.4",
     "@unocss/reset": "^66.5.4",
@@ -62,7 +62,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-vue": "^10.5.1",
     "less": "^4.4.2",
-    "lint-staged": "^16.2.4",
+    "lint-staged": "^16.2.5",
     "postcss": "^8.5.6",
     "postcss-px-to-viewport": "^1.1.1",
     "prettier": "^3.6.2",
@@ -73,7 +73,7 @@
     "unocss": "^66.5.4",
     "unplugin-auto-import": "^20.2.0",
     "unplugin-vue-components": "^30.0.0",
-    "vite": "^7.1.10",
+    "vite": "^7.1.11",
     "vite-plugin-build-info": "^0.1.2",
     "vite-plugin-compression2": "^2.3.0",
     "vite-plugin-env-parse": "^1.0.15",
@@ -114,5 +114,5 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@10.18.3"
+  "packageManager": "pnpm@10.19.0"
 }
