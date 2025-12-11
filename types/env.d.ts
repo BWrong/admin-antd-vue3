@@ -63,6 +63,10 @@ interface ImportMetaEnv {
    * 是否移除console、debugger
    */
   readonly VITE_DROP_CONSOLE: boolean
+  /**
+   * 开启调试工具
+   */
+  readonly VITE_DEV_TOOLS: boolean
 }
 // interface ImportMeta {
 //   readonly env: ImportMetaEnv;

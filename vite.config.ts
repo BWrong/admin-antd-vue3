@@ -16,6 +16,7 @@ import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import iconfont from 'vite-plugin-iconfont';
 import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server';
+import vueDevTools from 'vite-plugin-vue-devtools';
 
 import { themeToken } from './src/config/theme';
 
@@ -39,7 +40,8 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     VITE_ICONFONT_URL,
     VITE_OUT_DIR,
     VITE_DROP_CONSOLE = false,
-    VITE_UPDATE_NOTICE = false
+    VITE_UPDATE_NOTICE = false,
+    VITE_DEV_TOOLS = false
   } = env;
 
   /***** 接口代理配置，有多个可以自己加 ******/
@@ -86,6 +88,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     plugins: [
       vue(),
       vueJsx(),
+      VITE_DEV_TOOLS && vueDevTools(), // 必须放到createHtmlPlugin前面
       createHtmlPlugin({
         minify: true,
         entry: '/src/main.ts',
