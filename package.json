@@ -37,31 +37,31 @@
     "js-cookie": "^3.0.5",
     "pinia": "^3.0.4",
     "qs": "^6.14.0",
-    "vue": "^3.5.25",
-    "vue-router": "^4.6.3"
+    "vue": "^3.5.26",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^9.39.2",
     "@faker-js/faker": "^10.1.0",
     "@plugin-web-update-notification/vite": "^2.0.2",
-    "@release-it/conventional-changelog": "^10.0.3",
+    "@release-it/conventional-changelog": "^10.0.4",
     "@tsconfig/node-lts": "18.12.2",
     "@types/crypto-js": "^4.2.2",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^24.10.3",
+    "@types/node": "^24.10.4",
     "@unocss/eslint-config": "^66.5.10",
     "@unocss/preset-rem-to-px": "^66.5.10",
     "@unocss/reset": "^66.5.10",
-    "@vitejs/plugin-vue": "^6.0.2",
+    "@vitejs/plugin-vue": "^6.0.3",
     "@vitejs/plugin-vue-jsx": "^5.1.2",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
-    "autoprefixer": "^10.4.22",
-    "eslint": "^9.39.1",
+    "autoprefixer": "^10.4.23",
+    "eslint": "^9.39.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-vue": "^10.6.2",
-    "less": "^4.4.2",
+    "less": "^4.5.1",
     "lint-staged": "^16.2.7",
     "postcss": "^8.5.6",
     "postcss-px-to-viewport": "^1.1.1",
@@ -73,7 +73,7 @@
     "unocss": "^66.5.10",
     "unplugin-auto-import": "^20.3.0",
     "unplugin-vue-components": "^30.0.0",
-    "vite": "^7.2.7",
+    "vite": "^7.3.0",
     "vite-plugin-build-info": "^0.1.2",
     "vite-plugin-compression2": "^2.4.0",
     "vite-plugin-env-parse": "^1.0.15",
@@ -81,7 +81,7 @@
     "vite-plugin-iconfont": "^1.5.3",
     "vite-plugin-mock-dev-server": "^2.0.6",
     "vite-plugin-vue-devtools": "^8.0.5",
-    "vue-tsc": "^3.1.8"
+    "vue-tsc": "^3.2.1"
   },
   "pnpm": {
     "peerDependencyRules": {
@@ -115,5 +115,5 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@10.25.0"
+  "packageManager": "pnpm@10.26.1"
 }
