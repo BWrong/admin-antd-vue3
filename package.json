@@ -29,16 +29,16 @@
     "@bwrong/auth-tool": "^3.0.11",
     "@bwrong/request": "^1.0.1",
     "@bwrong/storage": "^1.1.0",
-    "@vueuse/core": "^14.1.0",
+    "@vueuse/core": "^14.2.0",
     "ant-design-vue": "^4.2.6",
-    "axios": "^1.13.3",
+    "axios": "^1.13.4",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.19",
     "js-cookie": "^3.0.5",
     "pinia": "^3.0.4",
     "qs": "^6.14.1",
     "vue": "^3.5.27",
-    "vue-router": "^4.6.4"
+    "vue-router": "^5.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -52,12 +52,12 @@
     "@unocss/eslint-config": "^66.6.0",
     "@unocss/preset-rem-to-px": "^66.6.0",
     "@unocss/reset": "^66.6.0",
-    "@vitejs/plugin-vue": "^6.0.3",
-    "@vitejs/plugin-vue-jsx": "^5.1.3",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "@vitejs/plugin-vue-jsx": "^5.1.4",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
-    "autoprefixer": "^10.4.23",
+    "autoprefixer": "^10.4.24",
     "eslint": "^9.39.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-vue": "^10.7.0",
@@ -81,7 +81,7 @@
     "vite-plugin-iconfont": "^1.5.3",
     "vite-plugin-mock-dev-server": "^2.0.7",
     "vite-plugin-vue-devtools": "^8.0.5",
-    "vue-tsc": "^3.2.3"
+    "vue-tsc": "^3.2.4"
   },
   "pnpm": {
     "peerDependencyRules": {
@@ -115,5 +115,5 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@10.28.1"
+  "packageManager": "pnpm@10.28.2"
 }

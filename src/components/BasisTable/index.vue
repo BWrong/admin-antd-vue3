@@ -41,20 +41,6 @@ interface IProps extends TableProps {
   // showSorterTooltip?: boolean;
   // sticky?: boolean;
 }
-type SlotKey =
-  | 'bodyCell'
-  | 'customFilterDropdown'
-  | 'customFilterIcon'
-  | 'emptyText'
-  | 'expandedRowRender'
-  | 'expandColumnTitle'
-  | 'expandIcon'
-  | 'footer'
-  | 'headerCell'
-  | 'summary'
-  | 'title';
-const slots: SetupContext['slots'] = useSlots();
-const slotsKeys = computed(() => Object.keys(slots) as SlotKey[]);
 const props = withDefaults(defineProps<IProps>(), {
   ...getDefaultFromProps(tableProps(), {
     rowKey: 'id',
@@ -71,6 +57,21 @@ const props = withDefaults(defineProps<IProps>(), {
     // sticky: false
   })
 });
+type SlotKey =
+  | 'bodyCell'
+  | 'customFilterDropdown'
+  | 'customFilterIcon'
+  | 'emptyText'
+  | 'expandedRowRender'
+  | 'expandColumnTitle'
+  | 'expandIcon'
+  | 'footer'
+  | 'headerCell'
+  | 'summary'
+  | 'title';
+const slots: SetupContext['slots'] = useSlots();
+const slotsKeys = computed(() => Object.keys(slots) as SlotKey[]);
+
 function ganerTableIndex(current = 1, pageSize = 10, index = 0) {
   return (current - 1) * pageSize + index + 1;
 }
