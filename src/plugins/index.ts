@@ -1,5 +1,5 @@
-import type { App } from 'vue';
+// import type { App } from 'vue';
 
-export default (app: App) => {
+export default () => {
   // console.log(app);
 };

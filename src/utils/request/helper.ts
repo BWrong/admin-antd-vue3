@@ -39,13 +39,13 @@ export function handleCheckAuth(config: RequestConfig) {
 }
 // 信息提示适配器，使用不同的UI组件库，配置有差异
 export const messageAdaptor = {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+   
   destroy: message.destroy,
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+   
   error: message.error,
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+   
   success: message.success,
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+   
   warn: message.warning
 };
 /**

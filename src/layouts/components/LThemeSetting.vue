@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { RadioChangeEvent, SwitchProps } from 'ant-design-vue';
+import type { SwitchProps } from 'ant-design-vue';
 
 interface IProps {
   open?: boolean;

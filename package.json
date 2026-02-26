@@ -41,7 +41,7 @@
     "vue-router": "^5.0.3"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.3",
+    "@eslint/js": "^10.0.1",
     "@faker-js/faker": "^10.3.0",
     "@plugin-web-update-notification/vite": "^2.0.2",
     "@release-it/conventional-changelog": "^10.0.5",
@@ -58,7 +58,7 @@
     "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/tsconfig": "^0.8.1",
     "autoprefixer": "^10.4.27",
-    "eslint": "^9.39.3",
+    "eslint": "^10.0.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-vue": "^10.8.0",
     "less": "^4.5.1",

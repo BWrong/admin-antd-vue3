@@ -1,9 +1,9 @@
 import unocssFlat from '@unocss/eslint-config/flat';
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting';
 import { configureVueProject, defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
-import { globalIgnores } from 'eslint/config';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import pluginVue from 'eslint-plugin-vue';
+import { globalIgnores } from 'eslint/config';
 
 import autoImport from './.eslintrc-auto-import.json' assert { type: 'json' };
 
@@ -53,7 +53,7 @@ export default defineConfigWithVueTs(
   },
   // 某些文件对import自动排序会有问题，所以关闭
   {
-    files: ['**/main.ts'],
+    files: ['**/main.ts', '**/eslint.config.ts'],
     rules: {
       'simple-import-sort/imports': 'off'
     }
