@@ -1,3 +1,10 @@
 {
-  "recommendations": ["Vue.volar", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "antfu.unocss", "antfu.iconify"]
+  "recommendations": [
+    "Vue.volar",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "antfu.unocss",
+    "antfu.iconify",
+    "oxc.oxc-vscode"
+  ]
 }

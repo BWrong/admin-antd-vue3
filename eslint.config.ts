@@ -1,12 +1,14 @@
 import unocssFlat from '@unocss/eslint-config/flat';
-import skipFormatting from '@vue/eslint-config-prettier/skip-formatting';
 import { configureVueProject, defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
+import skipFormatting from 'eslint-config-prettier/flat';
+import pluginOxlint from 'eslint-plugin-oxlint';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import pluginVue from 'eslint-plugin-vue';
 import { globalIgnores } from 'eslint/config';
 
 import autoImport from './.eslintrc-auto-import.json' assert { type: 'json' };
 
+// More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
 configureVueProject({
   scriptLangs: ['ts', 'tsx']
 });
@@ -16,6 +18,9 @@ export default defineConfigWithVueTs(
     files: ['**/*.{ts,mts,tsx,js,mjs,jsx,vue}']
   },
   globalIgnores(['**/dist/**', 'public/**', '**/dist-ssr/**', '**/coverage/**']),
+  pluginVue.configs['flat/strongly-recommended'],
+  vueTsConfigs.recommended,
+  unocssFlat,
   {
     languageOptions: {
       ecmaVersion: 'latest',
@@ -26,9 +31,7 @@ export default defineConfigWithVueTs(
       }
     }
   },
-  pluginVue.configs['flat/strongly-recommended'],
-  vueTsConfigs.recommended,
-  unocssFlat,
+  ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
   {
     plugins: {
       'simple-import-sort': simpleImportSort

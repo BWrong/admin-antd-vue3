@@ -69,7 +69,7 @@ function usePagination<TData = any, TParams extends any[] = any[], TShallow exte
     };
   }
   const finallyOptions = {
-    ...(restOptions || {}),
+    ...restOptions,
     defaultParams: defaultParams as TParams
   };
   const action = (...args: TParams) => {

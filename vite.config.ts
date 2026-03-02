@@ -1,33 +1,33 @@
-import { resolve } from 'node:path';
-import { fileURLToPath, URL } from 'node:url';
+import { resolve } from 'node:path'
+import { fileURLToPath, URL } from 'node:url'
 
-import { webUpdateNotice } from '@plugin-web-update-notification/vite';
-import vue from '@vitejs/plugin-vue';
-import vueJsx from '@vitejs/plugin-vue-jsx';
-import { visualizer } from 'rollup-plugin-visualizer';
-import unoCSS from 'unocss/vite';
-import autoImport from 'unplugin-auto-import/vite';
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
-import unpluginComponents from 'unplugin-vue-components/vite';
-import { type ConfigEnv, defineConfig, ESBuildOptions, loadEnv, type ProxyOptions } from 'vite';
-import buildInfo from 'vite-plugin-build-info';
-import { compression } from 'vite-plugin-compression2';
-import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse';
-import { createHtmlPlugin } from 'vite-plugin-html';
-import iconfont from 'vite-plugin-iconfont';
-import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server';
-import vueDevTools from 'vite-plugin-vue-devtools';
+import { webUpdateNotice } from '@plugin-web-update-notification/vite'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import { visualizer } from 'rollup-plugin-visualizer'
+import unoCSS from 'unocss/vite'
+import autoImport from 'unplugin-auto-import/vite'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import unpluginComponents from 'unplugin-vue-components/vite'
+import { defineConfig, loadEnv, type ProxyOptions } from 'vite'
+import buildInfo from 'vite-plugin-build-info'
+import { compression } from 'vite-plugin-compression2'
+import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
+import { createHtmlPlugin } from 'vite-plugin-html'
+import iconfont from 'vite-plugin-iconfont'
+import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server'
+import vueDevTools from 'vite-plugin-vue-devtools'
 
-import { themeToken } from './src/config/theme';
+import { themeToken } from './src/config/theme'
 
 // 完整配置，请查阅https://vitejs.dev/config/
-export default defineConfig(({ command, mode }: ConfigEnv) => {
-  const root = process.cwd(); // 项目根目录
-  const env = parseLoadedEnv(loadEnv(mode, root) as ImportMetaEnv);
-  console.log('【info】 command:', command, ', mode: ', mode);
-  console.log(env);
-  const IS_PRODUCTION = command === 'build';
-  const IS_MOCK = mode === 'mock';
+export default defineConfig(({ command, mode }) => {
+  const root = process.cwd() // 项目根目录
+  const env = parseLoadedEnv(loadEnv(mode, root) as ImportMetaEnv)
+  console.log('【info】 command:', command, ', mode: ', mode)
+  console.log(env)
+  const IS_PRODUCTION = command === 'build'
+  const IS_MOCK = mode === 'mock'
   // 读取环境配置
   const {
     VITE_BASE_URL,
@@ -41,8 +41,8 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     VITE_OUT_DIR,
     VITE_DROP_CONSOLE = false,
     VITE_UPDATE_NOTICE = false,
-    VITE_DEV_TOOLS = false
-  } = env;
+    VITE_DEV_TOOLS = false,
+  } = env
 
   /***** 接口代理配置，有多个可以自己加 ******/
   const PROXY_CONFIG: Record<string, string | ProxyOptions> = {
@@ -51,8 +51,8 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       // secure: false,
       // ws: true,
       changeOrigin: true, // 将Origin的来源更改为目标URL
-      rewrite: (path) => path.replace(new RegExp(`^${VITE_API_PREFIX}`), '/api')
-    }
+      rewrite: (path) => path.replace(new RegExp(`^${VITE_API_PREFIX}`), '/api'),
+    },
     // 可以自行添加更多，多个代理的时候需要同步修改request：
     // 方式1：创建多个request实例；
     // 方式2：request的baseURL设置成/，然后在接口url前面拼接上代理的prefix
@@ -62,7 +62,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     //  '/testApi2': {
     //   target:'://test.api2.com',
     // }
-  };
+  }
   return {
     root, // 项目根目录
     base: VITE_BASE_URL, // 基础路径
@@ -73,17 +73,17 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       port: VITE_PORT || 8080,
       open: true,
       // cors: false, // 跨域
-      proxy: PROXY_CONFIG
+      proxy: PROXY_CONFIG,
     },
     preview: {
       open: true,
-      proxy: PROXY_CONFIG
+      proxy: PROXY_CONFIG,
     },
     resolve: {
       alias: {
         // 别名
-        '@': createPath('./src')
-      }
+        '@': createPath('./src'),
+      },
     },
     plugins: [
       vue(),
@@ -102,9 +102,9 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
                 ${getGlobalConfig(env)}
               </script>
               <script src="${VITE_BASE_URL}iconfont/iconfont.js"></script>
-            `
-          }
-        }
+            `,
+          },
+        },
       }),
       // 自动导入组件 https://github.com/antfu/unplugin-auto-import
       autoImport({
@@ -117,8 +117,8 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
         eslintrc: {
           enabled: true,
           filepath: './.eslintrc-auto-import.json',
-          globalsPropValue: true
-        }
+          globalsPropValue: true,
+        },
       }),
       // 自动按需加载组件 https://github.com/antfu/unplugin-vue-components
       unpluginComponents({
@@ -128,16 +128,16 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
         directoryAsNamespace: false,
         resolvers: [
           AntDesignVueResolver({
-            importStyle: false // ant-design-vue采用cssinjs，不需要引入样式文件
-          })
-        ]
+            importStyle: false, // ant-design-vue采用cssinjs，不需要引入样式文件
+          }),
+        ],
       }),
       // https://unocss.dev/integrations/vite
       unoCSS(),
       // 注入打包和git信息，方便做版本追踪
       buildInfo(),
       envParse({
-        dtsPath: './types/env.d.ts'
+        dtsPath: './types/env.d.ts',
       }),
       iconfont({
         url: VITE_ICONFONT_URL,
@@ -145,7 +145,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
         iconJson: './src/components/IconPicker/data.json',
         inject: false,
         dts: './types/iconfont.d.ts',
-        iconifyFile: './.iconify.json'
+        iconifyFile: './.iconify.json',
       }),
       // 网站更新提醒
       VITE_UPDATE_NOTICE && webUpdateNotice(),
@@ -160,32 +160,28 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           gzipSize: true,
           brotliSize: true,
           // emitFile: true,
-          sourcemap: true
-        })
+          sourcemap: true,
+        }),
     ],
     build: {
       // 生产配置
       outDir: VITE_OUT_DIR, // 输出目录
       reportCompressedSize: false, //禁用 gzip 压缩大小报告,可以减少构建时间
-      rollupOptions: {
+      rolldownOptions: {
         output: {
           chunkFileNames: 'assets/js/[name]-[hash].js',
           entryFileNames: 'assets/js/[name]-[hash].js',
           assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
-          // 根据自己需求调整分包策略
-          manualChunks: {
-            vue: ['vue', 'vue-router', 'pinia'],
-            antd: ['ant-design-vue', 'dayjs']
-          }
-        }
-      }
-    },
-    esbuild: {
-      // 移出console.log和debugger调试信息，减少生产环境的js文件体积
-      drop: IS_PRODUCTION && VITE_DROP_CONSOLE ? (['console', 'debugger'] as ESBuildOptions['drop']) : []
+          minify: {
+            compress: {
+              dropDebugger: IS_PRODUCTION && VITE_DROP_CONSOLE,
+              dropConsole: IS_PRODUCTION && VITE_DROP_CONSOLE,
+            },
+          },
+        },
+      },
     },
     css: {
-      // transformer:'lightningcss',
       devSourcemap: true, // 开启css sourcemap
       // css预处理器配置
       preprocessorOptions: {
@@ -193,23 +189,23 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           javascriptEnabled: true,
           modifyVars: {
             ...themeToken,
-            hack: `true;@import "${resolve(__dirname, './src/assets/styles/_variable.less')}"`
-          }
-        }
-      }
-    }
-  };
-});
+            hack: `true;@import "${resolve(__dirname, './src/assets/styles/_variable.less')}"`,
+          },
+        },
+      },
+    },
+  }
+})
 /********** 一些辅助函数 *********/
 function createPath(url: string, metaUrl = import.meta.url) {
-  return fileURLToPath(new URL(url, metaUrl));
+  return fileURLToPath(new URL(url, metaUrl))
 }
 function getGlobalConfig(env: Record<string, string | number | boolean>) {
-  const config: Record<string, string | number | boolean> = {};
+  const config: Record<string, string | number | boolean> = {}
   for (const key in env) {
     if (key.startsWith('VITE_GLOBAL_')) {
-      config[key] = env[key];
+      config[key] = env[key]
     }
   }
-  return `window.__APP_CONFIG__=${JSON.stringify(config)};`;
+  return `window.__APP_CONFIG__=${JSON.stringify(config)};`
 }
