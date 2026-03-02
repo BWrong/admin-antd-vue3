@@ -1,5 +1,5 @@
-const { VITE_TITLE } = import.meta.env;
 import pkg from '../../package.json';
+const { VITE_TITLE } = import.meta.env;
 export default {
   // 基础配置
   appTitle: VITE_TITLE, // 应用名称，用于显示在浏览器标签

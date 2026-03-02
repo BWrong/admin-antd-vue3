@@ -31,7 +31,7 @@
     "@bwrong/storage": "^1.1.0",
     "@vueuse/core": "^14.2.1",
     "ant-design-vue": "^4.2.6",
-    "axios": "^1.13.5",
+    "axios": "^1.13.6",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.19",
     "js-cookie": "^3.0.5",
@@ -48,21 +48,21 @@
     "@tsconfig/node-lts": "18.12.2",
     "@types/crypto-js": "^4.2.2",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^24.10.14",
-    "@unocss/eslint-config": "^66.6.2",
-    "@unocss/preset-rem-to-px": "^66.6.2",
-    "@unocss/reset": "^66.6.2",
+    "@types/node": "^24.11.0",
+    "@unocss/eslint-config": "^66.6.3",
+    "@unocss/preset-rem-to-px": "^66.6.3",
+    "@unocss/reset": "^66.6.3",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vitejs/plugin-vue-jsx": "^5.1.4",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.7.0",
-    "@vue/tsconfig": "^0.8.1",
+    "@vue/tsconfig": "^0.9.0",
     "autoprefixer": "^10.4.27",
     "eslint": "^10.0.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-vue": "^10.8.0",
     "less": "^4.5.1",
-    "lint-staged": "^16.2.7",
+    "lint-staged": "^16.3.1",
     "postcss": "^8.5.6",
     "postcss-px-to-viewport": "^1.1.1",
     "prettier": "^3.8.1",
@@ -75,12 +75,12 @@
     "unplugin-vue-components": "^31.0.0",
     "vite": "^7.3.1",
     "vite-plugin-build-info": "^0.1.2",
-    "vite-plugin-compression2": "^2.4.0",
+    "vite-plugin-compression2": "^2.5.0",
     "vite-plugin-env-parse": "^1.0.15",
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-iconfont": "^1.5.3",
     "vite-plugin-mock-dev-server": "^2.0.7",
-    "vite-plugin-vue-devtools": "^8.0.6",
+    "vite-plugin-vue-devtools": "^8.0.7",
     "vue-tsc": "^3.2.5"
   },
   "pnpm": {
@@ -95,6 +95,7 @@
     "onlyBuiltDependencies": [
       "core-js",
       "esbuild",
+      "less",
       "vue-demi"
     ]
   },
@@ -115,5 +116,5 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@10.30.2"
+  "packageManager": "pnpm@10.30.3"
 }
