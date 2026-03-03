@@ -56,9 +56,10 @@ const themes = ref([
 ]);
 const { setTheme, themeOptions } = useTheme();
 function handleColorScheme(e: MouseEvent, colorScheme: ColorScheme) {
+  const isDark = colorScheme === 'dark'
   // 获取到 transition API 实例
   const transition = document.startViewTransition(() => {
-    document.documentElement.classList.toggle('dark')
+    document.documentElement.classList.toggle('dark', isDark)
   })
   // 在 transition.ready 的 Promise 完成后，执行自定义动画
   transition.ready.then(() => {
@@ -73,23 +74,27 @@ function handleColorScheme(e: MouseEvent, colorScheme: ColorScheme) {
       `circle(0% at ${clientX}px ${clientY}px)`,
       `circle(${radius}px at ${clientX}px ${clientY}px)`
     ]
-    const isDark = document.documentElement.classList.contains('dark')
     // 自定义动画
     document.documentElement.animate(
       {
         // 如果要切换到暗色主题，我们在过渡的时候从半径 100% 的圆开始，到 0% 的圆结束
         clipPath: isDark ? clipPath.reverse() : clipPath
+        // clipPath: clipPath
       },
       {
         duration: 500,
+        easing: 'ease-in',
+        fill: 'both',
         // 如果要切换到暗色主题，我们应该裁剪 view-transition-old(root) 的内容
         pseudoElement: isDark
           ? '::view-transition-old(root)'
           : '::view-transition-new(root)'
+        // pseudoElement: '::view-transition-new(root)'
       }
     )
-    setTheme({ colorScheme });
+    setTheme({ colorScheme })
   })
+
 }
 const colorList = ['#1890ff', '#52c41a', '#faad14', '#ff4d4f'];
 function handleSetColor(color: string) {

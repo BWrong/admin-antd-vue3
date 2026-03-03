@@ -107,7 +107,6 @@ function changeCode() {
   const str = new Date().getTime();
   state.codeSrc = `${apiHost}/code/` + str;
 }
-
 // 储存菜单及用户信息
 async function getMenuList() {
   await getMenusRequest().then((res) => {
@@ -162,10 +161,8 @@ function handleLogin() {
   background: #eee;
 }
 
-@media (prefers-color-scheme: dark) {
-  .login-page {
-    background: #141414;
-  }
+:global(.dark .login-page) {
+  background: #141414;
 }
 
 .login-form {

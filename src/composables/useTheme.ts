@@ -24,6 +24,8 @@ function initTheme() {
     const colorVar = useCssVar(`--${key}`, htmlElement);
     colorVar.value = value as string;
   });
+  // 有些地方需要依赖 html 上的 dark 类名，所以需要手动添加
+  htmlElement.classList.toggle('dark', themeOptions.colorScheme === 'dark')
 }
 // 配置theme
 function setTheme(newOptions: Partial<ThemeOptions>) {

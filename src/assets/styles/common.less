@@ -27,11 +27,27 @@ body {
   height: 0;
   content: ' ';
 }
-::view-transition-new(root),
-::view-transition-old(root) {
-  /* 关闭默认动画，否则影响自定义动画的执行 */
+// 1. 重置基础动画和混合模式
+::view-transition-old(root),
+::view-transition-new(root) {
   animation: none;
+  mix-blend-mode: normal;
 }
-.dark::view-transition-old(root) {
-  z-index: 9999;
+
+// 2. 亮色主题时的层级控制
+::view-transition-old(root) {
+  z-index: 1;
 }
+
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
+// 3. 暗色主题时的层级反转
+html.dark::view-transition-old(root) {
+  z-index: 2147483646;
+}
+
+html.dark::view-transition-new(root) {
+  z-index: 1;
+}
+
