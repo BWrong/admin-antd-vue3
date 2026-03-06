@@ -50,7 +50,7 @@
     "@tsconfig/node-lts": "^24.0.0",
     "@types/crypto-js": "^4.2.2",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^24.11.0",
+    "@types/node": "^24.11.1",
     "@unocss/eslint-config": "^66.6.5",
     "@unocss/preset-rem-to-px": "^66.6.5",
     "@unocss/reset": "^66.6.5",
