@@ -43,7 +43,6 @@
     "vue-router": "^5.0.3"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@faker-js/faker": "^10.3.0",
     "@plugin-web-update-notification/vite": "^2.0.2",
     "@release-it/conventional-changelog": "^10.0.5",

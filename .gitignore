@@ -32,5 +32,5 @@ components.d.ts
 *.njsproj
 *.sln
 *.sw?
-
+.eslintcache
 helper.json
