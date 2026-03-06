@@ -5,7 +5,7 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import pluginVue from 'eslint-plugin-vue';
 import { globalIgnores } from 'eslint/config';
 
-import autoImport from './.eslintrc-auto-import.json' assert { type: 'json' };
+import autoImport from './.eslintrc-auto-import.json' with { type: 'json' };
 
 configureVueProject({
   scriptLangs: ['ts', 'tsx']
