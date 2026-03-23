@@ -67,6 +67,7 @@ interface ImportMetaEnv {
    * 开启更新提示
    */
   readonly VITE_UPDATE_NOTICE: boolean
+  readonly VITE_PLUS_BYPASS: string
 }
 // interface ImportMeta {
 //   readonly env: ImportMetaEnv;

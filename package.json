@@ -20,7 +20,7 @@
     "type-check": "vue-tsc --build --force",
     "lint": "run-s lint:*",
     "lint:oxlint": "oxlint . --fix",
-    "lint:eslint": "eslint . --fix --cache",
+    "lint:eslint": "vp lint . --fix",
     "format": "oxfmt src/",
     "release": "release-it",
     "changelog": "release-it --changelog",
@@ -40,7 +40,7 @@
     "pinia": "^3.0.4",
     "qs": "^6.15.0",
     "vue": "^3.5.30",
-    "vue-router": "^5.0.3"
+    "vue-router": "^5.0.4"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.3.0",
@@ -50,15 +50,14 @@
     "@types/crypto-js": "^4.2.2",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^24.12.0",
-    "@unocss/eslint-config": "^66.6.6",
-    "@unocss/preset-rem-to-px": "^66.6.6",
-    "@unocss/reset": "^66.6.6",
+    "@unocss/eslint-config": "^66.6.7",
+    "@unocss/preset-rem-to-px": "^66.6.7",
+    "@unocss/reset": "^66.6.7",
     "@vitejs/plugin-vue": "^6.0.5",
     "@vitejs/plugin-vue-jsx": "^5.1.5",
     "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/tsconfig": "^0.9.0",
     "autoprefixer": "^10.4.27",
-    "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-oxlint": "~1.56.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
@@ -76,18 +75,18 @@
     "rollup-plugin-visualizer": "^7.0.1",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3",
-    "unocss": "^66.6.6",
+    "unocss": "^66.6.7",
     "unplugin-auto-import": "^21.0.0",
-    "unplugin-vue-components": "^31.0.0",
-    "vite": "^8.0.0",
+    "unplugin-vue-components": "^32.0.0",
+    "vite": "^8.0.1",
     "vite-plugin-build-info": "^0.1.2",
-    "vite-plugin-compression2": "^2.5.2",
+    "vite-plugin-compression2": "^2.5.3",
     "vite-plugin-env-parse": "^1.0.15",
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-iconfont": "^1.5.3",
     "vite-plugin-mock-dev-server": "^2.1.0",
     "vite-plugin-vue-devtools": "^8.1.0",
-    "vue-tsc": "^3.2.5"
+    "vue-tsc": "^3.2.6"
   },
   "pnpm": {
     "peerDependencyRules": {
@@ -106,8 +105,8 @@
     ]
   },
   "engines": {
-    "node": ">=20.0.0",
-    "pnpm": ">=10.0.0"
+    "node": "^22.0.0",
+    "pnpm": "^10.0.0"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged --allow-empty",
@@ -116,7 +115,7 @@
   "lint-staged": {
     "src/*.{vue,js,jsx,cjs,mjs,ts,tsx}": [
       "prettier --write",
-      "eslint --fix"
+      "vp lint --fix"
     ],
     "src/*.{css,less}": [
       "prettier --write"
