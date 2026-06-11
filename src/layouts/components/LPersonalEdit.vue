@@ -1,24 +1,44 @@
 <template>
   <a-modal
-title="修改密码" :open="props.open" :confirm-loading="state.confirmLoading" :keyboard="false"
-    :mask-closable="false" @cancel="handleCancel">
+    title="修改密码"
+    :open="props.open"
+    :confirm-loading="state.confirmLoading"
+    :keyboard="false"
+    :mask-closable="false"
+    @cancel="handleCancel"
+  >
     <a-form
-ref="formRef" class="form" :model="state.updatePwdForm" :rules="rules" :label-col="{ span: 5 }"
-      :wrapper-col="{ span: 18 }" @keydown.enter="updatePsd()">
+      ref="formRef"
+      class="form"
+      :model="state.updatePwdForm"
+      :rules="rules"
+      :label-col="{ span: 5 }"
+      :wrapper-col="{ span: 18 }"
+      @keydown.enter="updatePsd()"
+    >
       <a-form-item name="oldPassword" label="原始密码">
         <a-input
-v-model:value="state.updatePwdForm.oldPassword" auto-complete="off" placeholder="请输入原始密码"
-          type="password" />
+          v-model:value="state.updatePwdForm.oldPassword"
+          auto-complete="off"
+          placeholder="请输入原始密码"
+          type="password"
+        />
       </a-form-item>
       <a-form-item name="newPassword" label="新密码">
         <a-input
-v-model:value="state.updatePwdForm.newPassword" auto-complete="off" placeholder="请输入新密码"
-          type="password" />
+          v-model:value="state.updatePwdForm.newPassword"
+          auto-complete="off"
+          placeholder="请输入新密码"
+          type="password"
+        />
       </a-form-item>
       <a-form-item name="reNewPassword" label="重复密码">
         <a-input
-v-model:value="state.updatePwdForm.reNewPassword" auto-complete="off" placeholder="请输入重复密码"
-          type="password" />
+          v-model:value="state.updatePwdForm.reNewPassword"
+          auto-complete="off"
+          placeholder="请输入重复密码"
+          type="password"
+        />
       </a-form-item>
     </a-form>
     <template #footer>

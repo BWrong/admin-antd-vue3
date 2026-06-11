@@ -1,6 +1,6 @@
 allowBuilds:
   core-js: true
-  simple-git-hooks: true
+  simple-git-hooks: set this to true or false
 minimumReleaseAgeExclude:
   - '@types/node@25.9.3'
   - '@vue/compiler-core@3.5.37'
@@ -13,3 +13,17 @@ minimumReleaseAgeExclude:
   - '@vue/server-renderer@3.5.37'
   - '@vue/shared@3.5.37'
   - vue@3.5.37
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@latest
+  vitest: npm:@voidzero-dev/vite-plus-test@latest
+  vite-plus: latest
+overrides:
+  vite: 'catalog:'
+  vitest: 'catalog:'
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: '*'
+    vitest: '*'

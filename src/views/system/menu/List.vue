@@ -28,8 +28,13 @@
     </a-card>
     <!-- 新增编辑 -->
     <a-modal
-v-model:open="isShowEdit" :title="isAdd ? '新建' : '编辑'" :keyboard="false" :mask-closable="false"
-      :after-close="handleClose" @ok="handleOk">
+      v-model:open="isShowEdit"
+      :title="isAdd ? '新建' : '编辑'"
+      :keyboard="false"
+      :mask-closable="false"
+      :after-close="handleClose"
+      @ok="handleOk"
+    >
       <a-form ref="formRef" :model="form" :rules="rules" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
         <a-form-item has-feedback label="类型" name="type">
           <a-radio-group v-model:value="form.type">

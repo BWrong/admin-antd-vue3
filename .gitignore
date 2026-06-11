@@ -33,4 +33,5 @@ components.d.ts
 *.sln
 *.sw?
 .eslintcache
+.vite-hooks
 helper.json

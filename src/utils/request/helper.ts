@@ -39,13 +39,12 @@ export function handleCheckAuth(config: RequestConfig) {
 }
 // 信息提示适配器，使用不同的UI组件库，配置有差异
 export const messageAdaptor = {
-   
   destroy: message.destroy,
-   
+
   error: message.error,
-   
+
   success: message.success,
-   
+
   warn: message.warning
 };
 /**

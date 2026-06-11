@@ -32,8 +32,11 @@ export type PaginationOptions<TShallow extends boolean, TData, TParams extends a
   defaultParams?: TParams;
 };
 // 分页请求结果
-export interface PaginationResult<TData, TParams extends any[], TShallow extends boolean>
-  extends UseAsyncStateReturn<TData, TParams, TShallow> {
+export interface PaginationResult<TData, TParams extends any[], TShallow extends boolean> extends UseAsyncStateReturn<
+  TData,
+  TParams,
+  TShallow
+> {
   pagination: PaginationExtConfig;
   refresh: () => void;
 }
@@ -151,7 +154,7 @@ function usePagination<TData = any, TParams extends any[] = any[], TShallow exte
   };
 }
 export default usePagination;
-function get(source: Record<string, any>, path: string, defaultValue: any = undefined) {
+function get(source: Record<string, any>, path: string, defaultValue?: any) {
   // a[3].b -> a.3.b
   const paths = path.replace(/\[(\d+)\]/g, '.$1').split('.');
   let result = source;

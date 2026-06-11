@@ -11,20 +11,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "serve": "vite --host",
-    "serve:mock": "vite --mode mock --host",
-    "build": "vite build",
+    "dev": "vp dev --host",
+    "serve": "vp dev --host",
+    "serve:mock": "vp dev --mode mock --host",
+    "build": "vp build",
     "build:check": "npm run type-check && npm run build",
-    "preview": "vite preview",
+    "preview": "vp preview",
     "type-check": "vue-tsc --build --force",
-    "lint": "run-s lint:*",
-    "lint:oxlint": "oxlint . --fix",
-    "lint:eslint": "vp lint . --fix",
-    "format": "oxfmt src/",
+    "lint": "vp lint . --fix",
+    "format": "vp fmt src/",
     "release": "release-it",
     "changelog": "release-it --changelog",
-    "postinstall": "simple-git-hooks"
+    "postinstall": "vp config"
   },
   "dependencies": {
     "@bprogress/core": "^1.3.4",
@@ -64,21 +62,16 @@
     "eslint-plugin-vue": "^10.9.2",
     "jiti": "^2.7.0",
     "less": "^4.6.4",
-    "lint-staged": "^17.0.7",
     "npm-run-all2": "^9.0.1",
-    "oxfmt": "^0.54.0",
-    "oxlint": "~1.69.0",
     "postcss": "^8.5.15",
     "postcss-px-to-viewport": "^1.1.1",
-    "prettier": "^3.8.4",
     "release-it": "^20.2.0",
     "rollup-plugin-visualizer": "^7.0.1",
-    "simple-git-hooks": "^2.13.1",
     "typescript": "^6.0.3",
     "unocss": "^66.7.0",
     "unplugin-auto-import": "^21.0.0",
     "unplugin-vue-components": "^32.1.0",
-    "vite": "^8.0.16",
+    "vite": "catalog:",
     "vite-plugin-build-info": "^0.1.2",
     "vite-plugin-compression2": "^2.5.3",
     "vite-plugin-env-parse": "^1.0.15",
@@ -86,40 +79,12 @@
     "vite-plugin-iconfont": "^1.5.3",
     "vite-plugin-mock-dev-server": "^2.4.0",
     "vite-plugin-vue-devtools": "^8.1.2",
-    "vue-tsc": "^3.3.4"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "rollup"
-      ]
-    },
-    "ignoredBuiltDependencies": [
-      "simple-git-hooks"
-    ],
-    "onlyBuiltDependencies": [
-      "core-js",
-      "esbuild",
-      "less",
-      "vue-demi"
-    ]
+    "vue-tsc": "^3.3.4",
+    "vite-plus": "catalog:"
   },
   "engines": {
     "node": "^22.0.0",
     "pnpm": "^11.0.0"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged --allow-empty",
-    "preserveUnused": true
-  },
-  "lint-staged": {
-    "src/*.{vue,js,jsx,cjs,mjs,ts,tsx}": [
-      "prettier --write",
-      "vp lint --fix"
-    ],
-    "src/*.{css,less}": [
-      "prettier --write"
-    ]
   },
   "packageManager": "pnpm@11.5.3"
 }
