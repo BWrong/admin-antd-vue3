@@ -96,7 +96,7 @@ function usePagination<TData = any, TParams extends any[] = any[], TShallow exte
       ...paginationParams
     };
     const mergerParams = [newPaginationParams, ...restParams] as any;
-    executeImmediate(...mergerParams);
+    void executeImmediate(...mergerParams);
   };
 
   // changeCurrent change current page (current: number) => void
@@ -143,7 +143,7 @@ function usePagination<TData = any, TParams extends any[] = any[], TShallow exte
     }
   });
   const refresh = () => {
-    executeImmediate(...defaultParams);
+    void executeImmediate(...defaultParams);
   };
   return {
     state,

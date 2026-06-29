@@ -1,6 +1,7 @@
 import { type Component, type VNode } from 'vue';
 
-import Dialog, { type IProps } from '@/components/Dialog/index.vue';
+import Dialog from '@/components/Dialog/index.vue';
+import type { IProps } from '@/components/Dialog/types';
 
 interface ICreateOptions<D> extends Omit<IProps, 'component' | 'onOk'> {
   onConfirm?: (data: D) => void;

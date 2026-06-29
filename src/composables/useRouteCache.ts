@@ -96,7 +96,7 @@ export default function useRouteCache() {
   // 清除缓存的路由组件的实例
   function clearEntry() {
     caches.value.slice().forEach((key) => {
-      removeCacheEntry(key);
+      void removeCacheEntry(key);
     });
   }
 

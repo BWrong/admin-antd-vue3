@@ -1,20 +1,21 @@
-import { BProgress } from '@bprogress/core';
-import { initAuth } from '@bwrong/auth-tool';
-import { getStorage } from '@bwrong/storage';
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
+import { BProgress } from "@bprogress/core";
+import { initAuth } from "@bwrong/auth-tool";
+import { getStorage } from "@bwrong/storage";
+import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
 
 // import { getMenusRequest } from '@/api/auth';
-import config from '@/config';
-import { getToken } from '@/utils/auth';
+import config from "@/config";
+import { getToken } from "@/utils/auth";
 
-import dynamicRoutes from './dynamicRoutes';
-import routes, { noMatchRoute } from './staticRoutes';
+import dynamicRoutes from "./dynamicRoutes";
+import routes, { noMatchRoute } from "./staticRoutes";
 
-import '@bprogress/core/css';
+// @ts-ignore
+import "@bprogress/core/css";
 
 // 配置BProgress组件的选项
 BProgress.configure({
-  showSpinner: false
+  showSpinner: false,
 });
 let routerLoaded = false; // 动态路由是否已加载
 let removeRouters: Array<() => void> = [];
@@ -26,10 +27,10 @@ const router = createRouter({
     if (savedPosition) {
       return savedPosition;
     } else {
-      return { top: 0, left: 0, behavior: 'smooth' };
+      return { top: 0, left: 0, behavior: "smooth" };
     }
   },
-  routes
+  routes,
 });
 router.beforeEach(async (to) => {
   // 如果不控制权，所有路由直接放行
@@ -38,7 +39,7 @@ router.beforeEach(async (to) => {
   const token = getToken();
   // 其实路由拦截后所做跳转仅有以下几种情况：
   // 1.已登录时跳转到登录页（非登出的情况）需要重定向到根路径
-  if (to.path === '/login' && token) return '/';
+  if (to.path === "/login" && token) return "/";
   // 2.路由在白名单，或者已经登录且动态路由已加载完成，均放行
   if (config.whiteRoutes.includes(to.path) || (token && routerLoaded)) return;
   // 3.未登录且不在白名单，重定向到登录页，带上回调地址，方便回归
@@ -68,7 +69,7 @@ async function _getAllowRoutes(dynamicRoutes: RouteRecordRaw[]) {
   //   return res.menus;
   // });
   await Promise.resolve();
-  const menus = getStorage<Record<string, unknown>[]>('rawMenu') || [];
+  const menus = getStorage<Record<string, unknown>[]>("rawMenu") || [];
   return _ganerRoutesAndMenus(dynamicRoutes, menus);
 }
 /**
@@ -76,11 +77,14 @@ async function _getAllowRoutes(dynamicRoutes: RouteRecordRaw[]) {
  * @param {*} routes 需要鉴权的路由
  * @param {*} permissions 菜单和权限标识集
  */
-function _ganerRoutesAndMenus(routes: Array<RouteRecordRaw>, permissions: Record<string, unknown>[]) {
+function _ganerRoutesAndMenus(
+  routes: Array<RouteRecordRaw>,
+  permissions: Record<string, unknown>[],
+) {
   const { routes: filterRoutes } = initAuth({
     routes,
     permissions,
-    authKey: 'permission'
+    authKey: "permission",
   });
   return filterRoutes as RouteRecordRaw[];
 }

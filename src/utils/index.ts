@@ -5,15 +5,15 @@
  * @LastEditors: Bwrong
  * @LastEditTime: 2024-04-26 17:52:34
  */
-import Base64 from 'crypto-js/enc-base64';
-import Utf8 from 'crypto-js/enc-utf8';
+import Base64 from "crypto-js/enc-base64";
+import Utf8 from "crypto-js/enc-utf8";
 
-import { SEX } from '@/enums/user';
-import dayjs from '@/plugins/dayjs';
+import { SEX } from "@/enums/user";
+import dayjs from "@/plugins/dayjs";
 
 // 性别
 export function formatSex<T extends keyof typeof SEX>(value: T) {
-  return SEX[value] || '未知';
+  return SEX[value] || "未知";
 }
 
 /**
@@ -21,9 +21,12 @@ export function formatSex<T extends keyof typeof SEX>(value: T) {
  * @param {*} value
  * @param {*} type
  */
-export function formatTime(time: number | string | Date = new Date(), type = 'YYYY-MM-DD HH:mm:ss') {
+export function formatTime(
+  time: number | string | Date = new Date(),
+  type = "YYYY-MM-DD HH:mm:ss",
+) {
   const date = new Date(time);
-  return time ? dayjs(date).format(type) : '';
+  return time ? dayjs(date).format(type) : "";
 }
 
 // 转换成浮点数
@@ -37,12 +40,17 @@ export function toFixed(val: number | string, dig = 2) {
  * @return {[string]}       [参数集合]
  */
 export function getQuery(url: string) {
-  if (url.indexOf('?') === -1) return {};
+  if (url.indexOf("?") === -1) return {};
   const query = {} as { [key: string]: string };
-  const str = url.split('?')[1];
-  const strs = str.split('&');
+  const str = url.split("?")[1] || "";
+  const strs = str.split("&");
   for (let i = 0; i < strs.length; i++) {
-    query[strs[i].split('=')[0]] = decodeURI(strs[i].split('=')[1]);
+    const queryItem = strs[i];
+    if (!queryItem) continue;
+    const arr = queryItem.split("=");
+    if (arr[0]) {
+      query[arr[0]] = decodeURI(arr[1] || "");
+    }
   }
   return query;
 }
@@ -62,7 +70,7 @@ export function cryptoPassword(password: string, cryptoKey?: string) {
  * @param limit 单位M
  */
 export function checkFileSize(size: number, limit: number) {
-  return size > 1024 * 1024 * limit ? `上传文件大小不能超过${limit}MB` : '';
+  return size > 1024 * 1024 * limit ? `上传文件大小不能超过${limit}MB` : "";
 }
 /**
  * 检查上传文件是否是图片
@@ -71,18 +79,18 @@ export function checkFileSize(size: number, limit: number) {
  */
 export function checkIsImage(
   mime: string,
-  types = ['image/gif', 'image/x-png', 'image/png', 'image/pjpeg', 'image/jpeg', 'image/bmp'],
-  msg = '上传文件格式不正确'
+  types = ["image/gif", "image/x-png", "image/png", "image/pjpeg", "image/jpeg", "image/bmp"],
+  msg = "上传文件格式不正确",
 ) {
-  return types.includes(mime) ? '' : msg;
+  return types.includes(mime) ? "" : msg;
 }
 /**
  * 检查上传文件是否是视频
  * @param mime
  * @param types
  */
-export function checkIsVideo(mime: string, types = ['video/mp4'], msg = '上传文件格式不正确') {
-  return types.includes(mime) ? '' : msg;
+export function checkIsVideo(mime: string, types = ["video/mp4"], msg = "上传文件格式不正确") {
+  return types.includes(mime) ? "" : msg;
 }
 /********** 工具函数 ************/
 /**
@@ -93,32 +101,37 @@ export function checkIsVideo(mime: string, types = ['video/mp4'], msg = '上传�
  * @param {*} pidName    父级标识key
  * @param {*} idName     id标识key
  */
-interface ITreeData<T> {
+interface ITreeData<T extends Record<string, any> = Record<string, any>> {
   data: T[];
   pid?: number | string;
   children?: string;
   pidName?: string;
   idName?: string;
 }
-export function convertToTree<T = any>({
+export function convertToTree<T extends Record<string, any> = Record<string, any>>({
   data,
   pid = 0,
-  children = 'children',
-  pidName = 'parentId',
-  idName = 'id'
-}: ITreeData<T>) {
+  children = "children",
+  pidName = "parentId",
+  idName = "id",
+}: ITreeData<T>): T[] {
   const tree: T[] = [],
     map: Record<string, T[]> = {};
   data.forEach((item) => {
-    item[children] = map[item[idName]] = map[item[idName]] || [];
-    if (item[pidName]) {
-      map[item[pidName]] = map[item[pidName]] || [];
-      map[item[pidName]].push(item);
+    const id = item[idName];
+    const idKey = id != null ? String(id) : "";
+    (item as Record<string, any>)[children] = map[idKey] = map[idKey] || [];
+    const parentId = item[pidName];
+    if (parentId != null) {
+      const pKey = String(parentId);
+      map[pKey] = map[pKey] || [];
+      map[pKey].push(item);
     } else {
       tree.push(item);
     }
   });
-  return pid && map[pid] ? map[pid] : tree;
+  const rootKey = String(pid);
+  return pid && map[rootKey] ? map[rootKey] : tree;
 }
 
 /**
@@ -139,18 +152,18 @@ export function ganerTableIndex(current = 1, pageSize = 10, index = 0) {
 
 export const getFileType = (() => {
   const fileTypeMap: Record<string, string[]> = {
-    excel: ['.xls', '.xlsx', '.csv'],
-    word: ['.doc', '.docx', '.dot', '.dotx'],
-    ppt: ['.ppt', '.pptx', '.pps', '.pot', '.potx'],
-    code: ['.java', '.js', '.html', '.py', '.go']
+    excel: [".xls", ".xlsx", ".csv"],
+    word: [".doc", ".docx", ".dot", ".dotx"],
+    ppt: [".ppt", ".pptx", ".pps", ".pot", ".potx"],
+    code: [".java", ".js", ".html", ".py", ".go"],
   };
   return (filePath: string) => {
     const suffixMatch = filePath.match(/\.[^.]+$/);
     const suffix = String(suffixMatch).toLowerCase();
     for (const key in fileTypeMap) {
-      if (fileTypeMap[key].includes(suffix)) return key;
+      if (fileTypeMap[key]?.includes(suffix)) return key;
     }
-    return 'other';
+    return "other";
   };
 })();
 /**
@@ -159,7 +172,7 @@ export const getFileType = (() => {
  * @param filename
  */
 export function downloadFile(content: BlobPart, filename: string) {
-  const a = document.createElement('a');
+  const a = document.createElement("a");
   const blob = content instanceof Blob ? content : new Blob([content]);
   const url = window.URL.createObjectURL(blob);
   a.href = url;
@@ -173,11 +186,11 @@ export function downloadFile(content: BlobPart, filename: string) {
  * @returns
  */
 export const bytesToSize = (bytes?: number) => {
-  if (!bytes) return '0 B';
+  if (!bytes) return "0 B";
   const k = 1024,
-    sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+    sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
     i = Math.floor(Math.log(bytes) / Math.log(k));
-  return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+  return (bytes / Math.pow(k, i)).toPrecision(3) + " " + sizes[i];
 };
 /**
  * 将数组转换成对象
@@ -190,11 +203,11 @@ export const bytesToSize = (bytes?: number) => {
 export function arrayToObj<T extends Record<string, any>, K extends keyof T = string>(
   arrayData: T[],
   key: K,
-  value?: K
+  value?: K,
 ) {
   return arrayData.reduce(
     (temp, item) => ((temp[item[key]] = value ? item[value] : item), temp),
-    {} as Record<T[K], T[K] | T>
+    {} as Record<T[K], T[K] | T>,
   );
 }
 /**
@@ -223,7 +236,7 @@ export function checkEmptyFieldOfList<T, K extends keyof T>(data: T[], checkKeys
 
 export function getDefaultFromProps<T = Record<string, any>>(
   props: Record<string, any>,
-  overrideProps: T
+  overrideProps: T,
 ): T | Record<string, any> {
   const defaults = Object.entries(props).reduce((temp: any, [key, value]) => {
     temp[key] = value?.default;
@@ -231,6 +244,6 @@ export function getDefaultFromProps<T = Record<string, any>>(
   }, {});
   return {
     ...defaults,
-    ...overrideProps
+    ...overrideProps,
   };
 }

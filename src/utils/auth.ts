@@ -55,7 +55,7 @@ export function clearAuthData() {
 export function logout() {
   clearAuthData();
   clearStorage(['theme']);
-  router.replace('/login');
+  void router.replace('/login');
   resetRouter();
   location.reload();
 }

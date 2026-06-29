@@ -1,7 +1,7 @@
-import { type App, onActivated } from 'vue';
-import { onBeforeRouteLeave } from 'vue-router';
+import { type App, onActivated } from "vue";
+import { onBeforeRouteLeave } from "vue-router";
 
-let gobalScrollBox = 'html'; // 全局滚动盒子
+let gobalScrollBox = "html"; // 全局滚动盒子
 /**
  * 配置滚动盒子
  * @param scrollBox
@@ -23,8 +23,8 @@ export function useKeepScroll(scrollBox?: string) {
       console.warn(`useKeepScroll: 未找到 ${scrollBox || gobalScrollBox} Dom滚动容器`);
       return;
     }
-    scroller.scrollTop = pos[0];
-    scroller.scrollLeft = pos[1];
+    scroller.scrollTop = pos[0] as number;
+    scroller.scrollLeft = pos[1] as number;
   });
 
   onBeforeRouteLeave(() => {
@@ -40,10 +40,10 @@ export function useKeepScroll(scrollBox?: string) {
  * @param app
  * @param scrollBox
  */
-export function installKeepScroll(app: App, scrollBox = 'html') {
+export function installKeepScroll(app: App, scrollBox = "html") {
   app.mixin({
     created() {
-      if ('keep-scroll' in this.$attrs) {
+      if ("keep-scroll" in this.$attrs) {
         onBeforeRouteLeave(() => {
           const scroller = document.querySelector(scrollBox);
           if (scroller) {
@@ -54,13 +54,13 @@ export function installKeepScroll(app: App, scrollBox = 'html') {
       }
     },
     activated() {
-      if ('keep-scroll' in this.$attrs) {
+      if ("keep-scroll" in this.$attrs) {
         const scroller = document.querySelector(scrollBox);
         if (scroller) {
           scroller.scrollTop = this.$_top;
           scroller.scrollLeft = this.$_left;
         }
       }
-    }
+    },
   });
 }

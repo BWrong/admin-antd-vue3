@@ -1,33 +1,33 @@
-import { resolve } from 'node:path';
-import { fileURLToPath, URL } from 'node:url';
+import { resolve } from "node:path";
+import { fileURLToPath, URL } from "node:url";
 
-import { webUpdateNotice } from '@plugin-web-update-notification/vite';
-import vue from '@vitejs/plugin-vue';
-import vueJsx from '@vitejs/plugin-vue-jsx';
-import { visualizer } from 'rollup-plugin-visualizer';
-import unoCSS from 'unocss/vite';
-import autoImport from 'unplugin-auto-import/vite';
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
-import unpluginComponents from 'unplugin-vue-components/vite';
-import buildInfo from 'vite-plugin-build-info';
-import { compression } from 'vite-plugin-compression2';
-import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse';
-import { createHtmlPlugin } from 'vite-plugin-html';
-import iconfont from 'vite-plugin-iconfont';
-import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server';
-import vueDevTools from 'vite-plugin-vue-devtools';
-import { defineConfig, loadEnv, type ProxyOptions } from 'vite-plus';
+import { webUpdateNotice } from "@plugin-web-update-notification/vite";
+import vue from "@vitejs/plugin-vue";
+import vueJsx from "@vitejs/plugin-vue-jsx";
+import { visualizer } from "rollup-plugin-visualizer";
+import unoCSS from "unocss/vite";
+import autoImport from "unplugin-auto-import/vite";
+import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
+import unpluginComponents from "unplugin-vue-components/vite";
+import buildInfo from "vite-plugin-build-info";
+import { compression } from "vite-plugin-compression2";
+import { envParse, parseLoadedEnv } from "vite-plugin-env-parse";
+import { createHtmlPlugin } from "vite-plugin-html";
+import iconfont from "vite-plugin-iconfont";
+import { mockDevServerPlugin } from "vite-plugin-mock-dev-server";
+import vueDevTools from "vite-plugin-vue-devtools";
+import { defineConfig, loadEnv, type ProxyOptions } from "vite-plus";
 
-import { themeToken } from './src/config/theme';
+import { themeToken } from "./src/config/theme";
 
 // 完整配置，请查阅https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
   const root = process.cwd(); // 项目根目录
   const env = parseLoadedEnv(loadEnv(mode, root) as ImportMetaEnv);
-  console.log('【info】 command:', command, ', mode: ', mode);
+  console.log("【info】 command:", command, ", mode: ", mode);
   console.log(env);
-  const IS_PRODUCTION = command === 'build';
-  const IS_MOCK = mode === 'mock';
+  const IS_PRODUCTION = command === "build";
+  const IS_MOCK = mode === "mock";
   // 读取环境配置
   const {
     VITE_BASE_URL,
@@ -41,7 +41,7 @@ export default defineConfig(({ command, mode }) => {
     VITE_OUT_DIR,
     VITE_DROP_CONSOLE = false,
     VITE_UPDATE_NOTICE = false,
-    VITE_DEV_TOOLS = false
+    VITE_DEV_TOOLS = false,
   } = env;
 
   /***** 接口代理配置，有多个可以自己加 ******/
@@ -51,8 +51,8 @@ export default defineConfig(({ command, mode }) => {
       // secure: false,
       // ws: true,
       changeOrigin: true, // 将Origin的来源更改为目标URL
-      rewrite: (path) => path.replace(new RegExp(`^${VITE_API_PREFIX}`), '/api')
-    }
+      rewrite: (path) => path.replace(new RegExp(`^${VITE_API_PREFIX}`), "/api"),
+    },
     // 可以自行添加更多，多个代理的时候需要同步修改request：
     // 方式1：创建多个request实例；
     // 方式2：request的baseURL设置成/，然后在接口url前面拼接上代理的prefix
@@ -65,89 +65,90 @@ export default defineConfig(({ command, mode }) => {
   };
   return {
     lint: {
-      plugins: ['eslint', 'typescript', 'unicorn', 'oxc', 'vue'],
+      plugins: ["eslint", "typescript", "unicorn", "oxc", "vue"],
       jsPlugins: [
-        'eslint-plugin-simple-import-sort',
+        "eslint-plugin-simple-import-sort",
         {
-          name: 'vite-plus',
-          specifier: 'vite-plus/oxlint-plugin'
-        }
+          name: "vite-plus",
+          specifier: "vite-plus/oxlint-plugin",
+        },
       ],
       categories: {
-        correctness: 'error'
+        correctness: "error",
       },
       options: {
         typeAware: true,
-        typeCheck: true
+        typeCheck: true,
       },
       env: {
         browser: true,
         builtin: true,
-        es2026: true
+        es2026: true,
       },
       globals: {
-        Iconfont: 'writable',
-        __APP_CONFIG__: 'writable'
+        Iconfont: "writable",
+        __APP_CONFIG__: "writable",
       },
-      ignorePatterns: ['**/dist/**', 'public/**', '**/dist-ssr/**', '**/coverage/**'],
+      ignorePatterns: ["**/dist/**", "public/**", "**/dist-ssr/**", "**/coverage/**"],
       rules: {
-        'no-array-constructor': 'error',
-        'simple-import-sort/imports': [
-          'warn',
+        "no-array-constructor": "error",
+        "simple-import-sort/imports": [
+          "warn",
           {
-            groups: [['^node:'], ['^@?\\w'], ['^'], ['^\\.'], ['^\\u0000']]
-          }
+            groups: [["^node:"], ["^@?\\w"], ["^"], ["^\\."], ["^\\u0000"]],
+          },
         ],
-        'simple-import-sort/exports': 'warn',
-        'vite-plus/prefer-vite-plus-imports': 'error'
+        "simple-import-sort/exports": "warn",
+        "vite-plus/prefer-vite-plus-imports": "error",
       },
       overrides: [
         {
-          files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts', '**/*.vue'],
+          files: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts", "**/*.vue"],
           rules: {
-            'constructor-super': 'off',
-            'getter-return': 'off',
-            'no-class-assign': 'off',
-            'no-const-assign': 'off',
-            'no-dupe-class-members': 'off',
-            'no-dupe-keys': 'off',
-            'no-func-assign': 'off',
-            'no-import-assign': 'off',
-            'no-new-native-nonconstructor': 'off',
-            'no-obj-calls': 'off',
-            'no-redeclare': 'off',
-            'no-setter-return': 'off',
-            'no-this-before-super': 'off',
-            'no-undef': 'off',
-            'no-unreachable': 'off',
-            'no-unsafe-negation': 'off',
-            'no-var': 'error',
-            'no-with': 'off',
-            'prefer-const': 'error',
-            'prefer-rest-params': 'error',
-            'prefer-spread': 'error'
-          }
+            "constructor-super": "off",
+            "getter-return": "off",
+            "no-class-assign": "off",
+            "no-const-assign": "off",
+            "no-dupe-class-members": "off",
+            "no-dupe-keys": "off",
+            "no-func-assign": "off",
+            "no-import-assign": "off",
+            "no-new-native-nonconstructor": "off",
+            "no-obj-calls": "off",
+            "no-redeclare": "off",
+            "no-setter-return": "off",
+            "no-this-before-super": "off",
+            "no-undef": "off",
+            "no-unreachable": "off",
+            "no-unsafe-negation": "off",
+            "no-var": "error",
+            "no-with": "off",
+            "prefer-const": "error",
+            "prefer-rest-params": "error",
+            "prefer-spread": "error",
+            "eslint/no-unused-expressions": "off",
+          },
         },
         {
-          files: ['**/main.ts', '**/eslint.config.ts'],
+          files: ["**/main.ts", "**/eslint.config.ts"],
           rules: {
-            'simple-import-sort/imports': 'off'
+            "simple-import-sort/imports": "off",
           },
-          jsPlugins: ['eslint-plugin-simple-import-sort']
-        }
-      ]
+          jsPlugins: ["eslint-plugin-simple-import-sort"],
+        },
+      ],
     },
     fmt: {
       printWidth: 120,
       tabWidth: 2,
       singleQuote: true,
-      trailingComma: 'none',
+      trailingComma: "none",
       sortPackageJson: false,
-      ignorePatterns: []
+      ignorePatterns: [],
     },
     staged: {
-      'src/*.{vue,js,jsx,cjs,mjs,ts,tsx}': ['vp fmt', 'vp lint --fix'],
-      'src/*.{css,less}': 'vp fmt'
+      "src/*.{vue,js,jsx,cjs,mjs,ts,tsx}": ["vp fmt", "vp lint --fix"],
+      "src/*.{css,less}": "vp fmt",
     },
     root, // 项目根目录
     base: VITE_BASE_URL, // 基础路径
@@ -158,17 +159,17 @@ export default defineConfig(({ command, mode }) => {
       port: VITE_PORT || 8080,
       open: true,
       // cors: false, // 跨域
-      proxy: PROXY_CONFIG
+      proxy: PROXY_CONFIG,
     },
     preview: {
       open: true,
-      proxy: PROXY_CONFIG
+      proxy: PROXY_CONFIG,
     },
     resolve: {
       alias: {
         // 别名
-        '@': createPath('./src')
-      }
+        "@": createPath("./src"),
+      },
     },
     plugins: [
       vue(),
@@ -176,7 +177,7 @@ export default defineConfig(({ command, mode }) => {
       VITE_DEV_TOOLS && vueDevTools(), // 必须放到createHtmlPlugin前面
       createHtmlPlugin({
         minify: true,
-        entry: '/src/main.ts',
+        entry: "/src/main.ts",
         // template: 'index.html', // 模板路径
         inject: {
           data: {
@@ -187,50 +188,50 @@ export default defineConfig(({ command, mode }) => {
                 ${getGlobalConfig(env)}
               </script>
               <script src="${VITE_BASE_URL}iconfont/iconfont.js"></script>
-            `
-          }
-        }
+            `,
+          },
+        },
       }),
       // 自动导入组件 https://github.com/antfu/unplugin-auto-import
       autoImport({
-        imports: ['vue', 'vue-router', 'pinia', '@vueuse/core'],
-        dts: 'types/auto-imports.d.ts',
+        imports: ["vue", "vue-router", "pinia", "@vueuse/core"],
+        dts: "types/auto-imports.d.ts",
         // resolvers: [AntDesignVueResolver()],
-        dirs: ['src/composables', 'src/store', 'src/components'], // 需要自动导入的文件目录
+        dirs: ["src/composables", "src/store", "src/components"], // 需要自动导入的文件目录
         vueTemplate: true,
         resolvers: [],
         eslintrc: {
           enabled: true,
-          filepath: './.eslintrc-auto-import.json',
-          globalsPropValue: true
-        }
+          filepath: "./.eslintrc-auto-import.json",
+          globalsPropValue: true,
+        },
       }),
       // 自动按需加载组件 https://github.com/antfu/unplugin-vue-components
       unpluginComponents({
-        dts: 'types/components.d.ts',
-        dirs: ['src/components'],
-        extensions: ['vue', 'tsx'],
+        dts: "types/components.d.ts",
+        dirs: ["src/components"],
+        extensions: ["vue", "tsx"],
         directoryAsNamespace: false,
         resolvers: [
           AntDesignVueResolver({
-            importStyle: false // ant-design-vue采用cssinjs，不需要引入样式文件
-          })
-        ]
+            importStyle: false, // ant-design-vue采用cssinjs，不需要引入样式文件
+          }),
+        ],
       }),
       // https://unocss.dev/integrations/vite
       unoCSS(),
       // 注入打包和git信息，方便做版本追踪
       buildInfo(),
       envParse({
-        dtsPath: './types/env.d.ts'
+        dtsPath: "./types/env.d.ts",
       }),
       iconfont({
         url: VITE_ICONFONT_URL,
-        distUrl: './public/iconfont/iconfont.js',
-        iconJson: './src/components/IconPicker/data.json',
+        distUrl: "./public/iconfont/iconfont.js",
+        iconJson: "./src/components/IconPicker/data.json",
         inject: false,
-        dts: './types/iconfont.d.ts',
-        iconifyFile: './.iconify.json'
+        dts: "./types/iconfont.d.ts",
+        iconifyFile: "./.iconify.json",
       }),
       // 网站更新提醒
       VITE_UPDATE_NOTICE && webUpdateNotice(),
@@ -240,13 +241,13 @@ export default defineConfig(({ command, mode }) => {
       // 开启打包可视化分析报告,会增加打包时间，不需要可以关闭
       VITE_BUILD_REPORT &&
         visualizer({
-          template: 'treemap',
+          template: "treemap",
           open: true,
           gzipSize: true,
           brotliSize: true,
           // emitFile: true,
-          sourcemap: true
-        })
+          sourcemap: true,
+        }),
     ],
     build: {
       // 生产配置
@@ -254,17 +255,17 @@ export default defineConfig(({ command, mode }) => {
       reportCompressedSize: false, //禁用 gzip 压缩大小报告,可以减少构建时间
       rolldownOptions: {
         output: {
-          chunkFileNames: 'assets/js/[name]-[hash].js',
-          entryFileNames: 'assets/js/[name]-[hash].js',
-          assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+          chunkFileNames: "assets/js/[name]-[hash].js",
+          entryFileNames: "assets/js/[name]-[hash].js",
+          assetFileNames: "assets/[ext]/[name]-[hash].[ext]",
           minify: {
             compress: {
               dropDebugger: IS_PRODUCTION && VITE_DROP_CONSOLE,
-              dropConsole: IS_PRODUCTION && VITE_DROP_CONSOLE
-            }
-          }
-        }
-      }
+              dropConsole: IS_PRODUCTION && VITE_DROP_CONSOLE,
+            },
+          },
+        },
+      },
     },
     css: {
       devSourcemap: true, // 开启css sourcemap
@@ -274,11 +275,11 @@ export default defineConfig(({ command, mode }) => {
           javascriptEnabled: true,
           modifyVars: {
             ...themeToken,
-            hack: `true;@import "${resolve(__dirname, './src/assets/styles/_variable.less')}"`
-          }
-        }
-      }
-    }
+            hack: `true;@import "${resolve(__dirname, "./src/assets/styles/_variable.less")}"`,
+          },
+        },
+      },
+    },
   };
 });
 /********** 一些辅助函数 *********/
@@ -288,7 +289,7 @@ function createPath(url: string, metaUrl = import.meta.url) {
 function getGlobalConfig(env: Record<string, string | number | boolean>) {
   const config: Record<string, string | number | boolean> = {};
   for (const key in env) {
-    if (key.startsWith('VITE_GLOBAL_')) {
+    if (key.startsWith("VITE_GLOBAL_")) {
       config[key] = env[key];
     }
   }
