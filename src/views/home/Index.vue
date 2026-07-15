@@ -87,17 +87,21 @@
             <IconFont :type="record.icon" />
           </ASpace>
           <ASpace v-if="column.dataIndex === 'type'">
-            {{ record.type === 0 ? '菜单' : '操作' }}
+            {{ record.type === 0 ? "菜单" : "操作" }}
           </ASpace>
         </template>
       </BasisTable>
       <h3>图标</h3>
       <p>组件位置：/src/components/IconFont</p>
-      使用<a href="https://www.iconfont.cn/" class="text-link" target="_blank">iconfont</a>图标，<strong
-        >请将<span class="text-primary">ENV</span>文件中的<span class="text-primary">VITE_ICONFONT_URL</span
+      使用<a href="https://www.iconfont.cn/" class="text-link" target="_blank">iconfont</a
+      >图标，<strong
+        >请将<span class="text-primary">ENV</span>文件中的<span class="text-primary"
+          >VITE_ICONFONT_URL</span
         >变量设置为自己iconfont项目对应的地址</strong
       >。当然，如果你不喜欢这种使用方式，可以试试
-      <a href="https://unocss.dev/presets/icons" target="_blank" rel="noopener noreferrer">unocss Icons</a>或者其他方式
+      <a href="https://unocss.dev/presets/icons" target="_blank" rel="noopener noreferrer"
+        >unocss Icons</a
+      >或者其他方式
       <p class="text-6 text-primary">
         <IconFont type="icon-pic-right" :style="{ color: 'blue' }" />
         <IconFont type="icon-CodeSandbox" />
@@ -135,7 +139,8 @@
       </ASpace>
       <h3>UnoCss</h3>
       <p>
-        默认可以使用<a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">tailwindcss</a
+        默认可以使用<a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer"
+          >tailwindcss</a
         >语法,建议安装对应编辑器插件<a
           href="https://marketplace.visualstudio.com/items?itemName=antfu.unocss"
           target="_blank"
@@ -144,15 +149,17 @@
         >以获得更好的体验。
       </p>
       <p>
-        默认所有单位使用rem，如果需要使用px，可以安装<a href="https://unocss.dev/presets/rem-to-px">rem-to-px插件</a>
+        默认所有单位使用rem，如果需要使用px，可以安装<a href="https://unocss.dev/presets/rem-to-px"
+          >rem-to-px插件</a
+        >
       </p>
       <div
         class="m-1 inline-block h-30 max-w-lg bg-primary p-5 text-center text-white duration-1000 hover:(rounded-10 bg-green text-red)"
       >
         这是使用unocss默认预设写出的样式，class如下：
         <div>
-          m-1 inline-block h-30 max-w-lg bg-primary p-5 text-center text-white duration-1000 hover:(rounded-10 bg-green
-          text-red)
+          m-1 inline-block h-30 max-w-lg bg-primary p-5 text-center text-white duration-1000
+          hover:(rounded-10 bg-green text-red)
         </div>
       </div>
       <h3>主题设置</h3>
@@ -184,49 +191,49 @@
   </div>
 </template>
 <script lang="tsx" setup>
-import { message } from 'ant-design-vue';
-import type { ColumnProps } from 'ant-design-vue/es/table';
-import type { AxiosProgressEvent } from 'axios';
-import { reactive } from 'vue';
+import { message } from "ant-design-vue";
+import type { ColumnProps } from "ant-design-vue/es/table";
+import type { AxiosProgressEvent } from "axios";
+import { reactive } from "vue";
 
-import { testApi } from '@/api/auth';
-import { downloadRequest } from '@/api/file';
-import { bytesToSize } from '@/utils';
-import request from '@/utils/request';
+import { testApi } from "@/api/auth";
+import { downloadRequest } from "@/api/file";
+import { bytesToSize } from "@/utils";
+import request from "@/utils/request";
 
-import TestModalForm from './TestModalForm.vue';
-const authKeys = ['home', 'system', 'system/menu', 'other'];
-const selectAuthKeys = ref(['home', 'system']);
+import TestModalForm from "./TestModalForm.vue";
+const authKeys = ["home", "system", "system/menu", "other"];
+const selectAuthKeys = ref(["home", "system"]);
 const appConfig = window.__APP_CONFIG__;
 
 const columns: ColumnProps[] = [
   {
-    title: '名称',
-    dataIndex: 'name'
+    title: "名称",
+    dataIndex: "name",
   },
   {
-    title: '分类',
-    dataIndex: 'category'
+    title: "分类",
+    dataIndex: "category",
   },
   {
-    title: '价格',
-    dataIndex: 'price'
+    title: "价格",
+    dataIndex: "price",
   },
   {
-    title: '图片',
-    dataIndex: 'image'
+    title: "图片",
+    dataIndex: "image",
   },
   {
-    title: '操作',
-    align: 'center',
-    dataIndex: 'action'
-  }
+    title: "操作",
+    align: "center",
+    dataIndex: "action",
+  },
 ];
 const { isLoading, state, refresh, error, pagination } = usePagination(testApi, {
   defaultParams: [{ pageSize: 10, current: 1 }],
   paginationExtConfig: {
     showSizeChanger: true,
-  }
+  },
 });
 
 function handleRun() {
@@ -242,37 +249,37 @@ function handleCancelAllRequest() {
 const progress = reactive<Partial<AxiosProgressEvent>>({
   total: 0,
   loaded: 0,
-  progress: 0
+  progress: 0,
 });
 function handleDownloadFile() {
-  downloadRequest('文件下载测试', {}, progress);
+  downloadRequest("文件下载测试", {}, progress);
 }
 function handleDelete() {
-  message.success('删除成功');
+  message.success("删除成功");
 }
 const { createDialog } = useDialog();
 // 默认打开弹窗，并传递参数给组件，支持vue3的props类型推断
 function handleOpenModal() {
   // 这里需要手动添加一下泛型，就可推断onConfirm中参数的类型
   createDialog<typeof TestModalForm>(<TestModalForm title="测试模态窗" />, {
-    title: '测试弹窗1',
-    width: '500px',
+    title: "测试弹窗1",
+    width: "500px",
     // ...支持AModal的所有配置
     onConfirm(data) {
       // 可以拿到内部数据，在表单类弹窗中很有用
-      console.log('拿到组件内部数据：', data);
-    }
+      console.log("拿到组件内部数据：", data);
+    },
   });
 }
 function handleOpenModal1() {
   // 默认不显示
   const { open, close } = createDialog<typeof TestModalForm>(<TestModalForm title="测试模态窗" />, {
-    title: '测试弹窗2',
-    width: '500px',
+    title: "测试弹窗2",
+    width: "500px",
     defaultOpen: false,
     onConfirm(data) {
-      console.log('拿到组件内部数据：', data);
-    }
+      console.log("拿到组件内部数据：", data);
+    },
   });
   open();
   setTimeout(() => {
@@ -281,30 +288,33 @@ function handleOpenModal1() {
 }
 function handleOpenModal2() {
   // 带插槽
-  createDialog<typeof TestModalForm>(<TestModalForm title="测试模态窗">
-    {{
-      default: () => <div>默认插槽</div>,
-      test: () => <div>test插槽</div>
-    }}
-  </TestModalForm>, {
-    title: '测试弹窗3',
-    width: '500px',
-    onConfirm(data) {
-      console.log('拿到组件内部数据：', data);
-      console.log('122');
-    }
-  });
+  createDialog<typeof TestModalForm>(
+    <TestModalForm title="测试模态窗">
+      {{
+        default: () => <div>默认插槽</div>,
+        test: () => <div>test插槽</div>,
+      }}
+    </TestModalForm>,
+    {
+      title: "测试弹窗3",
+      width: "500px",
+      onConfirm(data) {
+        console.log("拿到组件内部数据：", data);
+        console.log("122");
+      },
+    },
+  );
 }
 const iconSelect = ref<Iconfont | undefined>();
-const colorList = ['#1890ff', '#52c41a', '#faad14', '#ff4d4f'];
+const colorList = ["#1890ff", "#52c41a", "#faad14", "#ff4d4f"];
 const { setTheme, themeOptions } = useTheme();
 // 设置主题颜色
 function handleSetTheme(color: string) {
   setTheme({
     themeToken: {
       ...themeOptions.themeToken,
-      colorPrimary: color
-    }
+      colorPrimary: color,
+    },
   });
 }
 </script>

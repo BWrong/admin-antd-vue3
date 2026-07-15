@@ -23,7 +23,7 @@ interface IPage {
   pageSize?: number;
 }
 
-interface IProps extends TableProps {
+interface IProps extends /* @vue-ignore */ TableProps {
   // eslint-disable-next-line vue/require-default-prop
   rowKey?: string;
   showIndex?: boolean;

@@ -16,5 +16,8 @@
   "iconify.customCollectionJsonPaths": ["./.iconify.json"],
   "iconify.annotations": true,
   "iconify.inplace": false,
-  "CodeFree.index": true
+  "CodeFree.index": true,
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

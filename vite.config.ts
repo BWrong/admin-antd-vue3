@@ -1,3 +1,4 @@
+import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, URL } from "node:url";
 
@@ -172,7 +173,23 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     plugins: [
-      vue(),
+      vue({
+        // vite-plus 非默认 Node 环境下，SFC 编译器无法解析跨文件 import type（用于 defineProps/extends），
+        // 需显式注入 fs 见 vue/compiler-sfc 的 SFCScriptCompileOptions.fs。
+        script: {
+          fs: {
+            fileExists: existsSync,
+            readFile: (file) => {
+              try {
+                return readFileSync(file, "utf-8");
+              } catch {
+                return undefined;
+              }
+            },
+            realpath: realpathSync
+          }
+        }
+      }),
       vueJsx(),
       VITE_DEV_TOOLS && vueDevTools(), // 必须放到createHtmlPlugin前面
       createHtmlPlugin({
