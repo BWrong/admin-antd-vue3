@@ -6,7 +6,7 @@ import type { Component, Ref } from 'vue';
 
 import { getDefaultFromProps } from '@/utils';
 // import type { VueNode } from 'ant-design-vue/es/_util/type';
-export interface IProps extends Omit<ModalProps, 'open'> {
+export interface IProps extends /* @vue-ignore */ Omit<ModalProps, 'open'> {
   // title?: string | (() => VueNode) | VueNode;
   // footer?: null | string | (() => VueNode) | VueNode;
   component?: Component;
@@ -52,13 +52,8 @@ function handleLoading(val = false) {
     </template>
     <template #default>
       <slot>
-        <component
-          :is="component"
-          ref="componentRef"
-          @confirm="handleConfirm"
-          @cancel="handleCancel"
-          @loading="handleLoading"
-        />
+        <component :is="component" ref="componentRef" @confirm="handleConfirm" @cancel="handleCancel"
+          @loading="handleLoading" />
       </slot>
     </template>
     <template #footer>

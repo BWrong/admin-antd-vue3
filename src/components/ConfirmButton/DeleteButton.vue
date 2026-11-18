@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import type { ConfirmProps } from './index.vue';
 
-interface DeleteProps extends ConfirmProps {
+interface DeleteProps extends /* @vue-ignore */ ConfirmProps {
   title?: string;
   text?: string;
   actionTitle?: string;

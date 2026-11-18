@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import { type ButtonProps, Modal } from 'ant-design-vue';
 
-export interface ConfirmProps extends ButtonProps {
+export interface ConfirmProps extends /* @vue-ignore */ ButtonProps {
   title?: string;
   text?: string;
   before?: () => boolean;
