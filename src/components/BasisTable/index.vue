@@ -10,10 +10,7 @@
 
 <script lang="ts" setup>
 import type { ColumnGroupType, ColumnProps, ColumnType, TableProps } from 'ant-design-vue/es/table';
-import { tableProps } from 'ant-design-vue/es/table/Table';
 import { computed, type SetupContext, useSlots } from 'vue';
-
-import { getDefaultFromProps } from '@/utils';
 defineOptions({
   name: 'BasisTable',
   inheritAttrs: false
@@ -23,7 +20,7 @@ interface IPage {
   pageSize?: number;
 }
 
-interface IProps extends /* @vue-ignore */ TableProps {
+interface IProps extends TableProps {
   // eslint-disable-next-line vue/require-default-prop
   rowKey?: string;
   showIndex?: boolean;
@@ -42,20 +39,18 @@ interface IProps extends /* @vue-ignore */ TableProps {
   // sticky?: boolean;
 }
 const props = withDefaults(defineProps<IProps>(), {
-  ...getDefaultFromProps(tableProps(), {
-    rowKey: 'id',
-    showIndex: false
-    // pagination: false,
-    // bordered: true,
-    // defaultExpandAllRows: false,
-    // expandFixed: false,
-    // expandRowByClick: false,
-    // loading: false,
-    // showExpandColumn: true,
-    // showHeader: true,
-    // showSorterTooltip: true,
-    // sticky: false
-  })
+  rowKey: 'id',
+  showIndex: false
+  // pagination: false,
+  // bordered: true,
+  // defaultExpandAllRows: false,
+  // expandFixed: false,
+  // expandRowByClick: false,
+  // loading: false,
+  // showExpandColumn: true,
+  // showHeader: true,
+  // showSorterTooltip: true,
+  // sticky: false
 });
 type SlotKey =
   | 'bodyCell'
