@@ -9,7 +9,7 @@ import unoCSS from 'unocss/vite';
 import autoImport from 'unplugin-auto-import/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 import unpluginComponents from 'unplugin-vue-components/vite';
-import { type ConfigEnv, defineConfig, ESBuildOptions, loadEnv, type ProxyOptions } from 'vite';
+import { type ConfigEnv, defineConfig, loadEnv, lazyPlugins, type ProxyOptions } from 'vite-plus';
 import buildInfo from 'vite-plugin-build-info';
 import { compression } from 'vite-plugin-compression2';
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse';
@@ -64,6 +64,34 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     // }
   };
   return {
+    lint: {
+      plugins: ['unicorn', 'typescript', 'oxc', 'import', 'vue'],
+      env: { browser: true, es2024: true },
+      globals: { Iconfont: 'readonly', __APP_CONFIG__: 'readonly' },
+      ignorePatterns: ['dist/**', 'public/**', 'mock/**', 'types/**'],
+      jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
+      rules: {
+        'vite-plus/prefer-vite-plus-imports': 'error',
+        'import/no-duplicates': 'error',
+        // 老 ESLint 配置里刻意关闭的两条，保持一致
+        'no-unused-expressions': 'off',
+        'typescript/no-floating-promises': 'off'
+      },
+      options: { typeAware: true, typeCheck: false }
+    },
+    fmt: {
+      printWidth: 120,
+      tabWidth: 2,
+      singleQuote: true,
+      trailingComma: 'none',
+      sortPackageJson: false,
+      // 生成/第三方文件不参与格式化
+      ignorePatterns: ['dist/**', 'public/**', 'types/**', 'CHANGELOG.md']
+    },
+    // 提交前对暂存文件跑检查（替代 lint-staged 配置）
+    staged: {
+      '*': 'vp check --fix'
+    },
     root, // 项目根目录
     base: VITE_BASE_URL, // 基础路径
     server: {
@@ -85,7 +113,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
         '@': createPath('./src')
       }
     },
-    plugins: [
+    plugins: lazyPlugins(() => [
       vue(),
       vueJsx(),
       VITE_DEV_TOOLS && vueDevTools(), // 必须放到createHtmlPlugin前面
@@ -113,12 +141,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
         // resolvers: [AntDesignVueResolver()],
         dirs: ['src/composables', 'src/store', 'src/components'], // 需要自动导入的文件目录
         vueTemplate: true,
-        resolvers: [],
-        eslintrc: {
-          enabled: true,
-          filepath: './.eslintrc-auto-import.json',
-          globalsPropValue: true
-        }
+        resolvers: []
       }),
       // 自动按需加载组件 https://github.com/antfu/unplugin-vue-components
       unpluginComponents({
@@ -162,7 +185,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           // emitFile: true,
           sourcemap: true
         })
-    ],
+    ]),
     build: {
       // 生产配置
       outDir: VITE_OUT_DIR, // 输出目录
@@ -172,17 +195,17 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           chunkFileNames: 'assets/js/[name]-[hash].js',
           entryFileNames: 'assets/js/[name]-[hash].js',
           assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
-          // 根据自己需求调整分包策略
-          manualChunks: {
-            vue: ['vue', 'vue-router', 'pinia'],
-            antd: ['ant-design-vue', 'dayjs']
-          }
+          // 根据自己需求调整分包策略（Rolldown 只支持函数形式的 manualChunks）
+          manualChunks(id: string) {
+            if (/node_modules\/(?:@vue\/|vue\/|vue-router\/|pinia\/)/.test(id)) return 'vue';
+            if (/node_modules\/(?:ant-design-vue|dayjs)\//.test(id)) return 'antd';
+          },
+          // 移出console.log和debugger调试信息，减少生产环境的js文件体积
+          ...(IS_PRODUCTION && VITE_DROP_CONSOLE
+            ? { minify: { compress: { dropConsole: true, dropDebugger: true } } }
+            : {})
         }
       }
-    },
-    esbuild: {
-      // 移出console.log和debugger调试信息，减少生产环境的js文件体积
-      drop: IS_PRODUCTION && VITE_DROP_CONSOLE ? (['console', 'debugger'] as ESBuildOptions['drop']) : []
     },
     css: {
       // transformer:'lightningcss',

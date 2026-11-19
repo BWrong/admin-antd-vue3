@@ -10,8 +10,14 @@
     </LHeader>
     <a-layout class="layout-main">
       <a-layout-sider
-v-model:collapsed="collapse" :collapsed-width="50" theme="light" :trigger="null" collapsible
-        breakpoint="lg" v-if="layout === 'side'">
+        v-model:collapsed="collapse"
+        :collapsed-width="50"
+        theme="light"
+        :trigger="null"
+        collapsible
+        breakpoint="lg"
+        v-if="layout === 'side'"
+      >
         <LSider v-model:collapse="collapse" :menus="menus" />
       </a-layout-sider>
       <a-layout-content class="app-scroll-wrap" id="app-main-scroller">

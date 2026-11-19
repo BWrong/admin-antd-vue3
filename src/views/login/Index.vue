@@ -2,8 +2,14 @@
   <div class="login-page">
     <a-card class="login-form">
       <h3>{{ appTitle }}</h3>
-      <a-form ref="formRef" :model="state.loginInfo" :rules="rules" class="form" :wrapper-col="{ span: 24 }"
-        @keydown.enter="handleLogin">
+      <a-form
+        ref="formRef"
+        :model="state.loginInfo"
+        :rules="rules"
+        class="form"
+        :wrapper-col="{ span: 24 }"
+        @keydown.enter="handleLogin"
+      >
         <a-form-item name="username">
           <a-input v-model:value="state.loginInfo.username" placeholder="账号" type="text">
             <template #prefix>

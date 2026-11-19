@@ -110,10 +110,11 @@ export function convertToTree<T = any>({
   const tree: T[] = [],
     map: Record<string, T[]> = {};
   data.forEach((item) => {
-    item[children] = map[item[idName]] = map[item[idName]] || [];
-    if (item[pidName]) {
-      map[item[pidName]] = map[item[pidName]] || [];
-      map[item[pidName]].push(item);
+    const node = item as Record<string, any>;
+    node[children] = map[node[idName]] = map[node[idName]] || [];
+    if (node[pidName]) {
+      map[node[pidName]] = map[node[pidName]] || [];
+      map[node[pidName]].push(item);
     } else {
       tree.push(item);
     }
@@ -221,10 +222,7 @@ export function checkEmptyFieldOfList<T, K extends keyof T>(data: T[], checkKeys
  * @returns
  */
 
-export function getDefaultFromProps<T = Record<string, any>>(
-  props: Record<string, any>,
-  overrideProps: T
-): T | Record<string, any> {
+export function getDefaultFromProps<T = Record<string, any>>(props: Record<string, any>, overrideProps: T): T {
   const defaults = Object.entries(props).reduce((temp: any, [key, value]) => {
     temp[key] = value?.default;
     return temp;
@@ -232,5 +230,5 @@ export function getDefaultFromProps<T = Record<string, any>>(
   return {
     ...defaults,
     ...overrideProps
-  };
+  } as T;
 }

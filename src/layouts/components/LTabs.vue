@@ -24,7 +24,8 @@
                 <template #icon>
                   <IconFont type="icon-close-circle" />
                 </template>
-                关闭其他</a-menu-item>
+                关闭其他</a-menu-item
+              >
             </a-menu>
           </template>
         </a-dropdown>
@@ -147,7 +148,7 @@ async function removeTab(name: Key | MouseEvent | KeyboardEvent, action: 'add' |
     // 当移除的是当前tab，则自动切换到最后一个tab（根据项目设置）
     if (tab.tabKey === curTabKey.value) {
       const lastTab = tabs.value[tabs.value.length - 1];
-      lastTab && await gotoTab(lastTab);
+      lastTab && (await gotoTab(lastTab));
     }
     // 同时移除tab缓存
     removeCache(tab.componentName || '');

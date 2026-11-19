@@ -4,10 +4,10 @@ const router = useRouter();
 const query = route.query;
 const path = query?.url ? decodeURIComponent(query?.url as string) : '';
 if (path) {
-  router.replace(path)
+  router.replace(path);
 } else {
-  router.replace('/')
-};
+  router.replace('/');
+}
 </script>
 
 <template>

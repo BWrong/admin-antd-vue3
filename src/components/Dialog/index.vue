@@ -52,8 +52,13 @@ function handleLoading(val = false) {
     </template>
     <template #default>
       <slot>
-        <component :is="component" ref="componentRef" @confirm="handleConfirm" @cancel="handleCancel"
-          @loading="handleLoading" />
+        <component
+          :is="component"
+          ref="componentRef"
+          @confirm="handleConfirm"
+          @cancel="handleCancel"
+          @loading="handleLoading"
+        />
       </slot>
     </template>
     <template #footer>
