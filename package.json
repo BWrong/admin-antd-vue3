@@ -11,18 +11,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "serve": "vite --host",
-    "serve:mock": "vite --mode mock --host",
-    "build": "vite build",
+    "dev": "vp dev --host",
+    "serve": "vp dev --host",
+    "serve:mock": "vp dev --mode mock --host",
+    "build": "vp build",
     "build:check": "npm run type-check && npm run build",
-    "preview": "vite preview",
+    "preview": "vp preview",
     "type-check": "vue-tsc --build --force",
-    "lint": "eslint ./src --fix",
-    "format": "prettier --write src/",
+    "lint": "vp lint --fix",
+    "format": "vp fmt src/",
     "release": "release-it",
     "changelog": "release-it --changelog",
-    "postinstall": "simple-git-hooks"
+    "postinstall": "vp config"
   },
   "dependencies": {
     "@bprogress/core": "^1.3.4",
@@ -48,32 +48,23 @@
     "@types/crypto-js": "^4.2.2",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^26.6.6",
-    "@unocss/eslint-config": "^66.13.0",
     "@unocss/preset-rem-to-px": "^66.13.0",
     "@unocss/reset": "^66.13.0",
     "@vitejs/plugin-vue": "^6.0.11",
     "@vitejs/plugin-vue-jsx": "^5.1.6",
-    "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.9.0",
     "@vue/tsconfig": "^0.9.1",
     "autoprefixer": "^10.6.2",
-    "eslint": "^10.15.0",
-    "eslint-plugin-simple-import-sort": "^14.0.0",
-    "eslint-plugin-vue": "^10.12.1",
     "jiti": "^2.7.0",
     "less": "^4.9.1",
-    "lint-staged": "^17.6.1",
     "postcss": "^8.5.33",
     "postcss-px-to-viewport": "^1.1.1",
-    "prettier": "^3.10.1",
     "release-it": "^21.1.2",
     "rollup-plugin-visualizer": "^7.1.3",
-    "simple-git-hooks": "^2.14.0",
-    "typescript": "^7.0.2",
+    "typescript": "^6.0.3",
     "unocss": "^66.13.0",
     "unplugin-auto-import": "^21.1.0",
     "unplugin-vue-components": "^32.1.0",
-    "vite": "^8.3.8",
+    "vite": "catalog:",
     "vite-plugin-build-info": "^0.1.2",
     "vite-plugin-compression2": "^2.5.4",
     "vite-plugin-env-parse": "^1.0.15",
@@ -81,24 +72,12 @@
     "vite-plugin-iconfont": "^1.5.3",
     "vite-plugin-mock-dev-server": "^2.7.1",
     "vite-plugin-vue-devtools": "^8.2.1",
+    "vite-plus": "catalog:",
     "vue-tsc": "^3.3.14"
   },
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=10.0.0"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged --allow-empty",
-    "preserveUnused": true
-  },
-  "lint-staged": {
-    "src/*.{vue,js,jsx,cjs,mjs,ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "src/*.{css,less}": [
-      "prettier --write"
-    ]
   },
   "packageManager": "pnpm@12.21.0"
 }

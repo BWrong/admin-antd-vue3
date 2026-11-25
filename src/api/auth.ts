@@ -29,6 +29,7 @@ export interface IMenu extends IRecordBase {
   icon?: Iconfont;
   type?: 0 | 1;
   hide?: boolean;
+  hideBreadcrumb?: boolean;
   children?: IMenu[];
   parentId?: string;
   permission?: string;

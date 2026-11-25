@@ -1,11 +1,14 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
+    "source.fixAll.oxc": "explicit"
   },
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "iconify.customCollectionJsonPaths": ["./.iconify.json"],
   "iconify.annotations": true,
   "iconify.inplace": false,
-  "CodeFree.index": true
+  "CodeFree.index": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  }
 }

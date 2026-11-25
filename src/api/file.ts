@@ -21,7 +21,7 @@ export const uploadRequest = (params: object, progressRef?: UnwrapNestedRefs<Par
 // 文件下载
 export const downloadRequest = (
   fileName: string,
-  params?,
+  params?: Record<string, any>,
   progressRef?: UnwrapNestedRefs<Partial<AxiosProgressEvent>>
 ) =>
   download(fileName, `/file/download?name=${fileName}`, params, {

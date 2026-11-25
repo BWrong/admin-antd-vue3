@@ -39,15 +39,21 @@ const props = withDefaults(defineProps<IProps>(), { collapse: false });
 const route = useRoute();
 const emit = defineEmits(['update:collapse']);
 const { matchedParentChain } = useMenuState(props.menus);
-const parentChain = computed(() => {
-  const _parentChain = matchedParentChain.value.filter((item) => !!item.title && !item.hideBreadcrumb);
+interface IBreadcrumbItem extends IMenu {
+  url: string;
+  children?: IBreadcrumbItem[];
+}
+const parentChain = computed<IBreadcrumbItem[]>(() => {
+  const _parentChain = matchedParentChain.value.filter(
+    (item) => !!item.title && !item.hideBreadcrumb
+  ) as IBreadcrumbItem[];
   return route.meta?.activeMenu
     ? [
         ..._parentChain,
         {
           ...route.meta,
           url: route.path
-        }
+        } as IBreadcrumbItem
       ]
     : _parentChain;
 });

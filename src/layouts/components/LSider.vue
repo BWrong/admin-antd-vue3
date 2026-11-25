@@ -41,7 +41,9 @@ const localOpeneds = ref<string[]>([]);
 const { matchedParentChain, activeMenu } = useMenuState(props.menus);
 const selectedKeys = computed(() => (activeMenu.value ? [activeMenu.value, route.path] : [route.path]));
 watchEffect(() => {
-  localOpeneds.value = (props.collapse ? [] : matchedParentChain.value).map((item) => item.url);
+  localOpeneds.value = (props.collapse ? [] : matchedParentChain.value)
+    .map((item) => item.url)
+    .filter((url): url is string => !!url);
 });
 </script>
 
