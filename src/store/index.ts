@@ -7,11 +7,14 @@ interface IUserInfo {
 export const useRootStore = defineStore('root', {
   state: () => ({ userinfo: {} as IUserInfo }),
   getters: {
-    userinfoGetter(state) {
-      if (state.userinfo) return state.userinfo;
-      const userInfo = getStorage<IUserInfo>('userinfo') || ({} as IUserInfo);
-      state.userinfo = userInfo;
-      return userInfo;
+    userinfoGetter(state): IUserInfo {
+      if (state.userinfo && Object.keys(state.userinfo).length > 0) return state.userinfo;
+      const userInfo = getStorage<IUserInfo>('userinfo');
+      if (userInfo && Object.keys(userInfo).length > 0) {
+        state.userinfo = userInfo;
+        return userInfo;
+      }
+      return state.userinfo || ({} as IUserInfo);
     }
   },
   actions: {

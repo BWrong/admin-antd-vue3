@@ -7,7 +7,7 @@
  */
 // import Qs from 'qs';
 import Request, { type RequestConfig } from '@bwrong/request';
-import { AxiosHeaders } from 'axios';
+import axios, { AxiosHeaders, type InternalAxiosRequestConfig } from 'axios';
 
 import appConfig from '@/config';
 
@@ -46,21 +46,21 @@ const request = new Request<ResponseType>({
   // 取消重复请求
   cancelDuplicateRequest: false,
   interceptors: {
-    requestInterceptor(config) {
-      // 注入认证信息
+    // @bwrong/request 类型声明未包含 Promise 返回值，axios 运行时原生支持异步请求拦截器
+    requestInterceptor: (async (config: InternalAxiosRequestConfig) => {
+      // 先检查并等待 token 刷新完成，再注入最新的认证信息
+      await handleCheckAuth(config);
       const token = getToken();
       if (token) {
         config.headers = config.headers || ({} as AxiosHeaders);
         config.headers['Authorization'] = `${tokenPrefix} ${token}`;
       }
-      // 检查更新认证信息
-      handleCheckAuth(config);
       // 如果是 formData 的数据请求，则不限制请求时间
       if (config.data instanceof FormData) {
         config.timeout = 0;
       }
       return config;
-    },
+    }) as unknown as (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig,
     responseInterceptor({ data, config }) {
       // 跳过拦截器
       if ((config as RequestConfig).skipIntercept) return Promise.resolve(data);
@@ -74,6 +74,9 @@ const request = new Request<ResponseType>({
       return Promise.reject(data as unknown as Error);
     },
     responseInterceptorCatch(error) {
+      if (axios.isCancel(error)) {
+        return Promise.reject(error);
+      }
       // 处理网络错误
       handleNetworkError(error);
       return Promise.reject(error);

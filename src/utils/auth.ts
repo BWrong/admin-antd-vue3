@@ -32,7 +32,10 @@ export function removeToken() {
  * @returns
  */
 export function computedExpires(expiresTime: number) {
-  return Date.now() + expiresTime * 1000 - refreshAheadTime;
+  const expiresMs = expiresTime * 1000;
+  // 避免后端有效期小于等于提前刷新时间时，一登录就判定为需要立即刷新
+  const aheadTime = expiresMs > 0 ? Math.min(refreshAheadTime, Math.floor(expiresMs / 2)) : 0;
+  return Date.now() + expiresMs - aheadTime;
 }
 /**
  * 保存认证信息
@@ -40,7 +43,9 @@ export function computedExpires(expiresTime: number) {
  */
 export function saveAuthData(authData: LoginRes) {
   Cookie.set(tokenKey, authData.access_token);
-  Cookie.set(refreshTokenKey, authData.refresh_token);
+  if (authData.refresh_token) {
+    Cookie.set(refreshTokenKey, authData.refresh_token);
+  }
   Cookie.set(tokenExpiresKey, String(computedExpires(authData.expires_in)));
 }
 /**

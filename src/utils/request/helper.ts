@@ -1,6 +1,6 @@
 import type { RequestConfig } from '@bwrong/request';
 import { message } from 'ant-design-vue';
-import type { AxiosError } from 'axios';
+import axios, { type AxiosError } from 'axios';
 import Cookie from 'js-cookie';
 
 import { refreshTokenRequest } from '@/api/auth';
@@ -11,30 +11,42 @@ import type { ResponseType } from '.';
 
 const { tokenExpiresKey, refreshTokenKey } = appConfig;
 
+let refreshPromise: Promise<void> | null = null;
+
 /**
- * 刷新token
+ * 刷新token（并发请求共享同一个刷新 Promise）
  * @param {string} refreshToken
  */
-export const handleRefreshToken: {
-  (token: string | undefined): void;
-  refreshDoing?: boolean;
-} = (refreshToken) => {
-  if (handleRefreshToken.refreshDoing) return;
-  handleRefreshToken.refreshDoing = true; // 加锁，防止重复刷新
-  refreshTokenRequest({ refresh_token: refreshToken })
-    .then((res) => saveAuthData(res))
+export function handleRefreshToken(refreshToken?: string): Promise<void> {
+  if (refreshPromise) return refreshPromise;
+  if (!refreshToken) {
+    logout();
+    return Promise.reject(new axios.CanceledError('登录状态已失效，请重新登录'));
+  }
+  refreshPromise = refreshTokenRequest({ refresh_token: refreshToken })
+    .then((res) => {
+      saveAuthData(res);
+    })
+    .catch((err) => {
+      // 刷新请求自身已走响应拦截器提示错误，这里取消等待中的请求以免携带旧 Token 发出及重复提示
+      return Promise.reject(new axios.CanceledError(err?.msg || err?.message || '刷新 Token 失败'));
+    })
     .finally(() => {
-      handleRefreshToken.refreshDoing = false;
+      refreshPromise = null;
     });
-};
+  return refreshPromise;
+}
 /**
  * 检查更新token
  * @param config
  */
-export function handleCheckAuth(config: RequestConfig) {
+export async function handleCheckAuth(config: RequestConfig) {
+  if (config.skipCheckAuth) return;
   const tokenExpires = Cookie.get(tokenExpiresKey);
-  if (Number(tokenExpires) <= Date.now() && !config.skipCheckAuth) {
-    handleRefreshToken(Cookie.get(refreshTokenKey));
+  if (!tokenExpires) return;
+  const expires = Number(tokenExpires);
+  if (!Number.isNaN(expires) && expires <= Date.now()) {
+    await handleRefreshToken(Cookie.get(refreshTokenKey));
   }
 }
 // 信息提示适配器，使用不同的UI组件库，配置有差异
@@ -55,7 +67,7 @@ export const messageAdaptor = {
 export function handleShowTips(data: ResponseType, config: RequestConfig) {
   if (config?.method?.match(/(post|delete|put)/i) && !config.skipShowTips) {
     messageAdaptor.destroy();
-    if (data.message) messageAdaptor.success(data.message || '操作成功');
+    messageAdaptor.success(data.msg || data.message || '操作成功');
   }
 }
 // HTTP状态码及对应提示
